@@ -2,7 +2,7 @@
 
 
 
-<label for="filtroNome">Filtrar por nome:</label>
+        <label for="filtroNome">Filtrar por nome:</label>
         <input type="text" id="filtroNome">
         <button onclick="filtrarPorNome()">Filtrar</button>
 
