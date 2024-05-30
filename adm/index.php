@@ -43,15 +43,15 @@
         color:white ;
         padding: 5px;
         text-decoration: none;
-    }
-    button{
-        border-radius: 5px;
-        text-decoration: none;
-        border: none;
-        padding: 15px;
-        background-image: linear-gradient(to right,rgb(130, 20, 220), rgb(44, 31, 220));
+        }
+        button{
+            border-radius: 5px;
+            text-decoration: none;
+            border: none;
+            padding: 15px;
+            background-image: linear-gradient(to right,rgb(130, 20, 220), rgb(44, 31, 220));
 
-    }
+        }
 
 
     </style>
