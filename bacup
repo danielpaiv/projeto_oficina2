@@ -1,0 +1,12 @@
+//codigo de logim
+
+
+
+<label for="filtroNome">Filtrar por nome:</label>
+        <input type="text" id="filtroNome">
+        <button onclick="filtrarPorNome()">Filtrar</button>
+
+        <label for="filtroData"><b>data_ped</b></label>
+        <input type="date" name="data_ped" id="filtroData" required>  
+        <button onclick="filtrarPorData()">Filtrar</button>
+        <br>
