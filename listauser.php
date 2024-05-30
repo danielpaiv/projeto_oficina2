@@ -20,13 +20,7 @@ $result = $stmt->get_result();
 
 
 
-include_once('config.php');
 
-// Verifica se o usuário está logado e se é um usuário comum
-if (!isset($_SESSION['nome']) || $_SESSION['role'] != 'user') {
-    header('Location: index.php');
-    exit;
-}
 
 
 //print_r($_SESSION);
