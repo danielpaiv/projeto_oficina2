@@ -80,6 +80,7 @@ if((!isset($_SESSION['nome']) == true) and (!isset($_SESSION['senha']) == true))
                     <th scope="col">estado</th>
                     <th scope="col">endereco</th>
                     <th scope="col">valor</th>
+                    <th scope="col">Adicionar ao Carrinho</th>
                 </tr>
             </thead>
             <tbody class="box">
@@ -97,13 +98,74 @@ if((!isset($_SESSION['nome']) == true) and (!isset($_SESSION['senha']) == true))
                     echo "<td>" . $user_data['estado'] . "</td>";
                     echo "<td>" . $user_data['endereco'] . "</td>";
                     echo "<td>" . $user_data['valor'] . "</td>";
+                    echo "<td><button onclick='adicionarAoCarrinho(" . json_encode($user_data) . ")'>Adicionar</button></td>";
                     echo "</tr>";
                 }
                 ?>
             </tbody>
         </table>
     </div>
+
+    <div id="carrinho" class="m-5">
+        <h2>Carrinho de Serviços</h2>
+        <ul id="listaCarrinho"></ul>
+        <button onclick="finalizarCompra()">Finalizar Compra</button>
+    </div>
     <script>
+
+        let carrinho = [];
+
+        function adicionarAoCarrinho(servico) {
+            carrinho.push(servico);
+            console.log(carrinho);
+            alert("Serviço adicionado ao carrinho!");
+        }
+
+
+        function adicionarAoCarrinho(servico) {
+            carrinho.push(servico);
+            console.log(carrinho);
+            alert("Serviço adicionado ao carrinho!");
+            atualizarCarrinho();
+        }
+
+        function atualizarCarrinho() {
+            const listaCarrinho = document.getElementById('listaCarrinho');
+            listaCarrinho.innerHTML = '';
+            carrinho.forEach(servico => {
+                const li = document.createElement('li');
+                li.textContent = `Nome: ${servico.nome}, Serviço: ${servico.serviço}, Valor: ${servico.valor}`;
+                listaCarrinho.appendChild(li);
+            });
+            
+        }
+
+        function finalizarCompra() {
+            console.log('Dados a serem enviados:', JSON.stringify(carrinho)); // Verificar dados enviados
+            fetch('processar_carrinho.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(carrinho),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                alert("Compra finalizada com sucesso!");
+                carrinho = []; // Limpar o carrinho
+                atualizarCarrinho();
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+
+
+
+
+
+
         function filtrarPorNome() {
             const input = document.getElementById('filtroNome');
             const filter = input.value.toLowerCase();
