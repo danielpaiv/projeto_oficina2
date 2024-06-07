@@ -50,6 +50,58 @@ if((!isset($_SESSION['nome']) == true) and (!isset($_SESSION['senha']) == true))
     <link rel="stylesheet" type="text/css" href="styles.css" media="screen" />
     <script src="#"></script>
     <script src="#"></script>
+    <style>
+        nav {
+    margin-bottom: 20px;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    margin: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+button a {
+    color: white;
+    text-decoration: none;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+#m-5 {
+    margin: 20px;
+}
+
+label {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+#clientesTabela {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#clientesTabela th, #clientesTabela td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#clientesTabela th {
+    background-color: #000000;
+    text-align: left;
+}
+
+#carrinho {
+    border: 1px solid #ddd;
+    padding: 10px;
+}
+    </style>
 </head>
 <body>
     <nav>
@@ -61,6 +113,8 @@ if((!isset($_SESSION['nome']) == true) and (!isset($_SESSION['senha']) == true))
     </nav>
     <div class="m-5">
         
+        <label for="filtroNome">Filtrar por nome:</label>
+        <input type="text" id="filtroNome" onkeyup="filtrarPorNome()">
 
         <label for="filtroData"><b>Data de Serviço</b></label>
         <input type="date" id="filtroData" onchange="filtrarPorData()">
@@ -173,7 +227,7 @@ if((!isset($_SESSION['nome']) == true) and (!isset($_SESSION['senha']) == true))
             const tr = table.getElementsByTagName('tr');
 
             for (let i = 1; i < tr.length; i++) {
-                const td = tr[i].getElementsByTagName('td')[7]; // coluna "Nome"
+                const td = tr[i].getElementsByTagName('td')[1]; // coluna "Nome"
                 if (td) {
                     const txtValue = td.textContent || td.innerText;
                     if (txtValue.toLowerCase().indexOf(filter) > -1) {
