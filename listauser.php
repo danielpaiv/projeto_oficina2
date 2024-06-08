@@ -52,55 +52,64 @@ if((!isset($_SESSION['nome']) == true) and (!isset($_SESSION['senha']) == true))
     <script src="#"></script>
     <style>
         nav {
-    margin-bottom: 20px;
-}
+        margin-bottom: 20px;
+        }
 
-button {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 20px;
-    margin: 5px;
-    border: none;
-    cursor: pointer;
-}
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            cursor: pointer;
+        }
 
-button a {
-    color: white;
-    text-decoration: none;
-}
+        button a {
+            color: white;
+            text-decoration: none;
+        }
 
-button:hover {
-    background-color: #45a049;
-}
+        button:hover {
+            background-color: #45a049;
+        }
 
-#m-5 {
-    margin: 20px;
-}
+        #m-5 {
+            margin: 20px;
+        }
 
-label {
-    font-weight: bold;
-    margin-right: 10px;
-}
+        label {
+            font-weight: bold;
+            margin-right: 10px;
+        }
 
-#clientesTabela {
-    width: 100%;
-    border-collapse: collapse;
-}
+        #clientesTabela {
+            width: 100%;
+            border-collapse: collapse;
+        }
 
-#clientesTabela th, #clientesTabela td {
-    border: 1px solid #ddd;
-    padding: 8px;
-}
+        #clientesTabela th, #clientesTabela td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
 
-#clientesTabela th {
-    background-color: #000000;
-    text-align: left;
-}
+        #clientesTabela th {
+            background-color: #000000;
+            text-align: left;
+        }
 
-#carrinho {
-    border: 1px solid #ddd;
-    padding: 10px;
-}
+        #carrinho {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+        li{
+            border: 1px solid #ddd;
+            padding: 10px;
+            background-color: yellow;
+            text-align: left;
+            margin: 20px;
+            width: 30%;
+            border-collapse: collapse;
+        }
     </style>
 </head>
 <body>
