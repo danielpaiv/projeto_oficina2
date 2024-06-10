@@ -47,10 +47,33 @@ if((!isset($_SESSION['nome']) == true) and (!isset($_SESSION['senha']) == true))
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Dashboard - Listar Serviços</title>
 
-    <link rel="stylesheet" type="text/css" href="styles.css" media="screen" />
-    <script src="#"></script>
-    <script src="#"></script>
+    
     <style>
+
+        body{
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #137897; 
+            /*text-align: center;*/
+            
+        }
+        .table{
+            background: rgba(0, 0, 0, 0.9);
+        
+            border-radius: 18px 18px 0 0;
+            color: white;
+            padding: 15px;
+            font-size: 18px;
+            text-align: center;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif 
+
+        }
+        tbody{
+            color: black;
+            font-size: 18px;
+            background-color: yellow;
+            text-align: center;
+        }
+            
         nav {
         margin-bottom: 20px;
         }
@@ -85,6 +108,7 @@ if((!isset($_SESSION['nome']) == true) and (!isset($_SESSION['senha']) == true))
         #clientesTabela {
             width: 100%;
             border-collapse: collapse;
+            left:50px;
         }
 
         #clientesTabela th, #clientesTabela td {
@@ -104,6 +128,24 @@ if((!isset($_SESSION['nome']) == true) and (!isset($_SESSION['senha']) == true))
             border: 1px solid #ddd;
             padding: 10px;
             background-color: blue;
+            width: 30%;
+        }
+        #carrinho h2 {
+            margin-top: blue;
+        }
+
+        #listaCarrinho {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        #listaCarrinho li {
+            padding: 5px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        #listaCarrinho li:last-child {
+            border-bottom: none;
         }
         li{
             border: 1px solid #ddd;
@@ -111,7 +153,7 @@ if((!isset($_SESSION['nome']) == true) and (!isset($_SESSION['senha']) == true))
             background-color: yellow;
             text-align: left;
             margin: 20px;
-            width: 30%;
+            width: 90%;
             border-collapse: collapse;
         }
     </style>
@@ -124,6 +166,16 @@ if((!isset($_SESSION['nome']) == true) and (!isset($_SESSION['senha']) == true))
         <button><a href="sair.php">Sair</a></button>
 
     </nav>
+    <br>
+    <br>
+    <div id="carrinho" class="m-5">
+        <h2>Carrinho de Serviços</h2>
+        <ul id="listaCarrinho"></ul>
+        <button onclick="finalizarCompra()">Finalizar Compra</button>
+    </div>
+    <br>
+    <br>
+
     <div class="m-5">
         
         <label for="filtroNome">Filtrar por nome:</label>
@@ -131,6 +183,7 @@ if((!isset($_SESSION['nome']) == true) and (!isset($_SESSION['senha']) == true))
 
         <label for="filtroData"><b>Data de Serviço</b></label>
         <input type="date" id="filtroData" onchange="filtrarPorData()">
+        <br>
         <br>
 
         <table id="clientesTabela" class="box">
@@ -173,11 +226,7 @@ if((!isset($_SESSION['nome']) == true) and (!isset($_SESSION['senha']) == true))
         </table>
     </div>
 
-    <div id="carrinho" class="m-5">
-        <h2>Carrinho de Serviços</h2>
-        <ul id="listaCarrinho"></ul>
-        <button onclick="finalizarCompra()">Finalizar Compra</button>
-    </div>
+    
     <script>
 
         let carrinho = [];
