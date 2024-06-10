@@ -96,10 +96,14 @@ if((!isset($_SESSION['nome']) == true) and (!isset($_SESSION['senha']) == true))
             background-color: #000000;
             text-align: left;
         }
+        h2{
+            color:#f9f9f9;
+        }
 
         #carrinho {
             border: 1px solid #ddd;
             padding: 10px;
+            background-color: blue;
         }
         li{
             border: 1px solid #ddd;
@@ -236,7 +240,7 @@ if((!isset($_SESSION['nome']) == true) and (!isset($_SESSION['senha']) == true))
             const tr = table.getElementsByTagName('tr');
 
             for (let i = 1; i < tr.length; i++) {
-                const td = tr[i].getElementsByTagName('td')[1]; // coluna "Nome"
+                const td = tr[i].getElementsByTagName('td')[4]; // coluna "Nome"
                 if (td) {
                     const txtValue = td.textContent || td.innerText;
                     if (txtValue.toLowerCase().indexOf(filter) > -1) {
