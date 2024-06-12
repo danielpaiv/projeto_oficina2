@@ -15,7 +15,7 @@ if((!isset($_SESSION['nome']) == true) and (!isset($_SESSION['senha']) == true))
     unset($_SESSION['senha']);
     header('Location: index.php');
 }
-//$logado = $_SESSION['nome'];
+ $logado = $_SESSION['nome'];
 
 //$sql = "SELECT * FROM usuarios ORDER BY id DESC";
 
@@ -166,12 +166,16 @@ if (isset($_POST['submit'])) {
         }
         @media screen and (max-width: 400px){
             nav{
-                top:10%;
+                top:0%;
                 
             }
         }
         h2{
             color:white;
+        }
+        #data_serv{
+            color:black;
+            border:black;
         }
     </style>
 </head>

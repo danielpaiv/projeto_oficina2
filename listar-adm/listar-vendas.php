@@ -1,35 +1,15 @@
-
 <?php
-    session_start();
-//esse codigo é responsável por criptografar a pagina viinculado ao codigo teste login.
-include_once('config.php');
-//print_r($_SESSION);
-if((!isset($_SESSION['nome']) == true) and (!isset($_SESSION['senha']) == true))
-{
-    unset($_SESSION['nome']);
-    unset($_SESSION['senha']);
-    header('Location: index.php');
-}
-$logado = $_SESSION['nome'];
 
-$sql = "SELECT * FROM usuarios ORDER BY id DESC";
-
-//$result = $conexao->query($sql);
-
-//print_r($result);
-
-
-    include_once('conexao.php');
+session_start();
+include_once('conexao.php');
     //print_r($_SESSION);
    
 
-    $sql = "SELECT * FROM clientes ORDER BY id DESC";
+    $sql = "SELECT * FROM carrinho ORDER BY id DESC";
 
     $result = $conexao->query($sql);
 
-    //print_r($result);
-
-        
+    print_r($result);
 ?>
 
 
@@ -38,14 +18,9 @@ $sql = "SELECT * FROM usuarios ORDER BY id DESC";
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Listar Serviços</title>
-
-    <!--<link rel="stylesheet" type="text/css" href="styles.css" media="screen" />
-    <script src="filtroNome.js"></script>
-    <script src="filtroData.js"></script>!-->
+    <title>Vendas</title>
     <style>
-
-        body{
+         body{
             font-family: Arial, Helvetica, sans-serif;
             background-color: #137897; 
             /*text-align: center;*/
@@ -180,14 +155,10 @@ $sql = "SELECT * FROM usuarios ORDER BY id DESC";
                 padding: 3px 0;
             }
         }
-       
-        
     </style>
-
 </head>
-
 <body>
-    <nav>
+<nav>
     <button><a href="sair.php">Sair</a></button>
     <button><a href="http://localhost/teste-usuario2/listar-adm/painel.html">Voltar</a></button>
     </nav>
@@ -209,15 +180,18 @@ $sql = "SELECT * FROM usuarios ORDER BY id DESC";
             <thead>
                 <tr class="table">
                 <th scope="col">id</th>
+                    <th scope="col">usuario_id</th>
+                    <th scope="col">servico_id</th>
                     <th scope="col">nome</th>
                     <th scope="col">cnpj</th>
                     <th scope="col">telefone</th>
-                    <th scope="col">serviço</th>
+                    <th scope="col">servico</th>
                     <th scope="col">data_serv</th>
                     <th scope="col">cidade</th>
                     <th scope="col">estado</th>
                     <th scope="col">endereco</th>
                     <th scope="col">valor</th>
+                    <th scope="col">data_insercao</th>
                     
                     <th scope="col"></th>
                 </tr>
@@ -228,15 +202,18 @@ $sql = "SELECT * FROM usuarios ORDER BY id DESC";
                     {
                         echo "<tr>";
                         echo "<td>".$user_data['id']."</td>";
+                        echo "<td>".$user_data['usuario_id']."</td>";
+                        echo "<td>".$user_data['servico_id']."</td>";
                         echo "<td>".$user_data['nome']."</td>";
                         echo "<td>".$user_data['cnpj']."</td>";
                         echo "<td>".$user_data['telefone']."</td>";
-                        echo "<td>".$user_data['serviço']."</td>";
+                        echo "<td>".$user_data['servico']."</td>";
                         echo "<td>".$user_data['data_serv']."</td>";
                         echo "<td>".$user_data['cidade']."</td>";
                         echo "<td>".$user_data['estado']."</td>";
                         echo "<td>".$user_data['endereco']."</td>";
                         echo "<td>".$user_data['valor']."</td>";
+                        echo "<td>".$user_data['data_insercao']."</td>";
                                                   
                         echo "</td>";
                     }
@@ -254,7 +231,7 @@ $sql = "SELECT * FROM usuarios ORDER BY id DESC";
             const tr = table.getElementsByTagName('tr');
 
             for (let i = 1; i < tr.length; i++) {
-                const td = tr[i].getElementsByTagName('td')[4]; // coluna "Nome"
+                const td = tr[i].getElementsByTagName('td')[3]; // coluna "Nome"
                 if (td) {
                     const txtValue = td.textContent || td.innerText;
                     if (txtValue.toLowerCase().indexOf(filter) > -1) {
@@ -288,5 +265,8 @@ $sql = "SELECT * FROM usuarios ORDER BY id DESC";
         console.log('Texto da Coluna:', txtValue);
 
     </script>
+</body>
+</html>
+    
 </body>
 </html>

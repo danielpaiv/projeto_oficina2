@@ -1,41 +1,17 @@
 <?php
-header('Content-Type: application/json');
+session_start();
+include_once('conexao.php');
 
-// Definindo informações do banco de dados
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "banco_dados";
-
-// Criar conexão
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Verificar conexão
-if ($conn->connect_error) {
-    echo json_encode(['status' => 'erro', 'mensagem' => 'Conexão falhou: ' . $conn->connect_error]);
+// Verifica se o usuário está logado
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login.php'); // Redireciona para a página de login se não estiver logado
     exit;
 }
 
-// Capturar os dados do carrinho enviados pelo cliente
+$user_id = $_SESSION['user_id'];
+
 $input = file_get_contents('php://input');
 $carrinho = json_decode($input, true);
-
-// Verificar se $carrinho é um array válido
-if (!is_array($carrinho)) {
-    echo json_encode(['status' => 'erro', 'mensagem' => 'Dados inválidos recebidos.']);
-    exit;
-}
-
-$usuario_id = 1; // Supondo que você tem o ID do usuário armazenado na sessão ou em outra variável
-
-// Preparar a declaração SQL para inserir os itens do carrinho
-$stmt = $conn->prepare("INSERT INTO carrinho (usuario_id, servico_id, nome, cnpj, telefone, servico, data_serv, cidade, estado, endereco, valor) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-if (!$stmt) {
-    echo json_encode(['status' => 'erro', 'mensagem' => 'Falha na preparação da declaração SQL: ' . $conn->error]);
-    exit;
-}
-
-$stmt->bind_param("iissssssssd", $usuario_id, $servico_id, $nome, $cnpj, $telefone, $servico, $data_serv, $cidade, $estado, $endereco, $valor);
 
 foreach ($carrinho as $item) {
     $servico_id = $item['id'];
@@ -48,15 +24,14 @@ foreach ($carrinho as $item) {
     $estado = $item['estado'];
     $endereco = $item['endereco'];
     $valor = $item['valor'];
-    
-    if (!$stmt->execute()) {
-        echo json_encode(['status' => 'erro', 'mensagem' => 'Falha na execução da declaração SQL: ' . $stmt->error]);
-        exit;
-    }
+    //$data_insercao = date('Y-m-d H:i:s');
+
+    $sql = "INSERT INTO carrinho (usuario_id, nome, cnpj, telefone, servico, data_serv, cidade, estado, endereco, valor, data_insercao) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $stmt = $conexao->prepare($sql);
+    $stmt->bind_param("issssssssds", $user_id, $nome, $cnpj, $telefone, $servico, $data_serv, $cidade, $estado, $endereco, $valor, $data_insercao);
+    $stmt->execute();
 }
 
-$stmt->close();
-$conn->close();
-
-echo json_encode(['status' => 'sucesso', 'mensagem' => 'Compra finalizada com sucesso!']);
+$response = ['status' => 'success'];
+echo json_encode($response);
 ?>

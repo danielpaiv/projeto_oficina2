@@ -34,7 +34,7 @@ session_start();
         {
             $_SESSION['nome'] = $nome;
             $_SESSION['senha'] = $senha;
-            header('Location: listar-serv.php');
+            header('Location: painel.html');
 
         }
         

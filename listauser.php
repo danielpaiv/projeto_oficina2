@@ -1,42 +1,37 @@
 <?php
-session_start();
-include_once('conexao.php');
+    session_start();
+    include_once('conexao.php');
 
-// Verifica se o usuário está logado
-if (!isset($_SESSION['user_id'])) {
-    header('Location: login.php'); // Redireciona para a página de login se não estiver logado
-    exit;
-}
+    // Verifica se o usuário está logado
+    if (!isset($_SESSION['user_id'])) {
+        header('Location: login.php'); // Redireciona para a página de login se não estiver logado
+        exit;
+    }
 
-$user_id = $_SESSION['user_id'];
+    $user_id = $_SESSION['user_id'];
 
-// Consulta os dados apenas do usuário logado
-$sql = "SELECT * FROM clientes WHERE user_id = ? ORDER BY id DESC";
-$stmt = $conexao->prepare($sql);
-$stmt->bind_param("i", $user_id);
-$stmt->execute();
-$result = $stmt->get_result();
-
-
+    // Consulta os dados apenas do usuário logado
+    $sql = "SELECT * FROM clientes WHERE user_id = ? ORDER BY id DESC";
+    $stmt = $conexao->prepare($sql);
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
 
+    //print_r($_SESSION);
+    if((!isset($_SESSION['nome']) == true) and (!isset($_SESSION['senha']) == true))
+    {
+        unset($_SESSION['nome']);
+        unset($_SESSION['senha']);
+        header('Location: index.php');
+    }
+    $logado = $_SESSION['nome'];
 
+    //$sql = "SELECT * FROM usuarios ORDER BY id DESC";
 
+    //$result = $conexao->query($sql);
 
-//print_r($_SESSION);
-if((!isset($_SESSION['nome']) == true) and (!isset($_SESSION['senha']) == true))
-{
-    unset($_SESSION['nome']);
-    unset($_SESSION['senha']);
-    header('Location: index.php');
-}
-//$logado = $_SESSION['nome'];
-
-//$sql = "SELECT * FROM usuarios ORDER BY id DESC";
-
-//$result = $conexao->query($sql);
-
-//print_r($result);
+    //print_r($result);
 
 ?>
 
@@ -156,6 +151,37 @@ if((!isset($_SESSION['nome']) == true) and (!isset($_SESSION['senha']) == true))
             width: 90%;
             border-collapse: collapse;
         }
+        @media screen and (max-width: 400px) {
+            body {
+                font-size: 8px;
+            }
+
+            .table {
+                font-size: 5px;
+                padding: 10px;
+            }
+
+            #clientesTabela th, #clientesTabela td {
+                padding: 4px;
+                font-size: 5px;
+            }
+
+            button {
+                padding: 5px 10px;
+                font-size: 12px;
+            }
+
+            #carrinho {
+                width: 96%;
+                padding: 5px;
+            }
+
+            #listaCarrinho li {
+                padding: 3px 0;
+            }
+        }
+       
+        
     </style>
 </head>
 <body>
@@ -164,6 +190,8 @@ if((!isset($_SESSION['nome']) == true) and (!isset($_SESSION['senha']) == true))
         <button><a href="formulario.php">Voltar</a></button>
     
         <button><a href="sair.php">Sair</a></button>
+
+        <button><a href="vendas.php">Minhas vendas</a></button>
 
     </nav>
     <br>
@@ -190,7 +218,7 @@ if((!isset($_SESSION['nome']) == true) and (!isset($_SESSION['senha']) == true))
             <thead>
                 <tr class="table">
                     <th scope="col">id</th>
-                    <!--<th scope="col">user_id</th>>!-->
+                    <th scope="col">user_id</th>
                     <th scope="col">nome</th>
                     <th scope="col">cnpj</th>
                     <th scope="col">telefone</th>
@@ -208,7 +236,7 @@ if((!isset($_SESSION['nome']) == true) and (!isset($_SESSION['senha']) == true))
                 while ($user_data = $result->fetch_assoc()) {
                     echo "<tr>";
                     echo "<td>" . $user_data['id'] . "</td>";
-                    //echo "<td>".$user_data['user_id']."</td>";
+                    echo "<td>".$user_data['user_id']."</td>";
                     echo "<td>" . $user_data['nome'] . "</td>";
                     echo "<td>" . $user_data['cnpj'] . "</td>";
                     echo "<td>" . $user_data['telefone'] . "</td>";
@@ -289,7 +317,7 @@ if((!isset($_SESSION['nome']) == true) and (!isset($_SESSION['senha']) == true))
             const tr = table.getElementsByTagName('tr');
 
             for (let i = 1; i < tr.length; i++) {
-                const td = tr[i].getElementsByTagName('td')[4]; // coluna "Nome"
+                const td = tr[i].getElementsByTagName('td')[5]; // coluna "Nome"
                 if (td) {
                     const txtValue = td.textContent || td.innerText;
                     if (txtValue.toLowerCase().indexOf(filter) > -1) {
