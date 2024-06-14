@@ -192,8 +192,7 @@ include_once('conexao.php');
                     <th scope="col">endereco</th>
                     <th scope="col">valor</th>
                     <th scope="col">data_insercao</th>
-                    
-                    <th scope="col"></th>
+                    <!--<th scope="col"></th>-->
                 </tr>
             </thead>
             <tbody class="box">

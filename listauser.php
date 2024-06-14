@@ -33,24 +33,125 @@
 
     //print_r($result);
 
+
+
+
+    $user_id = $_SESSION['user_id'];
+
+    // Consulta os dados apenas do usuário logado
+    $sql = "SELECT * FROM clientes WHERE user_id = ? ORDER BY id DESC";
+    $stmt = $conexao->prepare($sql);
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+
+    //print_r($_SESSION);
+    if((!isset($_SESSION['nome']) == true) and (!isset($_SESSION['senha']) == true))
+    {
+        unset($_SESSION['nome']);
+        unset($_SESSION['senha']);
+        header('Location: index.php');
+    }
+    $logado = $_SESSION['nome'];
+
+    //$sql = "SELECT * FROM usuarios ORDER BY id DESC";
+
+    //$result = $conexao->query($sql);
+
+    //print_r($result);
+
 ?>
 
+
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Dashboard - Listar Serviços</title>
-
-    
-    <style>
-
+    <title>Carrinho de Vendas</title>
+     <style>
         body{
             font-family: Arial, Helvetica, sans-serif;
-            background-color: #137897; 
-            /*text-align: center;*/
-            
+            margin: 0px;
+            background-color: #137897;
+
         }
+        a{
+            text-decoration: none;
+        }
+        header{
+            background-color: rgb(21, 4, 98  );
+            padding: 10px;
+        }
+        .btn-abrir{
+            color: white;
+            font-size: 20px;
+        }
+        nav{
+            height: 0%;
+            width: 250px;
+            background-color: rgb(21, 4, 98  ) ;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            overflow: hidden;
+            transition: width 0.3s;
+        }
+        nav a{
+            color: white;
+            font-size: 25px;
+            display: block;
+            padding: 12px 10px 12px 32px;
+        }
+        nav a:hover{
+            color: rgb(21, 4, 98  );
+            background-color: white;
+        }
+        main{
+            padding: 10px;
+            transition: margin-left 0.5s;
+        }
+        table,th,td{
+            border: 1px solid black;
+            border-collapse:collapse ;
+        }
+        th,td{
+            padding: 5px 10px;
+        }
+        th{
+            background-color: rgb(21, 4, 98);
+            color: white;
+        }
+        /*odd aplicado em todos elementos inpares*/
+        table tr:nth-child(odd){
+            background-color: #ddd;
+
+        }
+        /*odd aplicado em todos elementos pares*/
+        table tr:nth-child(even){
+            background-color:white ;
+
+        }
+        div{
+            display: inline-block;
+            background-color: #060642 ;
+            padding: 5px;
+            text-align: center;
+            width: 98.9%;
+        }
+        legend{
+            color: white;
+        }
+        h3{
+            color: blue;
+        }
+        p{
+            color: white;
+        }
+
         .table{
             background: rgba(0, 0, 0, 0.9);
         
@@ -98,6 +199,8 @@
         label {
             font-weight: bold;
             margin-right: 10px;
+            color:white;
+            padding: ;
         }
 
         #clientesTabela {
@@ -123,7 +226,7 @@
             border: 1px solid #ddd;
             padding: 10px;
             background-color: blue;
-            width: 30%;
+            width: 33%;
         }
         #carrinho h2 {
             margin-top: blue;
@@ -159,11 +262,13 @@
             .table {
                 font-size: 5px;
                 padding: 10px;
+                width: 56%;
             }
 
             #clientesTabela th, #clientesTabela td {
                 padding: 4px;
-                font-size: 5px;
+                font-size: 6px;
+                width: 90%;
             }
 
             button {
@@ -179,83 +284,113 @@
             #listaCarrinho li {
                 padding: 3px 0;
             }
+            .box{
+                width: 56%;
+            }
         }
-       
-        
+
     </style>
 </head>
 <body>
-    <nav>
+   
 
-        <button><a href="formulario.php">Voltar</a></button>
-    
-        <button><a href="sair.php">Sair</a></button>
+    <header>
+    <!--criei uma class para usar no css e não ter conflito com outros links-->
+    <a href="#" class="btn-abrir" onclick="abrirMenu()">&#9776; Menu</a>
 
-        <button><a href="vendas.php">Minhas vendas</a></button>
-
+    </header>
+   
+    <nav id="menu">
+        <a href="#" onclick="facharMenu()">&times; Fechar</a>
+        <a href="vendas.php">Minhas vendas</a>
+        <a href="formulario.php">Cadastrar serviços</a>
+        <a href="sair.php">Sair</a>
+        <a href="#">Mais opções</a>
     </nav>
-    <br>
-    <br>
-    <div id="carrinho" class="m-5">
-        <h2>Carrinho de Serviços</h2>
-        <ul id="listaCarrinho"></ul>
-        <button onclick="finalizarCompra()">Finalizar Compra</button>
-    </div>
-    <br>
-    <br>
 
-    <div class="m-5">
+    <main id="conteudo">
+
+        <div id="carrinho" class="m-5">
+            <h2>Carrinho de Serviços</h2>
+            <ul id="listaCarrinho"></ul>
+            <button onclick="finalizarCompra()">Finalizar Compra</button>
+        </div>
+        <br>
+        <br>
+
+        <div class="m-5">
+            
+            <label for="filtroNome">Filtrar por nome:</label>
+            <input type="text" id="filtroNome" onkeyup="filtrarPorNome()">
+
+            <label for="filtroData"><b>Data de Serviço</b></label>
+            <input type="date" id="filtroData" onchange="filtrarPorData()">
+            <br>
+            <br>
+
+            <table id="clientesTabela" class="box">
+                <thead>
+                    <tr class="table">
+                        <th scope="col">id</th>
+                        <th scope="col">user_id</th>
+                        <th scope="col">nome</th>
+                        <th scope="col">cnpj</th>
+                        <th scope="col">telefone</th>
+                        <th scope="col">serviço</th>
+                        <th scope="col">data_serv</th>
+                        <th scope="col">cidade</th>
+                        <th scope="col">estado</th>
+                        <th scope="col">endereco</th>
+                        <th scope="col">valor</th>
+                        <th scope="col">Adicionar ao Carrinho</th>
+                        <th>Editar</th>
+                    </tr>
+                </thead>
+                <tbody class="box">
+                    <?php
+                    while ($user_data = $result->fetch_assoc()) {
+                        echo "<tr>";
+                        echo "<td>" . $user_data['id'] . "</td>";
+                        echo "<td>".$user_data['user_id']."</td>";
+                        echo "<td>" . $user_data['nome'] . "</td>";
+                        echo "<td>" . $user_data['cnpj'] . "</td>";
+                        echo "<td>" . $user_data['telefone'] . "</td>";
+                        echo "<td>" . $user_data['serviço'] . "</td>";
+                        echo "<td>" . $user_data['data_serv'] . "</td>";
+                        echo "<td>" . $user_data['cidade'] . "</td>";
+                        echo "<td>" . $user_data['estado'] . "</td>";
+                        echo "<td>" . $user_data['endereco'] . "</td>";
+                        echo "<td>" . $user_data['valor'] . "</td>";
+                        echo "<td><button onclick='adicionarAoCarrinho(" . json_encode($user_data) . ")'>Adicionar</button></td>";
+                        echo "<td>
+                        
+                        <a class= 'btn btn-primary' href='edit.php?id=$user_data[id]'>
+                        <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-pencil' viewBox='0 0 16 16'>
+                        <path d='M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325'/>
+                        </svg>
+                        </a>
+                        
+                        </td>";
+                        echo "</tr>";
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
         
-        <label for="filtroNome">Filtrar por nome:</label>
-        <input type="text" id="filtroNome" onkeyup="filtrarPorNome()">
 
-        <label for="filtroData"><b>Data de Serviço</b></label>
-        <input type="date" id="filtroData" onchange="filtrarPorData()">
-        <br>
-        <br>
-
-        <table id="clientesTabela" class="box">
-            <thead>
-                <tr class="table">
-                    <th scope="col">id</th>
-                    <th scope="col">user_id</th>
-                    <th scope="col">nome</th>
-                    <th scope="col">cnpj</th>
-                    <th scope="col">telefone</th>
-                    <th scope="col">serviço</th>
-                    <th scope="col">data_serv</th>
-                    <th scope="col">cidade</th>
-                    <th scope="col">estado</th>
-                    <th scope="col">endereco</th>
-                    <th scope="col">valor</th>
-                    <th scope="col">Adicionar ao Carrinho</th>
-                </tr>
-            </thead>
-            <tbody class="box">
-                <?php
-                while ($user_data = $result->fetch_assoc()) {
-                    echo "<tr>";
-                    echo "<td>" . $user_data['id'] . "</td>";
-                    echo "<td>".$user_data['user_id']."</td>";
-                    echo "<td>" . $user_data['nome'] . "</td>";
-                    echo "<td>" . $user_data['cnpj'] . "</td>";
-                    echo "<td>" . $user_data['telefone'] . "</td>";
-                    echo "<td>" . $user_data['serviço'] . "</td>";
-                    echo "<td>" . $user_data['data_serv'] . "</td>";
-                    echo "<td>" . $user_data['cidade'] . "</td>";
-                    echo "<td>" . $user_data['estado'] . "</td>";
-                    echo "<td>" . $user_data['endereco'] . "</td>";
-                    echo "<td>" . $user_data['valor'] . "</td>";
-                    echo "<td><button onclick='adicionarAoCarrinho(" . json_encode($user_data) . ")'>Adicionar</button></td>";
-                    echo "</tr>";
-                }
-                ?>
-            </tbody>
-        </table>
-    </div>
-
+    </main>
     
     <script>
+        function abrirMenu() {
+            document.getElementById('menu').style. height = '100%';
+            document.getElementById('conteudo').style.marginLeft = '16%';
+        }
+        function facharMenu(){
+            document.getElementById('menu').style. height = '0%'
+            document.getElementById('conteudo').style.marginLeft = '0%';
+        }
+
 
         let carrinho = [];
 
@@ -299,10 +434,12 @@
                 alert("Compra finalizada com sucesso!");
                 carrinho = []; // Limpar o carrinho
                 atualizarCarrinho();
+                
             })
             .catch((error) => {
                 console.error('Error:', error);
             });
+            
         }
 
 
@@ -347,6 +484,8 @@
             }
         }
 
+        
     </script>
+
 </body>
 </html>

@@ -101,9 +101,9 @@ $sql = "SELECT * FROM usuarios ORDER BY id DESC";
         }
 
         #clientesTabela {
-            width: 100%;
+            width: 99%;
             border-collapse: collapse;
-            left:50px;
+            left:30px;
         }
 
         #clientesTabela th, #clientesTabela td {
@@ -218,8 +218,7 @@ $sql = "SELECT * FROM usuarios ORDER BY id DESC";
                     <th scope="col">estado</th>
                     <th scope="col">endereco</th>
                     <th scope="col">valor</th>
-                    
-                    <th scope="col"></th>
+                    <!--<th scope="col"></th>-->
                 </tr>
             </thead>
             <tbody class="box">
