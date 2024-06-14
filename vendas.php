@@ -17,7 +17,14 @@
     $stmt->execute();
     $result = $stmt->get_result();
 
-
+    //print_r($_SESSION);
+    if((!isset($_SESSION['nome']) == true) and (!isset($_SESSION['senha']) == true))
+    {
+        unset($_SESSION['nome']);
+        unset($_SESSION['senha']);
+        header('Location: index.php');
+    }
+    $logado = $_SESSION['nome'];
 ?>
 
 
@@ -29,7 +36,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu lateral</title>
+    <title>Minhas vendas</title>
      <style>
         body{
             font-family: Arial, Helvetica, sans-serif;
