@@ -287,7 +287,15 @@
             .box{
                 width: 56%;
             }
-        }
+            }
+            .hidden {
+            display: none;
+            }
+
+            #options a {
+                display: block;
+                margin: 5px 0;
+            }
 
     </style>
 </head>
@@ -305,7 +313,15 @@
         <a href="vendas.php">Minhas vendas</a>
         <a href="formulario.php">Cadastrar serviços</a>
         <a href="sair.php">Sair</a>
-        <a href="#">Mais opções</a>
+        <!--<a href="#">Mais opções</a>-->
+
+    <a href="#" id="showOptions">Mais opções</a>
+        <div id="options" class="hidden">
+            <a href="http://localhost/teste-usuario2/listar-adm/index.php">Adm</a>
+            <a href="meuRelatorio.php">Relatorio</a>
+            <a href="#">Opção 3</a>
+            <a href="#">Opção 4</a>
+        </div>
     </nav>
 
     <main id="conteudo">
@@ -342,6 +358,7 @@
                         <th scope="col">estado</th>
                         <th scope="col">endereco</th>
                         <th scope="col">valor</th>
+                        <th scope="col">estoque</th>
                         <th scope="col">Adicionar ao Carrinho</th>
                         <th>Editar</th>
                     </tr>
@@ -361,6 +378,7 @@
                         echo "<td>" . $user_data['estado'] . "</td>";
                         echo "<td>" . $user_data['endereco'] . "</td>";
                         echo "<td>" . $user_data['valor'] . "</td>";
+                        echo "<td>" . $user_data['estoque'] . "</td>";
                         echo "<td><button onclick='adicionarAoCarrinho(" . json_encode($user_data) . ")'>Adicionar</button></td>";
                         echo "<td>
                         
@@ -382,11 +400,22 @@
     </main>
     
     <script>
+
+        document.getElementById('showOptions').addEventListener('click', function(event) {
+            event.preventDefault(); // Impede o comportamento padrão do link
+            var options = document.getElementById('options');
+            if (options.classList.contains('hidden')) {
+                options.classList.remove('hidden');
+            } else {
+                options.classList.add('hidden');
+            }
+        });
+
         function abrirMenu() {
             document.getElementById('menu').style. height = '100%';
             document.getElementById('conteudo').style.marginLeft = '16%';
-        }
-        function facharMenu(){
+            }
+            function facharMenu(){
             document.getElementById('menu').style. height = '0%'
             document.getElementById('conteudo').style.marginLeft = '0%';
         }
@@ -401,25 +430,98 @@
         }
 
 
+       // function adicionarAoCarrinho(servico) {
+           // carrinho.push(servico);
+            //console.log(carrinho);
+            //alert("Serviço adicionado ao carrinho!");
+            //atualizarCarrinho();
+        //}
+
         function adicionarAoCarrinho(servico) {
-            carrinho.push(servico);
-            console.log(carrinho);
-            alert("Serviço adicionado ao carrinho!");
-            atualizarCarrinho();
+            // Verificar estoque antes de adicionar
+            if (servico.estoque > 0) {
+                carrinho.push(servico);
+                atualizarCarrinho();
+
+                // Atualizar estoque no banco de dados
+                fetch('atualizar_estoque.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ id: servico.id, estoque: servico.estoque - 1 }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        servico.estoque -= 1;
+
+                        // Salvar carrinho no localStorage
+                        localStorage.setItem('carrinho', JSON.stringify(carrinho));
+
+                        // Exibir o alerta e recarregar a página
+                        setTimeout(() => {
+                            alert("Serviço adicionado ao carrinho!");
+                            window.location.reload();
+                        }, 100);
+                    } else {
+                        alert("Erro ao atualizar o estoque.");
+                    }
+                })
+            .catch((error) => {
+                console.error('Error:', error);
+                });
+
+            } else {
+                alert("Estoque esgotado!");
+            }
         }
 
+        function carregarCarrinho() {
+            const carrinhoLocal = localStorage.getItem('carrinho');
+            if (carrinhoLocal) {
+                carrinho = JSON.parse(carrinhoLocal);
+                atualizarCarrinho();
+            }
+        }
+
+        // Chamar essa função ao carregar a página
+        window.onload = carregarCarrinho;
+
         function atualizarCarrinho() {
-            const listaCarrinho = document.getElementById('listaCarrinho');
-            listaCarrinho.innerHTML = '';
+            const carrinhoElement = document.getElementById('carrinho');
+            carrinhoElement.innerHTML = ''; // Limpar carrinho
+
             carrinho.forEach(servico => {
                 const li = document.createElement('li');
-                li.textContent = `Nome: ${servico.nome}, Serviço: ${servico.serviço}, Valor: ${servico.valor}`;
-                listaCarrinho.appendChild(li);
+                li.textContent = `${servico.nome} - ${servico.valor}`;
+                carrinhoElement.appendChild(li);
             });
+
+            // Atualizar no localStorage
+            localStorage.setItem('carrinho', JSON.stringify(carrinho));
+            
+        }
+
+
+
+        function atualizarCarrinho() {
+        const listaCarrinho = document.getElementById('listaCarrinho');
+        listaCarrinho.innerHTML = '';
+        carrinho.forEach(servico => {
+            const li = document.createElement('li');
+            li.textContent = `Nome: ${servico.nome}, Serviço: ${servico.serviço}, Valor: ${servico.valor}`;
+            listaCarrinho.appendChild(li);
+        });
             
         }
 
         function finalizarCompra() {
+            if (carrinho.length === 0) {
+                alert("Seu carrinho está vazio. Adicione itens antes de finalizar a compra.");
+                return;
+            }
+
             console.log('Dados a serem enviados:', JSON.stringify(carrinho)); // Verificar dados enviados
             fetch('processar_carrinho.php', {
                 method: 'POST',
@@ -433,14 +535,15 @@
                 console.log('Success:', data);
                 alert("Compra finalizada com sucesso!");
                 carrinho = []; // Limpar o carrinho
+                localStorage.removeItem('carrinho'); // Limpar o localStorage
                 atualizarCarrinho();
-                
+                window.location.href = "vendas.php"; // Redirecionar para a página de vendas
             })
             .catch((error) => {
                 console.error('Error:', error);
             });
-            
-        }
+        }       
+
 
 
 

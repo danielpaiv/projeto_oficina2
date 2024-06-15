@@ -52,6 +52,7 @@
                 $endereco = $user_data['endereco'];
                 $valor = $user_data['valor'];
                 $user_id =$user_data['user_id']; // Obtém o ID do usuário da sessão
+                $estoque =$user_data['estoque'];
 
                 print_r("USER : " .$nome);
                 
@@ -271,6 +272,10 @@
                 <div class="inputbox">
                     <input type="text" name="valor" id="valor" class="inputUser" value="<?php echo $valor ?>" required>
                     <label for="valor" class="labelInput">Valor</label>
+                </div><br><br>
+                <div class="inputbox">
+                    <input type="text" name="estoque" id="estoque" class="inputUser" value="<?php echo $estoque ?>" required>
+                    <label for="estoque" class="labelInput">estoque</label>
                 </div>
                 <br><br>
                 <input type="hidden" name="id" value="<?php echo $id ?>">

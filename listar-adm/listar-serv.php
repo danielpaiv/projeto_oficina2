@@ -196,7 +196,7 @@ $sql = "SELECT * FROM usuarios ORDER BY id DESC";
 
 <div class="m-5">
 
-        <label for="filtroNome">Filtrar por nome:</label>
+        <label for="filtroNome">Filtrar por Serviços:</label>
         <input type="text" id="filtroNome" onkeyup="filtrarPorNome()">
 
         <label for="filtroData"><b>Data de Serviço</b></label>
@@ -218,6 +218,7 @@ $sql = "SELECT * FROM usuarios ORDER BY id DESC";
                     <th scope="col">estado</th>
                     <th scope="col">endereco</th>
                     <th scope="col">valor</th>
+                    <th scope="col">estoque</th>
                     <!--<th scope="col"></th>-->
                 </tr>
             </thead>
@@ -236,6 +237,7 @@ $sql = "SELECT * FROM usuarios ORDER BY id DESC";
                         echo "<td>".$user_data['estado']."</td>";
                         echo "<td>".$user_data['endereco']."</td>";
                         echo "<td>".$user_data['valor']."</td>";
+                        echo "<td>".$user_data['estoque']."</td>";
                                                   
                         echo "</td>";
                     }

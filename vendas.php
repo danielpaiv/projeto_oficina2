@@ -9,11 +9,12 @@
     }
 
     $user_id = $_SESSION['user_id'];
+    $data_atual = date('Y-m-d');
 
     // Consulta os dados apenas do usuário logado
-    $sql = "SELECT * FROM carrinho WHERE usuario_id = ? ORDER BY id DESC";
+    $sql = "SELECT * FROM carrinho WHERE usuario_id = ? AND DATE(data_insercao) = ? ORDER BY id DESC";
     $stmt = $conexao->prepare($sql);
-    $stmt->bind_param("i", $user_id);
+    $stmt->bind_param("is", $user_id, $data_atual);
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -153,6 +154,14 @@
                 padding: 3px 0;
             }
         }
+        .hidden {
+            display: none;
+            }
+
+            #options a {
+                display: block;
+                margin: 5px 0;
+            }
 
     </style>
 </head>
@@ -170,7 +179,15 @@
         <a href="listauser.php">Voltar</a>
         <a href="sair.php">Sair</a>
         <a href="#">Contato</a>
-        <a href="#">Mais opções</a>
+        <!--<a href="#">Mais opções</a>-->
+
+        <a href="#" id="showOptions">Mais opções</a>
+            <div id="options" class="hidden">
+                <a href="http://localhost/teste-usuario2/listar-adm/index.php">Adm</a>
+                <a href="meurelatorio.php">Meu Relatório</a>
+                <a href="#">Opção 3</a>
+                <a href="#">Opção 4</a>
+            </div>
     </nav>
 
     <main id="conteudo">
@@ -231,6 +248,17 @@
     </main>
     
     <script>
+
+        document.getElementById('showOptions').addEventListener('click', function(event) {
+            event.preventDefault(); // Impede o comportamento padrão do link
+            var options = document.getElementById('options');
+            if (options.classList.contains('hidden')) {
+                options.classList.remove('hidden');
+            } else {
+                options.classList.add('hidden');
+            }
+        });
+
         function abrirMenu() {
             document.getElementById('menu').style. height = '100%';
             document.getElementById('conteudo').style.marginLeft = '16%';

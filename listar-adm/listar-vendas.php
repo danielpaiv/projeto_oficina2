@@ -161,6 +161,7 @@ include_once('conexao.php');
 <nav>
     <button><a href="sair.php">Sair</a></button>
     <button><a href="http://localhost/teste-usuario2/listar-adm/painel.html">Voltar</a></button>
+    <button><a href="relatorio.php">Relatório</a></button>
     </nav>
 
 
@@ -248,7 +249,7 @@ include_once('conexao.php');
             const tr = table.getElementsByTagName('tr');
 
             for (let i = 1; i < tr.length; i++) {
-                const td = tr[i].getElementsByTagName('td')[5]; // coluna "Data de Serviço"
+                const td = tr[i].getElementsByTagName('td')[12]; // coluna "Data de Serviço"
                 if (td) {
                     const txtValue = td.textContent || td.innerText;
                     if (txtValue.indexOf(input) > -1) {
