@@ -18,6 +18,8 @@
     $stmt->execute();
     $result = $stmt->get_result();
 
+    //var_dump($result->fetch_assoc());
+
     //print_r($_SESSION);
     if((!isset($_SESSION['nome']) == true) and (!isset($_SESSION['senha']) == true))
     {

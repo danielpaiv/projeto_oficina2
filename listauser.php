@@ -430,12 +430,12 @@
         }
 
 
-       // function adicionarAoCarrinho(servico) {
-           // carrinho.push(servico);
-            //console.log(carrinho);
-            //alert("Serviço adicionado ao carrinho!");
-            //atualizarCarrinho();
-        //}
+         function adicionarAoCarrinho(servico) {
+            carrinho.push(servico);
+            console.log(carrinho);
+            alert("Serviço adicionado ao carrinho!");
+            atualizarCarrinho();
+        }
 
         function adicionarAoCarrinho(servico) {
             // Verificar estoque antes de adicionar
