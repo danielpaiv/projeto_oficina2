@@ -216,6 +216,7 @@
                         <th scope="col">cidade</th>
                         <th scope="col">estado</th>
                         <th scope="col">endereco</th>
+                        <th scope="col">forma_pagamento</th>
                         <th scope="col">valor</th>
                         <th scope="col">data_insercao</th>
                         <!--<th>Editar</th>-->
@@ -237,6 +238,7 @@
                         echo "<td>".$user_data['cidade']."</td>";
                         echo "<td>".$user_data['estado']."</td>";
                         echo "<td>".$user_data['endereco']."</td>";
+                        echo "<td>".$user_data['forma_pagamento']."</td>";
                         echo "<td>".$user_data['valor']."</td>";
                         echo "<td>".$user_data['data_insercao']."</td>";
                         //echo "<td></td>";

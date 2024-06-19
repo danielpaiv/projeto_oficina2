@@ -37,10 +37,11 @@ if (isset($_POST['submit'])) {
     $endereco = $_POST['endereco'];
     $valor = $_POST['valor'];
     $user_id = $_POST['user_id']; // Obtém o ID do usuário da sessão
+    $forma_pagamento = $_POST['forma_pagamento'];
 
     // Insere os dados no banco de dados, incluindo o ID do usuário
-    $stmt = $conexao->prepare("INSERT INTO clientes (user_id, nome, cnpj, telefone, serviço, data_serv, cidade, estado, endereco, valor) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssssssssi", $user_id, $nome, $cnpj, $telefone, $serviço, $data_serv, $cidade, $estado, $endereco, $valor);
+    $stmt = $conexao->prepare("INSERT INTO clientes (user_id, nome, cnpj, telefone, serviço, data_serv, cidade, estado, endereco, forma_pagamento, valor) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssssssssssi", $user_id, $nome, $cnpj, $telefone, $serviço, $data_serv, $cidade, $estado, $endereco, $forma_pagamento, $valor);
     $stmt->execute();
 
     header('Location: listaadm.php'); // Redireciona para a página de listagem após o cadastro
@@ -246,6 +247,19 @@ if (isset($_POST['submit'])) {
                     <label for="endereco" class="labelInput">Endereço</label>
                 </div>
                 <br><br> 
+                <p>pagamento</p>
+                <input type="radio" id="dinheiro" name="forma_pagamento" value="dinheiro"  required>
+                <label for="dinheiro">dinheiro</label>
+
+                <input type="radio" id="debito" name="forma_pagamento" value="debito"  required>
+                <label for="debito">debito</label>
+                
+                <input type="radio" id="credito" name="forma_pagamento" value="credito"  required>
+                <label for="credito">credito</label>
+
+                <input type="radio" id="pix" name="forma_pagamento" value="pix" required>
+                <label for="pix">Pix</label>
+                <br><br>
                 <div class="inputbox">
                     <input type="text" name="valor" id="valor" class="inputUser" required>
                     <label for="valor" class="labelInput">Valor</label>

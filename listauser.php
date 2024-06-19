@@ -158,14 +158,14 @@
             border-radius: 18px 18px 0 0;
             color: white;
             padding: 15px;
-            font-size: 18px;
+            font-size: 14px;
             text-align: center;
             font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif 
 
         }
         tbody{
             color: black;
-            font-size: 18px;
+            font-size: 14px;
             background-color: yellow;
             text-align: center;
         }
@@ -307,6 +307,7 @@
     <a href="#" class="btn-abrir" onclick="abrirMenu()">&#9776; Menu</a>
 
     </header>
+    <div id="botoesVenda" class="box"></div>
    
     <nav id="menu">
         <a href="#" onclick="facharMenu()">&times; Fechar</a>
@@ -357,6 +358,7 @@
                         <th scope="col">cidade</th>
                         <th scope="col">estado</th>
                         <th scope="col">endereco</th>
+                        <th scope="col">forma_pagamento</th>
                         <th scope="col">valor</th>
                         <th scope="col">estoque</th>
                         <th scope="col">Adicionar ao Carrinho</th>
@@ -377,6 +379,7 @@
                         echo "<td>" . $user_data['cidade'] . "</td>";
                         echo "<td>" . $user_data['estado'] . "</td>";
                         echo "<td>" . $user_data['endereco'] . "</td>";
+                        echo "<td>" . $user_data['forma_pagamento'] . "</td>";
                         echo "<td>" . $user_data['valor'] . "</td>";
                         echo "<td>" . $user_data['estoque'] . "</td>";
                         echo "<td><button onclick='adicionarAoCarrinho(" . json_encode($user_data) . ")'>Adicionar</button></td>";
@@ -421,7 +424,7 @@
         }
 
 
-        let carrinho = [];
+        let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
 
         function adicionarAoCarrinho(servico) {
             carrinho.push(servico);
@@ -438,6 +441,12 @@
         }
 
         function adicionarAoCarrinho(servico) {
+            // Verificar se há itens no carrinho
+            if (carrinho.length > 0) {
+                alert("Você já tem itens no carrinho. Por favor, finalize ou cancele a venda atual antes de adicionar novos itens.");
+                return;
+            }
+
             // Verificar estoque antes de adicionar
             if (servico.estoque > 0) {
                 carrinho.push(servico);
@@ -502,6 +511,57 @@
             localStorage.setItem('carrinho', JSON.stringify(carrinho));
             
         }
+        function cancelarVenda() {
+            // Lógica para cancelar a venda
+            if (confirm("Você tem certeza que deseja cancelar a venda?")) {
+                // Restaurar o estoque dos itens no carrinho
+                carrinho.forEach(servico => {
+                    fetch('atualizar_estoque.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ id: servico.id, estoque: servico.estoque + 1 }),
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Estoque restaurado com sucesso
+                        } else {
+                            alert("Erro ao restaurar o estoque do serviço com ID: " + servico.id);
+                        }
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
+                });
+
+                // Limpar o carrinho
+                carrinho = [];
+                localStorage.removeItem('carrinho');
+                alert("Venda cancelada!");
+                // Recarregar a página
+                window.location.reload();
+            }
+        }
+        function exibirBotoesVenda() {
+            const botoesContainer = document.getElementById('botoesVenda');
+            botoesContainer.innerHTML = `
+                
+                <button onclick="cancelarVenda()">Cancelar Venda</button>
+            `;
+        }
+        function confirmarVenda() {
+            // Lógica para confirmar a venda
+            alert("Venda confirmada!");
+            // Limpar o carrinho e recarregar a página
+            carrinho = [];
+            localStorage.removeItem('carrinho');
+            window.location.reload();
+        }
+
+        // Chamar a função para exibir os botões quando necessário
+        exibirBotoesVenda();
 
 
 

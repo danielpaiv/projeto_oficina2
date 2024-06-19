@@ -9,11 +9,11 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $user_id = $_SESSION['user_id'];
-
+$data_atual = date('Y-m-d');
 // Consulta para obter a soma dos valores e quantidades apenas do usuário atual
-$sql = "SELECT usuario_id, SUM(valor) AS total_valor, COUNT(*) AS total_quantidade FROM carrinho WHERE usuario_id = ? GROUP BY usuario_id";
+$sql = "SELECT usuario_id, SUM(valor) AS total_valor, COUNT(*) AS total_quantidade FROM carrinho WHERE usuario_id = ? AND DATE(data_insercao) = ? GROUP BY usuario_id";
 $stmt = $conexao->prepare($sql);
-$stmt->bind_param("i", $user_id);
+$stmt->bind_param("is", $user_id, $data_atual);
 $stmt->execute();
 $result = $stmt->get_result();
 ?>
@@ -23,7 +23,7 @@ $result = $stmt->get_result();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu lateral</title>
+    <title>Menu Relatório</title>
      <style>
          body {
             font-family: Arial, sans-serif;
@@ -142,7 +142,7 @@ $result = $stmt->get_result();
 
         <header>
         <!--criei uma class para usar no css e não ter conflito com outros links-->
-        <a href="#" class="btn-abrir" onclick="abrirMenu()">&#9776; Menu</a>
+        <a href="#" class="btn-abrir" onclick="abrirMenu()">&#9776; Menu Usuario</a>
 
     </header>
    

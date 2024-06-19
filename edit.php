@@ -50,6 +50,7 @@
                 $cidade = $user_data['cidade'];
                 $estado = $user_data['estado'];
                 $endereco = $user_data['endereco'];
+                $forma_pagamento = $user_data['forma_pagamento'];
                 $valor = $user_data['valor'];
                 $user_id =$user_data['user_id']; // Obtém o ID do usuário da sessão
                 $estoque =$user_data['estoque'];
@@ -90,7 +91,7 @@
         .box{
             columns: 1;
             position: absolute;
-            top: 50%;
+            top: 65%;
             left: 50%;
             transform: translate(-50%,-50%);
             background-color: rgba(0, 0, 0, 0.6);
@@ -246,8 +247,10 @@
 
                 <!--<input type="radio" id="fachada" name="serviço" value="limpeza de fachada" <?php echo ($serviço == "limpeza de fachada") ? 'checked' : ''; ?> required>
                 <label for="fachada">Fachada</label>
+
                 <input type="radio" id="vidros" name="serviço" value="limpeza de vidros" <?php echo ($serviço == "limpeza de vidros") ? 'checked' : ''; ?> required>
                 <label for="vidros">Vidros</label>
+                
                 <input type="radio" id="outro" name="serviço" value="outro" <?php echo ($serviço == "outro") ? 'checked' : ''; ?> required>
                 <label for="outro">Outro</label>-->
                 <br><br>
@@ -259,16 +262,48 @@
                     <label for="cidade" class="labelInput">Cidade</label>
                 </div>
                 <br><br>
+
                 <div class="inputbox">
                     <input type="text" name="estado" id="estado" class="inputUser" value="<?php echo $estado ?>" required>
                     <label for="estado" class="labelInput">Estado</label>
                 </div>
                 <br><br>
+
                 <div class="inputbox">
                     <input type="text" name="endereco" id="endereco" class="inputUser" value="<?php echo $endereco ?>" required>
                     <label for="endereco" class="labelInput">Endereço</label>
                 </div>
-                <br><br> 
+                
+                
+                <!--<div class="inputbox">
+                    <input type="text" name="forma_pagamento" id="forma_pagamento" class="inputUser" value="<?php echo $forma_pagamento ?>" required>
+                    <label for="forma_pagamento" class="labelInput">Forma de pagamento</label>
+                </div>
+                <br><br>-->
+
+
+                <p>pagamento</p>
+                <input type="radio" id="dinheiro" name="forma_pagamento" value="dinheiro" <?php echo ($serviço == "dinheiro") ? 'checked' : ''; ?> required>
+                <label for="dinheiro">dinheiro</label>
+
+                <input type="radio" id="debito" name="forma_pagamento" value="debito" <?php echo ($serviço == "debito") ? 'checked' : ''; ?> required>
+                <label for="debito">debito</label>
+                
+                <input type="radio" id="credito" name="forma_pagamento" value="credito" <?php echo ($serviço == "credito") ? 'checked' : ''; ?> required>
+                <label for="credito">credito</label>
+
+                <input type="radio" id="pix" name="forma_pagamento" value="pix" <?php echo ($serviço == "pix") ? 'checked' : ''; ?> required>
+                <label for="pix">Pix</label>
+                <br><br>
+
+
+
+
+
+
+
+
+
                 <div class="inputbox">
                     <input type="text" name="valor" id="valor" class="inputUser" value="<?php echo $valor ?>" required>
                     <label for="valor" class="labelInput">Valor</label>
@@ -278,6 +313,7 @@
                     <label for="estoque" class="labelInput">estoque</label>
                 </div>
                 <br><br>
+
                 <input type="hidden" name="id" value="<?php echo $id ?>">
                 <input type="submit" name="update" id="update">
             </fieldset>

@@ -126,23 +126,37 @@ $result = $conexao->query($sql);
         p{
             color: white;
         }
+        .hidden {
+            display: none;
+            }
 
+            #options a {
+                display: block;
+                margin: 5px 0;
+            }
     </style>
    
 </head>
 <body>
     <header>
         <!--criei uma class para usar no css e não ter conflito com outros links-->
-        <a href="#" class="btn-abrir" onclick="abrirMenu()">&#9776; Menu</a>
+        <a href="#" class="btn-abrir" onclick="abrirMenu()">&#9776; Menu Adm</a>
 
     </header>
    
     <nav id="menu">
         <a href="#" onclick="facharMenu()">&times; Fechar</a>
-        <a href="listar-vendas.php">Vendas</a>
-        <a href="#">Sobre</a>
+        <a href="http://localhost/teste-usuario2/listar-adm/painel.html">Voltar</a>
+        <a href="http://localhost/teste-usuario2/adm/index.php">Cadastrar User</a>
         <a href="#">Contato</a>
-        <a href="#">Mais opções</a>
+        <!--<a href="#">Mais opções</a>-->
+        <a href="#" id="showOptions">Mais opções</a>
+        <div id="options" class="hidden">
+            <a href="http://localhost/teste-usuario2/index.php">Menu User</a>
+            <a href="Sair.php">Sair</a>
+            <a href="#"></a>
+            <a href="#"></a>
+        </div>
     </nav>
 
     <main id="conteudo">
@@ -184,6 +198,17 @@ $result = $conexao->query($sql);
     </main>
     
     <script>
+
+        document.getElementById('showOptions').addEventListener('click', function(event) {
+            event.preventDefault(); // Impede o comportamento padrão do link
+            var options = document.getElementById('options');
+            if (options.classList.contains('hidden')) {
+                options.classList.remove('hidden');
+            } else {
+                options.classList.add('hidden');
+            }
+        });
+
         function abrirMenu() {
             document.getElementById('menu').style. height = '100%';
             document.getElementById('conteudo').style.marginLeft = '17%';
