@@ -268,7 +268,7 @@ include_once('conexao.php');
         function criarNotaFiscal(user_data) {
             const form = document.createElement('form');
             form.setAttribute('method', 'post');
-            form.setAttribute('action', 'http://localhost/teste-usuario2/notas.php');
+            form.setAttribute('action', 'notas.php');
             form.style.display = 'none';
 
             for (const key in user_data) {

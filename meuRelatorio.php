@@ -11,7 +11,20 @@ if (!isset($_SESSION['user_id'])) {
 $user_id = $_SESSION['user_id'];
 $data_atual = date('Y-m-d');
 // Consulta para obter a soma dos valores e quantidades apenas do usuário atual
-$sql = "SELECT usuario_id, SUM(valor) AS total_valor, COUNT(*) AS total_quantidade FROM carrinho WHERE usuario_id = ? AND DATE(data_insercao) = ? GROUP BY usuario_id";
+//$sql = "SELECT usuario_id, SUM(valor) AS total_valor, COUNT(*) AS total_quantidade FROM carrinho WHERE usuario_id = ? AND DATE(data_insercao) = ? GROUP BY usuario_id";
+
+$sql = "SELECT usuario_id, 
+               SUM(CASE WHEN forma_pagamento = 'debito' THEN valor ELSE 0 END) AS total_debito,
+               SUM(CASE WHEN forma_pagamento = 'credito' THEN valor ELSE 0 END) AS total_credito,
+               SUM(CASE WHEN forma_pagamento = 'dinheiro' THEN valor ELSE 0 END) AS total_dinheiro,
+               SUM(CASE WHEN forma_pagamento = 'pix' THEN valor ELSE 0 END) AS total_pix,
+               SUM(valor) AS total_valor,
+               COUNT(*) AS total_quantidade 
+               
+        FROM carrinho 
+        WHERE usuario_id = ? AND DATE(data_insercao) = ? 
+        GROUP BY usuario_id";
+
 $stmt = $conexao->prepare($sql);
 $stmt->bind_param("is", $user_id, $data_atual);
 $stmt->execute();
@@ -176,6 +189,10 @@ $result = $stmt->get_result();
                         <thead>
                             <tr>
                                 <th>Usuário ID</th>
+                                <th>Total Débito</th>
+                                <th>Total Crédito</th>
+                                <th>Total Dinheiro</th>
+                                <th>Total Pix</th>
                                 <th>Total Valor</th>
                                 <th>Total Quantidade</th>
                             </tr>
@@ -185,6 +202,10 @@ $result = $stmt->get_result();
                             while ($row = $result->fetch_assoc()) {
                                 echo "<tr>";
                                 echo "<td>" . $row['usuario_id'] . "</td>";
+                                echo "<td>" . $row['total_debito'] . "</td>";
+                                echo "<td>" . $row['total_credito'] . "</td>";
+                                echo "<td>" . $row['total_dinheiro'] . "</td>";
+                                echo "<td>" . $row['total_pix'] . "</td>";
                                 echo "<td>" . $row['total_valor'] . "</td>";
                                 echo "<td>" . $row['total_quantidade'] . "</td>";
                                 echo "</tr>";

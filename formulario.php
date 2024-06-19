@@ -246,7 +246,7 @@ if (isset($_POST['submit'])) {
                     <input type="text" name="endereco" id="endereco" class="inputUser" required>
                     <label for="endereco" class="labelInput">Endereço</label>
                 </div>
-                <br><br> 
+                <br>
                 <p>pagamento</p>
                 <input type="radio" id="dinheiro" name="forma_pagamento" value="dinheiro"  required>
                 <label for="dinheiro">dinheiro</label>
