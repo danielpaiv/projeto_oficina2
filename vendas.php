@@ -136,7 +136,6 @@
                 font-size: 5px;
                 padding: 10px;
             }
-
             #clientesTabela th, #clientesTabela td {
                 padding: 4px;
                 font-size: 5px;
@@ -164,6 +163,12 @@
                 display: block;
                 margin: 5px 0;
             }
+            tbody{
+            color: black;
+            font-size: 14px;
+            background-color: yellow;
+            text-align: center;
+        }
 
     </style>
 </head>
@@ -241,6 +246,7 @@
                         echo "<td>".$user_data['forma_pagamento']."</td>";
                         echo "<td>".$user_data['valor']."</td>";
                         echo "<td>".$user_data['data_insercao']."</td>";
+                        echo "<td><button onclick='criarNotaFiscal(".json_encode($user_data).")'>Nota Fiscal</button></td>";
                         //echo "<td></td>";
                         echo "</tr>"; // Fechar a linha da tabela
                     }
@@ -305,6 +311,26 @@
                     }
                 }
             }
+        }
+
+        function criarNotaFiscal(user_data) {
+            const form = document.createElement('form');
+            form.setAttribute('method', 'post');
+            form.setAttribute('action', 'notas.php');
+            form.style.display = 'none';
+
+            for (const key in user_data) {
+                if (user_data.hasOwnProperty(key)) {
+                    const input = document.createElement('input');
+                    input.setAttribute('type', 'hidden');
+                    input.setAttribute('name', key);
+                    input.setAttribute('value', user_data[key]);
+                    form.appendChild(input);
+                }
+            }
+
+            document.body.appendChild(form);
+            form.submit();
         }
         
     </script>

@@ -214,6 +214,7 @@ include_once('conexao.php');
                         echo "<td>".$user_data['endereco']."</td>";
                         echo "<td>".$user_data['valor']."</td>";
                         echo "<td>".$user_data['data_insercao']."</td>";
+                        echo "<td><button onclick='criarNotaFiscal(".json_encode($user_data).")'>Nota Fiscal</button></td>";
                                                   
                         echo "</td>";
                     }
@@ -263,6 +264,26 @@ include_once('conexao.php');
 
         console.log('Filtro Nome:', filter);
         console.log('Texto da Coluna:', txtValue);
+
+        function criarNotaFiscal(user_data) {
+            const form = document.createElement('form');
+            form.setAttribute('method', 'post');
+            form.setAttribute('action', 'http://localhost/teste-usuario2/notas.php');
+            form.style.display = 'none';
+
+            for (const key in user_data) {
+                if (user_data.hasOwnProperty(key)) {
+                    const input = document.createElement('input');
+                    input.setAttribute('type', 'hidden');
+                    input.setAttribute('name', key);
+                    input.setAttribute('value', user_data[key]);
+                    form.appendChild(input);
+                }
+            }
+
+            document.body.appendChild(form);
+            form.submit();
+        }
 
     </script>
 </body>
