@@ -3,7 +3,14 @@ session_start();
 include_once('conexao.php');
 
 // Consulta para obter a soma dos valores e quantidades de cada usuário
-$sql = "SELECT c.usuario_id, u.nome, SUM(c.valor) AS total_valor, COUNT(*) AS total_quantidade 
+$sql = "SELECT c.usuario_id, u.nome,
+     
+    SUM(CASE WHEN forma_pagamento = 'debito' THEN valor ELSE 0 END) AS total_debito,
+    SUM(CASE WHEN forma_pagamento = 'credito' THEN valor ELSE 0 END) AS total_credito,
+    SUM(CASE WHEN forma_pagamento = 'dinheiro' THEN valor ELSE 0 END) AS total_dinheiro,
+    SUM(CASE WHEN forma_pagamento = 'pix' THEN valor ELSE 0 END) AS total_pix,
+    SUM(c.valor) AS total_valor,
+    COUNT(*) AS total_quantidade 
         FROM carrinho c
         JOIN usuarios u ON c.usuario_id = u.id
         GROUP BY c.usuario_id";
@@ -31,7 +38,7 @@ $result = $conexao->query($sql);
         }
 
         table {
-            width: 50%;
+            width: 70%;
             margin: 20px auto;
             border-collapse: collapse;
         }
@@ -173,6 +180,11 @@ $result = $conexao->query($sql);
                                 <tr>
                                     <th>Usuário ID</th>
                                     <th>Nome do Usuário</th>
+                                    
+                                    <th>Total Débito</th>
+                                    <th>Total Crédito</th>
+                                    <th>Total Dinheiro</th>
+                                    <th>Total Pix</th>
                                     <th>Total Valor</th>
                                     <th>Total Quantidade</th>
                                 </tr>
@@ -183,6 +195,11 @@ $result = $conexao->query($sql);
                                     echo "<tr>";
                                     echo "<td>" . $row['usuario_id'] . "</td>";
                                     echo "<td>" . $row['nome'] . "</td>";
+                                   
+                                    echo "<td>" . $row['total_debito'] . "</td>";
+                                    echo "<td>" . $row['total_credito'] . "</td>";
+                                    echo "<td>" . $row['total_dinheiro'] . "</td>";
+                                    echo "<td>" . $row['total_pix'] . "</td>";
                                     echo "<td>" . $row['total_valor'] . "</td>";
                                     echo "<td>" . $row['total_quantidade'] . "</td>";
                                     echo "</tr>";

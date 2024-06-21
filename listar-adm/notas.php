@@ -66,6 +66,7 @@
 <body>
     <button><a href="sair.php">sair</a></button>
     <button><a href="listar-vendas.php">Voltar</a></button>
+    <br><br>
     <h1>Nota Fiscal</h1>
     <table>
         <tr>
@@ -142,6 +143,10 @@
         <tr>
             <th>Cnpj</th>
             <td>40.912.304/0001-40</td>
+        </tr>
+        <tr>
+            <th>Telefone</th>
+            <td>(81) 99361-9196</td>
         </tr>
         <tr>
             <th>Endeço</th>

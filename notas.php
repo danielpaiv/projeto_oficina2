@@ -75,12 +75,12 @@
         <!--<tr>
             <th>User ID</th>
             <td><?php echo $user_id; ?></td>
-        </tr>
+        </tr>-->
         <tr>
             <th>Usuário ID</th>
             <td><?php echo $usuario_id; ?></td>
         </tr>
-        <tr>
+        <!--<tr>
             <th>Serviço ID</th>
             <td><?php echo $servico_id; ?></td>
         </tr>-->

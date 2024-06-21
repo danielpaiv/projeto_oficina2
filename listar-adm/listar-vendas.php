@@ -32,14 +32,14 @@ include_once('conexao.php');
             border-radius: 18px 18px 0 0;
             color: white;
             padding: 15px;
-            font-size: 18px;
+            font-size: 12px;
             text-align: center;
             font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif 
 
         }
         tbody{
             color: black;
-            font-size: 18px;
+            font-size: 12px;
             background-color: yellow;
             text-align: center;
         }
@@ -192,6 +192,7 @@ include_once('conexao.php');
                     <th scope="col">estado</th>
                     <th scope="col">endereco</th>
                     <th scope="col">valor</th>
+                    <th scope="col">forma_pagamento</th>
                     <th scope="col">data_insercao</th>
                     <!--<th scope="col"></th>-->
                 </tr>
@@ -213,6 +214,7 @@ include_once('conexao.php');
                         echo "<td>".$user_data['estado']."</td>";
                         echo "<td>".$user_data['endereco']."</td>";
                         echo "<td>".$user_data['valor']."</td>";
+                        echo "<td>".$user_data['forma_pagamento']."</td>";
                         echo "<td>".$user_data['data_insercao']."</td>";
                         echo "<td><button onclick='criarNotaFiscal(".json_encode($user_data).")'>Nota Fiscal</button></td>";
                                                   
@@ -232,7 +234,7 @@ include_once('conexao.php');
             const tr = table.getElementsByTagName('tr');
 
             for (let i = 1; i < tr.length; i++) {
-                const td = tr[i].getElementsByTagName('td')[3]; // coluna "Nome"
+                const td = tr[i].getElementsByTagName('td')[1]; // coluna "Nome"
                 if (td) {
                     const txtValue = td.textContent || td.innerText;
                     if (txtValue.toLowerCase().indexOf(filter) > -1) {
@@ -250,7 +252,7 @@ include_once('conexao.php');
             const tr = table.getElementsByTagName('tr');
 
             for (let i = 1; i < tr.length; i++) {
-                const td = tr[i].getElementsByTagName('td')[12]; // coluna "Data de Serviço"
+                const td = tr[i].getElementsByTagName('td')[13]; // coluna "Data de Serviço"
                 if (td) {
                     const txtValue = td.textContent || td.innerText;
                     if (txtValue.indexOf(input) > -1) {
