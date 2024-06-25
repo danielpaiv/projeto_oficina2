@@ -89,7 +89,7 @@
             <td><?php echo $nome; ?></td>
         </tr>
         <tr>
-            <th>CNPJ</th>
+            <th>CNPJ / Cpf</th>
             <td><?php echo $cnpj; ?></td>
         </tr>
         <tr>
@@ -97,7 +97,7 @@
             <td><?php echo $telefone; ?></td>
         </tr>
         <tr>
-            <th>Serviço</th>
+            <th>Produtos</th>
             <td><?php echo $servico; ?></td>
         </tr>
         <tr>

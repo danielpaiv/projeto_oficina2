@@ -200,11 +200,11 @@
     <main id="conteudo">
        
         <div class="m-5">
-            <label for="filtroNome">Filtrar por nome:</label>
+            <label for="filtroNome">Filtrar por serviços:</label>
             <input type="text" id="filtroNome" onkeyup="filtrarPorNome()">
 
-            <label for="filtroData"><b>Data de Serviço</b></label>
-            <input type="date" id="filtroData" onchange="filtrarPorData()">
+            <!--<label for="filtroData"><b>Data de Serviço</b></label>
+            <input type="date" id="filtroData" onchange="filtrarPorData()">-->
             <br><br>
             <table id="clientesTabela" class="box">
                 <thead>
@@ -214,10 +214,10 @@
                         <th scope="col">usuario_id</th>
                         <th scope="col">servico_id</th>
                         <th scope="col">nome</th>
-                        <th scope="col">cnpj</th>
+                        <th scope="col">cnpj / Cpf</th>
                         <th scope="col">telefone</th>
                         <th scope="col">servico</th>
-                        <th scope="col">data_serv</th>
+                        <th scope="col">Data cadastro</th>
                         <th scope="col">cidade</th>
                         <th scope="col">estado</th>
                         <th scope="col">endereco</th>

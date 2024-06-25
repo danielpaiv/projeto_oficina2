@@ -7,8 +7,37 @@
         header('Location: login.php'); // Redireciona para a página de login se não estiver logado
         exit;
     }
-
+/*
     $user_id = $_SESSION['user_id'];
+
+    // Consulta os dados apenas do usuário logado
+    $sql = "SELECT * FROM clientes WHERE user_id = ? ORDER BY id DESC";
+    $stmt = $conexao->prepare($sql);
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+*/
+
+
+    //print_r($_SESSION);
+    if((!isset($_SESSION['nome']) == true) and (!isset($_SESSION['senha']) == true))
+    {
+        unset($_SESSION['nome']);
+        unset($_SESSION['senha']);
+        header('Location: index.php');
+    }
+    $logado = $_SESSION['nome'];
+
+    //$sql = "SELECT * FROM usuarios ORDER BY id DESC";
+
+    //$result = $conexao->query($sql);
+
+    //print_r($result);
+
+
+
+
+/*    $user_id = $_SESSION['user_id'];
 
     // Consulta os dados apenas do usuário logado
     $sql = "SELECT * FROM clientes WHERE user_id = ? ORDER BY id DESC";
@@ -32,34 +61,18 @@
     //$result = $conexao->query($sql);
 
     //print_r($result);
+*/
 
-
-
-
-    $user_id = $_SESSION['user_id'];
-
-    // Consulta os dados apenas do usuário logado
-    $sql = "SELECT * FROM clientes WHERE user_id = ? ORDER BY id DESC";
-    $stmt = $conexao->prepare($sql);
-    $stmt->bind_param("i", $user_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-
+    include_once('conexao.php');
     //print_r($_SESSION);
-    if((!isset($_SESSION['nome']) == true) and (!isset($_SESSION['senha']) == true))
-    {
-        unset($_SESSION['nome']);
-        unset($_SESSION['senha']);
-        header('Location: index.php');
-    }
-    $logado = $_SESSION['nome'];
+   
 
-    //$sql = "SELECT * FROM usuarios ORDER BY id DESC";
+    $sql = "SELECT * FROM clientes ORDER BY id DESC";
 
-    //$result = $conexao->query($sql);
+    $result = $conexao->query($sql);
 
     //print_r($result);
+
 
 ?>
 
@@ -226,7 +239,7 @@
             border: 1px solid #ddd;
             padding: 10px;
             background-color: blue;
-            width: 33%;
+            width: 50%;
         }
         #carrinho h2 {
             margin-top: blue;
@@ -312,7 +325,7 @@
     <nav id="menu">
         <a href="#" onclick="facharMenu()">&times; Fechar</a>
         <a href="vendas.php">Minhas vendas</a>
-        <a href="formulario.php">Cadastrar serviços</a>
+        <a href="http://localhost/teste-usuario2/listar-adm/index.php">Cadastrar serviços</a>
         <a href="sair.php">Sair</a>
         <!--<a href="#">Mais opções</a>-->
 
@@ -339,9 +352,10 @@
             
             <label for="filtroNome">Filtrar por nome:</label>
             <input type="text" id="filtroNome" onkeyup="filtrarPorNome()">
-
+            <!--
             <label for="filtroData"><b>Data de Serviço</b></label>
             <input type="date" id="filtroData" onchange="filtrarPorData()">
+            -->
             <br>
             <br>
 
@@ -349,20 +363,20 @@
                 <thead>
                     <tr class="table">
                         <th scope="col">id</th>
-                        <th scope="col">user_id</th>
+                        <!--<th scope="col">user_id</th>
                         <th scope="col">nome</th>
                         <th scope="col">cnpj</th>
-                        <th scope="col">telefone</th>
+                        <th scope="col">telefone</th>-->
                         <th scope="col">serviço</th>
-                        <th scope="col">data_serv</th>
-                        <th scope="col">cidade</th>
+                        <th scope="col">Data cadastro</th>
+                        <!--<th scope="col">cidade</th>
                         <th scope="col">estado</th>
                         <th scope="col">endereco</th>
-                        <th scope="col">forma_pagamento</th>
+                        <th scope="col">forma_pagamento</th>-->
                         <th scope="col">valor</th>
                         <th scope="col">estoque</th>
                         <th scope="col">Adicionar ao Carrinho</th>
-                        <th>Editar</th>
+                        <th>Inserir Dados</th>
                     </tr>
                 </thead>
                 <tbody class="box">
@@ -370,16 +384,16 @@
                     while ($user_data = $result->fetch_assoc()) {
                         echo "<tr>";
                         echo "<td>" . $user_data['id'] . "</td>";
-                        echo "<td>".$user_data['user_id']."</td>";
-                        echo "<td>" . $user_data['nome'] . "</td>";
-                        echo "<td>" . $user_data['cnpj'] . "</td>";
-                        echo "<td>" . $user_data['telefone'] . "</td>";
+                        //echo "<td>".$user_data['user_id']."</td>";
+                        //echo "<td>" . $user_data['nome'] . "</td>";
+                        //echo "<td>" . $user_data['cnpj'] . "</td>";
+                        //echo "<td>" . $user_data['telefone'] . "</td>";
                         echo "<td>" . $user_data['serviço'] . "</td>";
                         echo "<td>" . $user_data['data_serv'] . "</td>";
-                        echo "<td>" . $user_data['cidade'] . "</td>";
-                        echo "<td>" . $user_data['estado'] . "</td>";
-                        echo "<td>" . $user_data['endereco'] . "</td>";
-                        echo "<td>" . $user_data['forma_pagamento'] . "</td>";
+                        //echo "<td>" . $user_data['cidade'] . "</td>";
+                        //echo "<td>" . $user_data['estado'] . "</td>";
+                        //echo "<td>" . $user_data['endereco'] . "</td>";
+                        //echo "<td>" . $user_data['forma_pagamento'] . "</td>";
                         echo "<td>" . $user_data['valor'] . "</td>";
                         echo "<td>" . $user_data['estoque'] . "</td>";
                         echo "<td><button onclick='adicionarAoCarrinho(" . json_encode($user_data) . ")'>Adicionar</button></td>";
@@ -570,7 +584,7 @@
         listaCarrinho.innerHTML = '';
         carrinho.forEach(servico => {
             const li = document.createElement('li');
-            li.textContent = `Nome: ${servico.nome}, Serviço: ${servico.serviço}, Valor: ${servico.valor}`;
+            li.textContent = `Nome: ${servico.nome}, Serviço: ${servico.serviço},forma_pagamento: ${servico.forma_pagamento}, Valor: ${servico.valor}`;
             listaCarrinho.appendChild(li);
         });
             
@@ -617,7 +631,7 @@
             const tr = table.getElementsByTagName('tr');
 
             for (let i = 1; i < tr.length; i++) {
-                const td = tr[i].getElementsByTagName('td')[5]; // coluna "Nome"
+                const td = tr[i].getElementsByTagName('td')[1]; // coluna "Nome"
                 if (td) {
                     const txtValue = td.textContent || td.innerText;
                     if (txtValue.toLowerCase().indexOf(filter) > -1) {

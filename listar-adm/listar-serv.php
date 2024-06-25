@@ -190,6 +190,7 @@ $sql = "SELECT * FROM usuarios ORDER BY id DESC";
     <nav>
     <button><a href="sair.php">Sair</a></button>
     <button><a href="http://localhost/teste-usuario2/listar-adm/painel.html">Voltar</a></button>
+    <button><a href="http://localhost/teste-usuario2/adm/formulario_copy.php">Novo serviço</a></button>
     </nav>
 
 
@@ -209,14 +210,14 @@ $sql = "SELECT * FROM usuarios ORDER BY id DESC";
             <thead>
                 <tr class="table">
                 <th scope="col">id</th>
-                    <th scope="col">nome</th>
+                    <!--<th scope="col">nome</th>
                     <th scope="col">cnpj</th>
-                    <th scope="col">telefone</th>
+                    <th scope="col">telefone</th>-->
                     <th scope="col">serviço</th>
                     <th scope="col">data_serv</th>
-                    <th scope="col">cidade</th>
+                    <!--<th scope="col">cidade</th>
                     <th scope="col">estado</th>
-                    <th scope="col">endereco</th>
+                    <th scope="col">endereco</th>-->
                     <th scope="col">valor</th>
                     <th scope="col">estoque</th>
                     <!--<th scope="col"></th>-->
@@ -228,14 +229,14 @@ $sql = "SELECT * FROM usuarios ORDER BY id DESC";
                     {
                         echo "<tr>";
                         echo "<td>".$user_data['id']."</td>";
-                        echo "<td>".$user_data['nome']."</td>";
-                        echo "<td>".$user_data['cnpj']."</td>";
-                        echo "<td>".$user_data['telefone']."</td>";
+                        //echo "<td>".$user_data['nome']."</td>";
+                        //echo "<td>".$user_data['cnpj']."</td>";
+                        //echo "<td>".$user_data['telefone']."</td>";
                         echo "<td>".$user_data['serviço']."</td>";
                         echo "<td>".$user_data['data_serv']."</td>";
-                        echo "<td>".$user_data['cidade']."</td>";
-                        echo "<td>".$user_data['estado']."</td>";
-                        echo "<td>".$user_data['endereco']."</td>";
+                        //echo "<td>".$user_data['cidade']."</td>";
+                        //echo "<td>".$user_data['estado']."</td>";
+                        //echo "<td>".$user_data['endereco']."</td>";
                         echo "<td>".$user_data['valor']."</td>";
                         echo "<td>".$user_data['estoque']."</td>";
                                                   
@@ -255,7 +256,7 @@ $sql = "SELECT * FROM usuarios ORDER BY id DESC";
             const tr = table.getElementsByTagName('tr');
 
             for (let i = 1; i < tr.length; i++) {
-                const td = tr[i].getElementsByTagName('td')[4]; // coluna "Nome"
+                const td = tr[i].getElementsByTagName('td')[1]; // coluna "Nome"
                 if (td) {
                     const txtValue = td.textContent || td.innerText;
                     if (txtValue.toLowerCase().indexOf(filter) > -1) {

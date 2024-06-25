@@ -155,7 +155,7 @@ $result = $conexao->query($sql);
         <a href="#" onclick="facharMenu()">&times; Fechar</a>
         <a href="http://localhost/teste-usuario2/listar-adm/painel.html">Voltar</a>
         <a href="http://localhost/teste-usuario2/adm/index.php">Cadastrar User</a>
-        <a href="#">Contato</a>
+        <a href="relatorio-diario.php">relatorio Diario</a>
         <!--<a href="#">Mais opções</a>-->
         <a href="#" id="showOptions">Mais opções</a>
         <div id="options" class="hidden">
@@ -174,7 +174,7 @@ $result = $conexao->query($sql);
                 <div>
 
                     <section>
-                        <h1>Relatório de Vendas</h1>
+                        <h1>Relatório de Vendas Geral</h1>
                         <table border="1">
                             <thead>
                                 <tr>

@@ -161,14 +161,14 @@ include_once('conexao.php');
 <nav>
     <button><a href="sair.php">Sair</a></button>
     <button><a href="http://localhost/teste-usuario2/listar-adm/painel.html">Voltar</a></button>
-    <button><a href="relatorio.php">Relatório</a></button>
+    <button><a href="relatorio-geral.php">Relatório</a></button>
     </nav>
 
 
 
 <div class="m-5">
 
-        <label for="filtroNome">Filtrar por nome:</label>
+        <label for="filtroNome">Filtrar por id do usuario:</label>
         <input type="text" id="filtroNome" onkeyup="filtrarPorNome()">
 
         <label for="filtroData"><b>Data de Serviço</b></label>
