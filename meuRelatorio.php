@@ -1,34 +1,43 @@
 <?php
-session_start();
-include_once('conexao.php');
+    session_start();
+    include_once('conexao.php');
 
-// Verifica se o usuário está logado
-if (!isset($_SESSION['user_id'])) {
-    header('Location: login.php'); // Redireciona para a página de login se não estiver logado
-    exit;
-}
+    //print_r($_SESSION);
+    if((!isset($_SESSION['nome']) == true) and (!isset($_SESSION['senha']) == true))
+    {
+        unset($_SESSION['nome']);
+        unset($_SESSION['senha']);
+        header('Location: index.php');
+    }
+    $logado = $_SESSION['nome'];
 
-$user_id = $_SESSION['user_id'];
-$data_atual = date('Y-m-d');
-// Consulta para obter a soma dos valores e quantidades apenas do usuário atual
-//$sql = "SELECT usuario_id, SUM(valor) AS total_valor, COUNT(*) AS total_quantidade FROM carrinho WHERE usuario_id = ? AND DATE(data_insercao) = ? GROUP BY usuario_id";
+    // Verifica se o usuário está logado
+    if (!isset($_SESSION['user_id'])) {
+        header('Location: login.php'); // Redireciona para a página de login se não estiver logado
+        exit;
+    }
 
-$sql = "SELECT usuario_id, 
-               SUM(CASE WHEN forma_pagamento = 'debito' THEN valor ELSE 0 END) AS total_debito,
-               SUM(CASE WHEN forma_pagamento = 'credito' THEN valor ELSE 0 END) AS total_credito,
-               SUM(CASE WHEN forma_pagamento = 'dinheiro' THEN valor ELSE 0 END) AS total_dinheiro,
-               SUM(CASE WHEN forma_pagamento = 'pix' THEN valor ELSE 0 END) AS total_pix,
-               SUM(valor) AS total_valor,
-               COUNT(*) AS total_quantidade 
-               
-        FROM carrinho 
-        WHERE usuario_id = ? AND DATE(data_insercao) = ? 
-        GROUP BY usuario_id";
+    $user_id = $_SESSION['user_id'];
+    $data_atual = date('Y-m-d');
+    // Consulta para obter a soma dos valores e quantidades apenas do usuário atual
+    //$sql = "SELECT usuario_id, SUM(valor) AS total_valor, COUNT(*) AS total_quantidade FROM carrinho WHERE usuario_id = ? AND DATE(data_insercao) = ? GROUP BY usuario_id";
 
-$stmt = $conexao->prepare($sql);
-$stmt->bind_param("is", $user_id, $data_atual);
-$stmt->execute();
-$result = $stmt->get_result();
+    $sql = "SELECT usuario_id, 
+                SUM(CASE WHEN forma_pagamento = 'debito' THEN valor ELSE 0 END) AS total_debito,
+                SUM(CASE WHEN forma_pagamento = 'credito' THEN valor ELSE 0 END) AS total_credito,
+                SUM(CASE WHEN forma_pagamento = 'dinheiro' THEN valor ELSE 0 END) AS total_dinheiro,
+                SUM(CASE WHEN forma_pagamento = 'pix' THEN valor ELSE 0 END) AS total_pix,
+                SUM(valor) AS total_valor,
+                COUNT(*) AS total_quantidade 
+                
+            FROM carrinho 
+            WHERE usuario_id = ? AND DATE(data_insercao) = ? 
+            GROUP BY usuario_id";
+
+    $stmt = $conexao->prepare($sql);
+    $stmt->bind_param("is", $user_id, $data_atual);
+    $stmt->execute();
+    $result = $stmt->get_result();
 ?>
 
 <!DOCTYPE html>

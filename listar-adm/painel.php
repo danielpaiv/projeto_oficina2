@@ -1,3 +1,24 @@
+
+<?php
+
+    session_start();
+        include_once('conexao.php');
+
+
+        //print_r($_SESSION);
+        if((!isset($_SESSION['nome']) == true) and (!isset($_SESSION['senha']) == true))
+        {
+            unset($_SESSION['nome']);
+            unset($_SESSION['senha']);
+            header('Location: index.php');
+        }
+        $logado = $_SESSION['nome'];
+
+?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,7 +54,7 @@
             background-color: rgba(0, 0, 0, 0.6);
             padding: 30px;
             border-radius: 30px;
-            width: 30%;
+            width: 50%;
             right: 0%;
             color: white;
             
@@ -59,6 +80,8 @@
     <button><a href="http://localhost/teste-usuario2/listar-adm/listar-vendas.php" class="btn btn-danger me-5">vendas</a></button>
 
     <button><a href="http://localhost/teste-usuario2/listar-adm/relatorio-geral.php" class="btn btn-danger me-5">Relatórios</a></button>
+
+    <button><a href="http://localhost/phpmyadmin/index.php" class="btn btn-danger me-5">Editar esteque</a></button>
 
     <button><a href="sair.php" class="btn btn-danger me-5">Sair</a></button>
     </div>

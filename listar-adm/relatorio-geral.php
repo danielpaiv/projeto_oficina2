@@ -1,20 +1,31 @@
 <?php
-session_start();
-include_once('conexao.php');
+    session_start();
+    include_once('conexao.php');
 
-// Consulta para obter a soma dos valores e quantidades de cada usuário
-$sql = "SELECT c.usuario_id, u.nome,
-     
-    SUM(CASE WHEN forma_pagamento = 'debito' THEN valor ELSE 0 END) AS total_debito,
-    SUM(CASE WHEN forma_pagamento = 'credito' THEN valor ELSE 0 END) AS total_credito,
-    SUM(CASE WHEN forma_pagamento = 'dinheiro' THEN valor ELSE 0 END) AS total_dinheiro,
-    SUM(CASE WHEN forma_pagamento = 'pix' THEN valor ELSE 0 END) AS total_pix,
-    SUM(c.valor) AS total_valor,
-    COUNT(*) AS total_quantidade 
-        FROM carrinho c
-        JOIN usuarios u ON c.usuario_id = u.id
-        GROUP BY c.usuario_id";
-$result = $conexao->query($sql);
+    //print_r($_SESSION);
+    if((!isset($_SESSION['nome']) == true) and (!isset($_SESSION['senha']) == true))
+    {
+        unset($_SESSION['nome']);
+        unset($_SESSION['senha']);
+        header('Location: index.php');
+    }
+    $logado = $_SESSION['nome'];
+
+
+
+    // Consulta para obter a soma dos valores e quantidades de cada usuário
+    $sql = "SELECT c.usuario_id, u.nome,
+        
+        SUM(CASE WHEN forma_pagamento = 'debito' THEN valor ELSE 0 END) AS total_debito,
+        SUM(CASE WHEN forma_pagamento = 'credito' THEN valor ELSE 0 END) AS total_credito,
+        SUM(CASE WHEN forma_pagamento = 'dinheiro' THEN valor ELSE 0 END) AS total_dinheiro,
+        SUM(CASE WHEN forma_pagamento = 'pix' THEN valor ELSE 0 END) AS total_pix,
+        SUM(c.valor) AS total_valor,
+        COUNT(*) AS total_quantidade 
+            FROM carrinho c
+            JOIN usuarios u ON c.usuario_id = u.id
+            GROUP BY c.usuario_id";
+    $result = $conexao->query($sql);
 ?>
 
 <!DOCTYPE html>

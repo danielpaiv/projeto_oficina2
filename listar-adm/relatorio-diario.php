@@ -1,29 +1,38 @@
 <?php
-session_start();
-include_once('conexao.php');
+    session_start();
+    include_once('conexao.php');
 
-// Verifica se as datas foram enviadas pelo formulário
-$data_inicio = isset($_POST['data_inicio']) ? $_POST['data_inicio'] : '';
-$data_fim = isset($_POST['data_fim']) ? $_POST['data_fim'] : '';
+    //print_r($_SESSION);
+    if((!isset($_SESSION['nome']) == true) and (!isset($_SESSION['senha']) == true))
+    {
+        unset($_SESSION['nome']);
+        unset($_SESSION['senha']);
+        header('Location: index.php');
+    }
+    $logado = $_SESSION['nome'];
 
-// Consulta para obter a soma dos valores e quantidades de cada usuário
-$sql = "SELECT c.usuario_id, u.nome,
-    SUM(CASE WHEN forma_pagamento = 'debito' THEN valor ELSE 0 END) AS total_debito,
-    SUM(CASE WHEN forma_pagamento = 'credito' THEN valor ELSE 0 END) AS total_credito,
-    SUM(CASE WHEN forma_pagamento = 'dinheiro' THEN valor ELSE 0 END) AS total_dinheiro,
-    SUM(CASE WHEN forma_pagamento = 'pix' THEN valor ELSE 0 END) AS total_pix,
-    SUM(c.valor) AS total_valor,
-    COUNT(*) AS total_quantidade 
-    FROM carrinho c
-    JOIN usuarios u ON c.usuario_id = u.id";
+    // Verifica se as datas foram enviadas pelo formulário
+    $data_inicio = isset($_POST['data_inicio']) ? $_POST['data_inicio'] : '';
+    $data_fim = isset($_POST['data_fim']) ? $_POST['data_fim'] : '';
 
-// Adiciona a condição de data se as datas forem fornecidas
-if (!empty($data_inicio) && !empty($data_fim)) {
-    $sql .= " WHERE c.data_insercao BETWEEN '$data_inicio' AND '$data_fim'";
-}
+    // Consulta para obter a soma dos valores e quantidades de cada usuário
+    $sql = "SELECT c.usuario_id, u.nome,
+        SUM(CASE WHEN forma_pagamento = 'debito' THEN valor ELSE 0 END) AS total_debito,
+        SUM(CASE WHEN forma_pagamento = 'credito' THEN valor ELSE 0 END) AS total_credito,
+        SUM(CASE WHEN forma_pagamento = 'dinheiro' THEN valor ELSE 0 END) AS total_dinheiro,
+        SUM(CASE WHEN forma_pagamento = 'pix' THEN valor ELSE 0 END) AS total_pix,
+        SUM(c.valor) AS total_valor,
+        COUNT(*) AS total_quantidade 
+        FROM carrinho c
+        JOIN usuarios u ON c.usuario_id = u.id";
 
-$sql .= " GROUP BY c.usuario_id";
-$result = $conexao->query($sql);
+    // Adiciona a condição de data se as datas forem fornecidas
+    if (!empty($data_inicio) && !empty($data_fim)) {
+        $sql .= " WHERE c.data_insercao BETWEEN '$data_inicio' AND '$data_fim'";
+    }
+
+    $sql .= " GROUP BY c.usuario_id";
+    $result = $conexao->query($sql);
 ?>
 
 <!DOCTYPE html>

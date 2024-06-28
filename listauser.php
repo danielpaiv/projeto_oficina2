@@ -2,6 +2,27 @@
     session_start();
     include_once('conexao.php');
 
+    //exibe o usuario logado simples
+    $nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Nome não definido';
+    $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 'ID não definido';
+
+
+    // exibe o usuario logado avançado co css Certifique-se de que as chaves 'nome' e 'id' existem na sessão
+    if (isset($_SESSION['nome']) && isset($_SESSION['user_id'])) {
+        
+    
+        echo 'Nome: ' . $_SESSION['nome'] . '<br>';
+            
+        
+        echo 'ID: ' . $_SESSION['user_id'] . '<br>';
+        } 
+        
+        else {
+            
+        
+        echo 'Nome e ID não estão definidos na sessão.';
+    }
+
     // Verifica se o usuário está logado
     if (!isset($_SESSION['user_id'])) {
         header('Location: login.php'); // Redireciona para a página de login se não estiver logado
@@ -299,6 +320,8 @@
             }
             .box{
                 width: 56%;
+                top: 50;
+                
             }
             }
             .hidden {
@@ -309,27 +332,53 @@
                 display: block;
                 margin: 5px 0;
             }
+        .fixed-info {
+            position: fixed;
+            top: 80;
+            left: 1320;
+            width: 12%;
+            background-color: black;
+            padding: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+        .fixed{
+            position: fixed;
+            width: 98%;
+            top: 0;
+        }
+        .m-5{
+            position: fixed;
+            width: 98%
+        }
+        
+       
+        
 
     </style>
 </head>
 <body>
+    <div class="fixed-info">
+        <p>Nome: <?php echo $nome; ?></p>
+        <p>ID: <?php echo $user_id; ?></p>
+    </div>
    
 
-    <header>
+    <header class="fixed">
     <!--criei uma class para usar no css e não ter conflito com outros links-->
     <a href="#" class="btn-abrir" onclick="abrirMenu()">&#9776; Menu</a>
 
     </header>
-    <div id="botoesVenda" class="box"></div>
+    <!--<div id="botoesVenda" class="box"></div>-->
    
-    <nav id="menu">
+    <nav id="menu" >
         <a href="#" onclick="facharMenu()">&times; Fechar</a>
         <a href="vendas.php">Minhas vendas</a>
         <a href="http://localhost/teste-usuario2/listar-adm/index.php">Cadastrar serviços</a>
         <a href="sair.php">Sair</a>
         <!--<a href="#">Mais opções</a>-->
 
-    <a href="#" id="showOptions">Mais opções</a>
+        <a href="#" id="showOptions">Mais opções</a>
         <div id="options" class="hidden">
             <a href="http://localhost/teste-usuario2/listar-adm/index.php">Adm</a>
             <a href="meuRelatorio.php">Relatorio</a>
@@ -340,10 +389,11 @@
 
     <main id="conteudo">
 
-        <div id="carrinho" class="m-5">
+        <div id="carrinho" class="carrinho">
             <h2>Carrinho de Serviços</h2>
             <ul id="listaCarrinho"></ul>
             <button onclick="finalizarCompra()">Finalizar Compra</button>
+            <button id="botoesVenda"></button>
         </div>
         <br>
         <br>
@@ -443,14 +493,14 @@
         function adicionarAoCarrinho(servico) {
             carrinho.push(servico);
             console.log(carrinho);
-            alert("Serviço adicionado ao carrinho!");
+            alert("Serviço adicionado ao carrinho! certifeque de perguntar ao cliente se vai querer dados na nota");
         }
 
 
          function adicionarAoCarrinho(servico) {
             carrinho.push(servico);
             console.log(carrinho);
-            alert("Serviço adicionado ao carrinho!");
+            alert("Serviço adicionado ao carrinho! certifeque de perguntar ao cliente se vai querer dados na nota");
             atualizarCarrinho();
         }
 
@@ -484,7 +534,7 @@
 
                         // Exibir o alerta e recarregar a página
                         setTimeout(() => {
-                            alert("Serviço adicionado ao carrinho!");
+                            alert("Serviço adicionado ao carrinho! certifeque-se de perguntar ao cliente se vai querer dados na nota.");
                             window.location.reload();
                         }, 100);
                     } else {

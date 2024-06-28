@@ -34,7 +34,7 @@ session_start();
         {
             $_SESSION['nome'] = $nome;
             $_SESSION['senha'] = $senha;
-            header('Location: painel.html');
+            header('Location: painel.php');
 
         }
         

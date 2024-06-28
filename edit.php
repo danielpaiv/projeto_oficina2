@@ -256,7 +256,7 @@
                 <label for="outro">Outro</label>-->
                 <br><br>
                 <label for="data_serv"><b>Data do Serviço</b></label>
-                <input type="date" name="data_serv" id="data_serv" value="" required>  
+                <input type="date" name="data_serv" id="data_serv" value="<?php echo $data_serv ?>" required>  
                 <br><br><br>
                 <div class="inputbox">
                     <input type="text" name="cidade" id="cidade" class="inputUser" >
