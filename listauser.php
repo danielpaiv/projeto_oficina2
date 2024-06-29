@@ -381,9 +381,9 @@
         <a href="#" id="showOptions">Mais opções</a>
         <div id="options" class="hidden">
             <a href="http://localhost/teste-usuario2/listar-adm/index.php">Adm</a>
-            <a href="meuRelatorio.php">Relatorio</a>
-            <a href="#">Opção 3</a>
-            <a href="#">Opção 4</a>
+            <a href="meuRelatorio.php">Relatorio por administradora</a>
+            <a href="relatorio_vendas_por_servico.php">Relatório por itens</a>
+            <!--<a href="#">Opção 4</a>-->
         </div>
     </nav>
 

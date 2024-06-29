@@ -2,38 +2,22 @@
     session_start();
     include_once('conexao.php');
 
-    //print_r($_SESSION);
-    if((!isset($_SESSION['nome']) == true) and (!isset($_SESSION['senha']) == true))
-    {
-        unset($_SESSION['nome']);
-        unset($_SESSION['senha']);
-        header('Location: index.php');
-    }
-    $logado = $_SESSION['nome'];
-
-    // Verifica se o usuário está logado
     if (!isset($_SESSION['user_id'])) {
-        header('Location: login.php'); // Redireciona para a página de login se não estiver logado
+        header('Location: login.php');
         exit;
     }
 
     $user_id = $_SESSION['user_id'];
     $data_consulta = isset($_GET['data_consulta']) ? $_GET['data_consulta'] : date('Y-m-d');
-    //$data_atual = date('Y-m-d');
-    // Consulta para obter a soma dos valores e quantidades apenas do usuário atual
-    //$sql = "SELECT usuario_id, SUM(valor) AS total_valor, COUNT(*) AS total_quantidade FROM carrinho WHERE usuario_id = ? AND DATE(data_insercao) = ? GROUP BY usuario_id";
 
+    // Consulta para obter os totais de serviços por data específica
     $sql = "SELECT usuario_id, 
-                SUM(CASE WHEN forma_pagamento = 'debito' THEN valor ELSE 0 END) AS total_debito,
-                SUM(CASE WHEN forma_pagamento = 'credito' THEN valor ELSE 0 END) AS total_credito,
-                SUM(CASE WHEN forma_pagamento = 'dinheiro' THEN valor ELSE 0 END) AS total_dinheiro,
-                SUM(CASE WHEN forma_pagamento = 'pix' THEN valor ELSE 0 END) AS total_pix,
+                servico,
                 SUM(valor) AS total_valor,
                 COUNT(*) AS total_quantidade 
-                
             FROM carrinho 
-            WHERE usuario_id = ?  AND DATE(data_insercao) = ?
-            GROUP BY usuario_id";
+            WHERE usuario_id = ? AND DATE(data_insercao) = ?
+            GROUP BY usuario_id, servico";
 
     $stmt = $conexao->prepare($sql);
     $stmt->bind_param("is", $user_id, $data_consulta);
@@ -47,7 +31,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu Relatório</title>
+    <title>Menu lateral</title>
      <style>
          body {
             font-family: Arial, sans-serif;
@@ -161,7 +145,6 @@
         label{
             color:white;
         }
-
     </style>
 </head>
 <body>
@@ -178,75 +161,50 @@
         <a href="vendas.php">Vendas</a>
         <a href="listauser.php">Carrinho</a>
         <a href="sair.php">Sair</a>
-        <a href="relatorio_vendas_por_servico.php">Relatório por itens</a>
+        <a href="meuRelatorio.php">Relatorio por administradora</a>
     </nav>
 
     <main id="conteudo">
 
- 
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Relatório de Vendas</title>
-</head>
-<body>
-    <main id="conteudo">
         <div class="center">
-            <div>
-                <section>
 
-                    <h1>Relatório por administradora</h1>
-
-                    <form method="get" action="">
+            <section>
+                <h1>Relatório de Vendas por Itens</h1>
+                
+                <form method="get" action="">
                     <label for="data_consulta">Selecionar Data:</label>
                     <input type="date" id="data_consulta" name="data_consulta" value="<?php echo $data_consulta; ?>">
                     <button type="submit">Consultar</button>
                 </form>
-                    <table border="1">
-                        <thead>
-                            <tr>
-                                <th>Usuário ID</th>
-                                <th>Total Débito</th>
-                                <th>Total Crédito</th>
-                                <th>Total Dinheiro</th>
-                                <th>Total Pix</th>
-                                <th>Total Valor</th>
-                                <th>Total Quantidade</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            while ($row = $result->fetch_assoc()) {
-                                echo "<tr>";
-                                echo "<td>" . $row['usuario_id'] . "</td>";
-                                echo "<td>" . $row['total_debito'] . "</td>";
-                                echo "<td>" . $row['total_credito'] . "</td>";
-                                echo "<td>" . $row['total_dinheiro'] . "</td>";
-                                echo "<td>" . $row['total_pix'] . "</td>";
-                                echo "<td>" . $row['total_valor'] . "</td>";
-                                echo "<td>" . $row['total_quantidade'] . "</td>";
-                                echo "</tr>";
-                            }
-                            ?>
-                        </tbody>
-                    
-                    </table>
 
-                </section>
-            </div>
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th>Usuário ID</th>
+                            <th>Serviço</th>
+                            <th>Total Valor</th>
+                            <th>Total Quantidade</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                         while ($row = $result->fetch_assoc()) {
+                            echo "<tr>";
+                            echo "<td>" . $row['usuario_id'] . "</td>";
+                            echo "<td>" . $row['servico'] . "</td>";
+                            echo "<td>" . $row['total_valor'] . "</td>";
+                            echo "<td>" . $row['total_quantidade'] . "</td>";
+                            echo "</tr>";
+                            }
+                        ?>
+                    </tbody>
+                </table>
+       
+            </section>
 
         </div>
 
-        
-       
     </main>
-</body>
-</html>
-
-    
     
     <script>
         function abrirMenu() {
@@ -262,5 +220,21 @@
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

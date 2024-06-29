@@ -9,12 +9,12 @@
     }
 
     $user_id = $_SESSION['user_id'];
-    $data_atual = date('Y-m-d');
+    //$data_atual = date('Y-m-d');
 
     // Consulta os dados apenas do usuário logado
-    $sql = "SELECT * FROM carrinho WHERE usuario_id = ? AND DATE(data_insercao) = ? ORDER BY id DESC";
+    $sql = "SELECT * FROM carrinho WHERE usuario_id =  ? ORDER BY id DESC";
     $stmt = $conexao->prepare($sql);
-    $stmt->bind_param("is", $user_id, $data_atual);
+    $stmt->bind_param("i", $user_id);
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -185,15 +185,15 @@
         <a href="#" onclick="facharMenu()">&times; Fechar</a>
         <a href="listauser.php">Voltar</a>
         <a href="sair.php">Sair</a>
-        <a href="#">Contato</a>
-        <!--<a href="#">Mais opções</a>-->
+        <!--<a href=""></a>
+        <a href="#">Mais opções</a>-->
 
         <a href="#" id="showOptions">Mais opções</a>
             <div id="options" class="hidden">
                 <a href="http://localhost/teste-usuario2/listar-adm/index.php">Adm</a>
-                <a href="meurelatorio.php">Meu Relatório</a>
-                <a href="#">Opção 3</a>
-                <a href="#">Opção 4</a>
+                <a href="meurelatorio.php">Relatório por admistradora</a>
+                <a href="relatorio_vendas_por_servico.php">Relatório por itens</a>
+                <!--<a href="#">Opção 4</a>-->
             </div>
     </nav>
 
@@ -203,8 +203,8 @@
             <label for="filtroNome">Filtrar por serviços:</label>
             <input type="text" id="filtroNome" onkeyup="filtrarPorNome()">
 
-            <!--<label for="filtroData"><b>Data de Serviço</b></label>
-            <input type="date" id="filtroData" onchange="filtrarPorData()">-->
+            <label for="filtroData"><b>Data de Serviço</b></label>
+            <input type="date" id="filtroData" onchange="filtrarPorData()">
             <br><br>
             <table id="clientesTabela" class="box">
                 <thead>
@@ -301,7 +301,7 @@
             const table = document.getElementById('clientesTabela');
             const tr = table.getElementsByTagName('tr');
             for (let i = 1; i < tr.length; i++) {
-                const td = tr[i].getElementsByTagName('td')[13]; // coluna "Data de Serviço"
+                const td = tr[i].getElementsByTagName('td')[14]; // coluna "Data de Serviço"
                 if (td) {
                     const txtValue = td.textContent || td.innerText;
                     if (txtValue.indexOf(input) > -1) {
