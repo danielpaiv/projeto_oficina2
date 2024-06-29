@@ -169,7 +169,7 @@ include_once('conexao.php');
 <body>
 <nav>
     <button><a href="sair.php">Sair</a></button>
-    <button><a href="http://localhost/teste-usuario2/listar-adm/painel.html">Voltar</a></button>
+    <button><a href="http://localhost/teste-usuario2/listar-adm/painel.php">Voltar</a></button>
     <button><a href="relatorio-geral.php">Relatório</a></button>
     </nav>
 

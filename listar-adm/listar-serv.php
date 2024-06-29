@@ -189,7 +189,7 @@ $sql = "SELECT * FROM usuarios ORDER BY id DESC";
 <body>
     <nav>
     <button><a href="sair.php">Sair</a></button>
-    <button><a href="http://localhost/teste-usuario2/listar-adm/painel.html">Voltar</a></button>
+    <button><a href="http://localhost/teste-usuario2/listar-adm/painel.php">Voltar</a></button>
     <button><a href="http://localhost/teste-usuario2/adm/formulario_copy.php">Novo serviço</a></button>
     </nav>
 

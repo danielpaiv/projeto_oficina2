@@ -164,7 +164,7 @@
    
     <nav id="menu">
         <a href="#" onclick="facharMenu()">&times; Fechar</a>
-        <a href="http://localhost/teste-usuario2/listar-adm/painel.html">Voltar</a>
+        <a href="http://localhost/teste-usuario2/listar-adm/painel.php">Voltar</a>
         <a href="http://localhost/teste-usuario2/adm/index.php">Cadastrar User</a>
         <a href="relatorio-diario.php">relatorio Diario</a>
         <!--<a href="#">Mais opções</a>-->
