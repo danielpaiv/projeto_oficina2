@@ -2,31 +2,35 @@
     session_start();
     include_once('conexao.php');
 
-    //print_r($_SESSION);
-    if((!isset($_SESSION['nome']) == true) and (!isset($_SESSION['senha']) == true))
-    {
+    // Verifica se o usuário está logado
+    if ((!isset($_SESSION['nome']) == true) and (!isset($_SESSION['senha']) == true)) {
         unset($_SESSION['nome']);
         unset($_SESSION['senha']);
         header('Location: index.php');
     }
     $logado = $_SESSION['nome'];
 
+    // Obtém a data da consulta ou usa a data do dia anterior por padrão
+    $data_consulta = isset($_GET['data_consulta']) ? $_GET['data_consulta'] : date('Y-m-d', strtotime('-1 day'));
 
-
-    // Consulta para obter a soma dos valores e quantidades de cada usuário
-    $sql = "SELECT c.usuario_id, u.nome,
-        
+// Consulta para obter a soma dos valores e quantidades de cada usuário por data específica
+$sql = "SELECT c.usuario_id, u.nome,
         SUM(CASE WHEN forma_pagamento = 'debito' THEN valor ELSE 0 END) AS total_debito,
         SUM(CASE WHEN forma_pagamento = 'credito' THEN valor ELSE 0 END) AS total_credito,
         SUM(CASE WHEN forma_pagamento = 'dinheiro' THEN valor ELSE 0 END) AS total_dinheiro,
         SUM(CASE WHEN forma_pagamento = 'pix' THEN valor ELSE 0 END) AS total_pix,
         SUM(c.valor) AS total_valor,
         COUNT(*) AS total_quantidade 
-            FROM carrinho c
-            JOIN usuarios u ON c.usuario_id = u.id
-            GROUP BY c.usuario_id";
-    $result = $conexao->query($sql);
+        FROM carrinho c
+        JOIN usuarios u ON c.usuario_id = u.id
+        WHERE DATE(c.data_insercao) = ?
+        GROUP BY c.usuario_id";
+$stmt = $conexao->prepare($sql);
+$stmt->bind_param("s", $data_consulta);
+$stmt->execute();
+$result = $stmt->get_result();
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -152,6 +156,9 @@
                 display: block;
                 margin: 5px 0;
             }
+            label{
+                color:white;
+            }
     </style>
    
 </head>
@@ -186,6 +193,11 @@
 
                     <section>
                         <h1>Relatório de Vendas Geral</h1>
+                        <form method="get" action="">
+                            <label for="data_consulta">Selecionar Data:</label>
+                            <input type="date" id="data_consulta" name="data_consulta" value="<?php echo $data_consulta; ?>">
+                            <button type="submit">Consultar</button>
+                        </form>
                         <table border="1">
                             <thead>
                                 <tr>
