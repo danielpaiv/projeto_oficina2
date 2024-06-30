@@ -8,7 +8,7 @@
     }
 
     $user_id = $_SESSION['user_id'];
-    $data_consulta = isset($_GET['data_consulta']) ? $_GET['data_consulta'] : date('Y-m-d');
+    $data_consulta = isset($_GET['data_consulta']) ? $_GET['data_consulta'] : date('Y-m-d', strtotime('-1 day'));
 
     // Consulta para obter os totais de serviços por data específica
     $sql = "SELECT usuario_id, 

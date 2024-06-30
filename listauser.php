@@ -386,7 +386,7 @@
             <!--<a href="#">Opção 4</a>-->
         </div>
     </nav>
-
+    <br>
     <main id="conteudo">
 
         <div id="carrinho" class="carrinho">

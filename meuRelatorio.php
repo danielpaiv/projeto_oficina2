@@ -18,7 +18,7 @@
     }
 
     $user_id = $_SESSION['user_id'];
-    $data_consulta = isset($_GET['data_consulta']) ? $_GET['data_consulta'] : date('Y-m-d');
+    $data_consulta = isset($_GET['data_consulta']) ? $_GET['data_consulta'] : date('Y-m-d', strtotime('-1 day'));
     //$data_atual = date('Y-m-d');
     // Consulta para obter a soma dos valores e quantidades apenas do usuário atual
     //$sql = "SELECT usuario_id, SUM(valor) AS total_valor, COUNT(*) AS total_quantidade FROM carrinho WHERE usuario_id = ? AND DATE(data_insercao) = ? GROUP BY usuario_id";
