@@ -344,7 +344,7 @@
         }
         .fixed{
             position: fixed;
-            width: 98%;
+            width: 100%;
             top: 0;
         }
         .m-5{
