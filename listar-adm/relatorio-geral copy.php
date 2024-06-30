@@ -167,7 +167,6 @@
         <a href="http://localhost/teste-usuario2/listar-adm/painel.php">Voltar</a>
         <a href="http://localhost/teste-usuario2/adm/index.php">Cadastrar User</a>
         <a href="relatorio-diario.php">relatorio Diario</a>
-        <a href="relatorio-geral copy.php">relatorio Diario 1</a>
         <!--<a href="#">Mais opções</a>-->
         <a href="#" id="showOptions">Mais opções</a>
         <div id="options" class="hidden">

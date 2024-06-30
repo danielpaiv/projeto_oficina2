@@ -9,12 +9,13 @@
     }
 
     $user_id = $_SESSION['user_id'];
+    $data_consulta = isset($_GET['data_consulta']) ? $_GET['data_consulta'] : date('Y-m-d', strtotime('-1 day'));
     //$data_atual = date('Y-m-d');
 
     // Consulta os dados apenas do usuário logado
-    $sql = "SELECT * FROM carrinho WHERE usuario_id =  ? ORDER BY id DESC";
+    $sql = "SELECT * FROM carrinho WHERE usuario_id = ? AND DATE(data_insercao) = ? ORDER BY id DESC";
     $stmt = $conexao->prepare($sql);
-    $stmt->bind_param("i", $user_id);
+    $stmt->bind_param("is", $user_id, $data_consulta);
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -108,7 +109,7 @@
             background-color: #060642 ;
             padding: 5px;
             text-align: center;
-            width: 98.3%;
+            width: 99.3%;
         }
         legend{
             color: white;
@@ -200,11 +201,20 @@
     <main id="conteudo">
        
         <div class="m-5">
+
+            <form method="get" action="">
+                <label for="data_consulta">Selecionar Data:</label>
+                <input type="date" id="data_consulta" name="data_consulta" value="<?php echo $data_consulta; ?>">
+                <button type="submit">Consultar</button>
+            </form>
+            <br>
             <label for="filtroNome">Filtrar por serviços:</label>
             <input type="text" id="filtroNome" onkeyup="filtrarPorNome()">
 
+            <!--
             <label for="filtroData"><b>Data de Serviço</b></label>
             <input type="date" id="filtroData" onchange="filtrarPorData()">
+            -->
             <br><br>
             <table id="clientesTabela" class="box">
                 <thead>

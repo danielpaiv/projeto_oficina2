@@ -209,7 +209,7 @@
     <script>
         function abrirMenu() {
             document.getElementById('menu').style. height = '100%';
-            document.getElementById('conteudo').style.marginLeft = '20%';
+            document.getElementById('conteudo').style.marginLeft = '15%';
         }
         function facharMenu(){
             document.getElementById('menu').style. height = '0%'
