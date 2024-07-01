@@ -94,7 +94,9 @@
 
         header {
             background-color: rgb(21, 4, 98);
-            padding: 10px;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
         }
 
         .btn-abrir {
@@ -181,6 +183,12 @@
         <header>
         <!--criei uma class para usar no css e não ter conflito com outros links-->
         <a href="#" class="btn-abrir" onclick="abrirMenu()">&#9776; Menu</a>
+
+        <a href="relatorio-periodo.php"class="btn-abrir">relatorio por período</a>
+
+        <a href="relatorio-diario.php"class="btn-abrir">relatorio Diario</a>
+
+        <a href="relatorio-geral.php"class="btn-abrir">relatorio Geral</a>
 
     </header>
    
