@@ -7,23 +7,37 @@
         exit;
     }
 
-    $user_id = $_SESSION['user_id'];
     $data_consulta = isset($_GET['data_consulta']) ? $_GET['data_consulta'] : date('Y-m-d', strtotime('-1 day'));
+    $nome_usuario = isset($_GET['nome_usuario']) ? $_GET['nome_usuario'] : '';
 
-    // Consulta para obter os totais de serviços por data específica
-    $sql = "SELECT usuario_id, 
-                servico,
-                SUM(valor) AS total_valor,
-                COUNT(*) AS total_quantidade 
-            FROM carrinho 
-            WHERE usuario_id = ? AND DATE(data_insercao) = ?
-            GROUP BY usuario_id, servico";
+    $sql = "SELECT c.usuario_id, u.nome, c.servico, SUM(c.valor) AS total_valor, COUNT(*) AS total_quantidade 
+            FROM carrinho c
+            JOIN usuarios u ON c.usuario_id = u.id
+            WHERE DATE(c.data_insercao) = ?
+            AND u.nome LIKE ?
+            GROUP BY c.usuario_id, u.nome, c.servico";
 
     $stmt = $conexao->prepare($sql);
-    $stmt->bind_param("is", $user_id, $data_consulta);
+    $nome_usuario_like = '%' . $nome_usuario . '%';
+    $stmt->bind_param("ss", $data_consulta, $nome_usuario_like);
     $stmt->execute();
     $result = $stmt->get_result();
+
+    $sql_totals = "SELECT c.usuario_id, u.nome, SUM(c.valor) AS total_valor, COUNT(*) AS total_quantidade 
+                FROM carrinho c
+                JOIN usuarios u ON c.usuario_id = u.id
+                WHERE DATE(c.data_insercao) = ?
+                AND u.nome LIKE ?
+                GROUP BY c.usuario_id, u.nome";
+
+    $stmt_totals = $conexao->prepare($sql_totals);
+    $stmt_totals->bind_param("ss", $data_consulta, $nome_usuario_like);
+    $stmt_totals->execute();
+    $result_totals = $stmt_totals->get_result();
 ?>
+
+
+
 
 
 <!DOCTYPE html>
@@ -37,7 +51,7 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color:#313b73ff;
+            background-color: #060642;
         }
 
         h1 {
@@ -46,9 +60,13 @@
             color: white;
         }
 
-        table {
-            width: 50%;
+        .table-container {
+            width: 60%;  /* Increase width to make table larger */
             margin: 20px auto;
+        }
+
+        table {
+            width: 130%;  /* Table takes full width of the container */
             border-collapse: collapse;
         }
 
@@ -69,21 +87,25 @@
         tr:hover {
             background-color: #ddd;
         }
-        a{
+
+        a {
             text-decoration: none;
         }
-        header{
-            background-color: rgb(21, 4, 98  );
+
+        header {
+            background-color: rgb(21, 4, 98);
             padding: 10px;
         }
-        .btn-abrir{
+
+        .btn-abrir {
             color: white;
             font-size: 20px;
         }
-        nav{
+
+        nav {
             height: 0%;
             width: 250px;
-            background-color: rgb(21, 4, 98  ) ;
+            background-color: rgb(21, 4, 98);
             position: fixed;
             top: 0;
             left: 0;
@@ -91,56 +113,62 @@
             overflow: hidden;
             transition: width 0.3s;
         }
-        nav a{
+
+        nav a {
             color: white;
             font-size: 25px;
             display: block;
             padding: 12px 10px 12px 32px;
         }
-        nav a:hover{
-            color: rgb(21, 4, 98  );
+
+        nav a:hover {
+            color: rgb(21, 4, 98);
             background-color: white;
         }
-        main{
+
+        main {
             padding: 10px;
             transition: margin-left 0.5s;
         }
-        table,th,td{
+
+        table, th, td {
             border: 1px solid black;
-            border-collapse:collapse ;
+            border-collapse: collapse;
         }
-        th,td{
+
+        th, td {
             padding: 5px 10px;
         }
-        th{
+
+        th {
             background-color: rgb(21, 4, 98);
             color: white;
         }
-        /*odd aplicado em todos elementos inpares*/
-        table tr:nth-child(odd){
+
+        table tr:nth-child(odd) {
             background-color: #ddd;
+        }
 
+        table tr:nth-child(even) {
+            background-color: white;
         }
-        /*odd aplicado em todos elementos pares*/
-        table tr:nth-child(even){
-            background-color:white ;
 
+        .report-container {
+            display: flex;
+            justify-content: space-between; /* Adjust spacing to give more room */
         }
-        div{
-            display: inline-block;
-            background-color: #060642 ;
-            padding: 5px;
-            text-align: center;
-            width: 99%;
+
+        .report-container > div {
+            width: 38%; /* Adjust width of each section to balance the space */
         }
-        legend{
-            color: white;
+
+        .hidden {
+            display: none;
         }
-        h3{
-            color: blue;
-        }
-        p{
-            color: white;
+
+        #options a {
+            display: block;
+            margin: 5px 0;
         }
         label{
             color:white;
@@ -167,21 +195,34 @@
 
     <main id="conteudo">
 
-        <div class="center">
+        <div class="report-container">
 
             <section>
                 <h1>Relatório de Vendas por Itens</h1>
-                
-                <form method="get" action="">
-                    <label for="data_consulta">Selecionar Data:</label>
-                    <input type="date" id="data_consulta" name="data_consulta" value="<?php echo $data_consulta; ?>">
-                    <button type="submit">Consultar</button>
-                </form>
 
-                <table border="1">
+                    <!--<form method="get" action="">
+                        <label for="data_consulta">Selecionar Data:</label>
+                        <input type="date" id="data_consulta" name="data_consulta" value="<?php echo $data_consulta; ?>">
+                        <label for="nome_usuario">Nome do Usuário:</label>
+                        <input type="text" id="nome_usuario" name="nome_usuario" value="<?php echo htmlspecialchars($nome_usuario); ?>">
+                        <button type="submit">Consultar</button>
+                    </form>-->
+                    
+                    <form method="get" action="">
+                        <label for="data_consulta">Selecionar Data:</label>
+                        <input type="date" id="data_consulta" name="data_consulta" value="<?php echo $data_consulta; ?>">
+                        <button type="submit">Consultar</button>
+                    </form>
+                    <br>
+                    <label for="filtroNome">Filtrar por serviços:</label>
+                    <input type="text" id="filtroNome" onkeyup="filtrarPorNome()">
+                <br><br>
+
+                <table id="clientesTabela" border="1">
                     <thead>
                         <tr>
                             <th>Usuário ID</th>
+                            <th>Nome do Usuário</th>
                             <th>Serviço</th>
                             <th>Total Valor</th>
                             <th>Total Quantidade</th>
@@ -192,6 +233,7 @@
                          while ($row = $result->fetch_assoc()) {
                             echo "<tr>";
                             echo "<td>" . $row['usuario_id'] . "</td>";
+                            echo "<td>" . $row['nome'] . "</td>";
                             echo "<td>" . $row['servico'] . "</td>";
                             echo "<td>" . $row['total_valor'] . "</td>";
                             echo "<td>" . $row['total_quantidade'] . "</td>";
@@ -202,6 +244,37 @@
                 </table>
        
             </section>
+
+            <div>
+                <section>
+                    <h1>Totais por Usuário</h1>
+                    <br>
+                    <div class="table-container">
+                        <table border="1">
+                            <thead>
+                                <tr>
+                                    <th>Usuário ID</th>
+                                    <th>Nome do Usuário</th>
+                                    <th>Total Valor</th>
+                                    <th>Total Quantidade</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                while ($row_totals = $result_totals->fetch_assoc()) {
+                                    echo "<tr>";
+                                    echo "<td>" . $row_totals['usuario_id'] . "</td>";
+                                    echo "<td>" . $row_totals['nome'] . "</td>";
+                                    echo "<td>" . $row_totals['total_valor'] . "</td>";
+                                    echo "<td>" . $row_totals['total_quantidade'] . "</td>";
+                                    echo "</tr>";
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
 
         </div>
 
@@ -215,6 +288,24 @@
         function facharMenu(){
             document.getElementById('menu').style. height = '0%'
             document.getElementById('conteudo').style.marginLeft = '0%';
+        }
+
+        function filtrarPorNome() {
+            const input = document.getElementById('filtroNome');
+            const filter = input.value.toLowerCase();
+            const table = document.getElementById('clientesTabela');
+            const tr = table.getElementsByTagName('tr');
+            for (let i = 1; i < tr.length; i++) {
+                const td = tr[i].getElementsByTagName('td')[1]; // coluna "Nome"
+                if (td) {
+                    const txtValue = td.textContent || td.innerText;
+                    if (txtValue.toLowerCase().indexOf(filter) > -1) {
+                        tr[i].style.display = '';
+                    } else {
+                        tr[i].style.display = 'none';
+                    }
+                }
+            }
         }
         
     </script>
