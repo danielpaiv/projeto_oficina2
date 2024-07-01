@@ -176,6 +176,12 @@
                     <input type="date" id="data_consulta" name="data_consulta" value="<?php echo $data_consulta; ?>">
                     <button type="submit">Consultar</button>
                 </form>
+                <br>
+                <form method="post" action="exibir_relatorio.php" target="_blank">
+                    <input type="hidden" name="data_consulta" value="<?php echo $data_consulta; ?>">
+                    <input type="hidden" name="user_id" value="<?php echo $user_id; ?>">
+                    <button type="submit">Gerar Relatório</button>
+                </form>
 
                 <table border="1">
                     <thead>

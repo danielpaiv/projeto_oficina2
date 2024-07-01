@@ -10,7 +10,9 @@
     $data_consulta = isset($_GET['data_consulta']) ? $_GET['data_consulta'] : date('Y-m-d');
     $nome_usuario = isset($_GET['nome_usuario']) ? $_GET['nome_usuario'] : '';
 
-    $sql = "SELECT c.usuario_id, u.nome, c.servico, SUM(c.valor) AS total_valor, COUNT(*) AS total_quantidade 
+    $sql = "SELECT c.usuario_id, u.nome, c.servico, 
+            SUM(c.valor) AS total_valor, 
+            COUNT(*) AS total_quantidade 
             FROM carrinho c
             JOIN usuarios u ON c.usuario_id = u.id
             WHERE DATE(c.data_insercao) = ?
@@ -289,6 +291,12 @@
                     <br>
                     <label for="filtroNome">Filtrar por Usuário:</label>
                     <input type="text" id="filtroNome" onkeyup="filtrarPorNome()">
+
+                    <form method="post" action="exibir_relatorio.php" target="_blank">
+                    <input type="hidden" name="data_consulta" value="<?php echo $data_consulta; ?>">
+                    <button type="submit">Gerar Relatório</button>
+                </form>
+                <br>
                 <br><br>
 
                 <table id="clientesTabela" border="1">

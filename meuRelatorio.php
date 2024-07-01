@@ -228,6 +228,7 @@
                                 echo "<td>" . $row['total_pix'] . "</td>";
                                 echo "<td>" . $row['total_valor'] . "</td>";
                                 echo "<td>" . $row['total_quantidade'] . "</td>";
+                                echo "<td><button onclick='criarNotaFiscal(".json_encode($row).")'>Nota Fiscal</button></td>";
                                 echo "</tr>";
                             }
                             ?>
@@ -249,6 +250,27 @@
     
     
     <script>
+
+        function criarNotaFiscal(user_data) {
+            const form = document.createElement('form');
+            form.setAttribute('method', 'post');
+            form.setAttribute('action', 'notas copy.php');
+            form.style.display = 'none';
+
+            for (const key in user_data) {
+                if (user_data.hasOwnProperty(key)) {
+                    const input = document.createElement('input');
+                    input.setAttribute('type', 'hidden');
+                    input.setAttribute('name', key);
+                    input.setAttribute('value', user_data[key]);
+                    form.appendChild(input);
+                }
+            }
+
+            document.body.appendChild(form);
+            form.submit();
+        }
+
         function abrirMenu() {
             document.getElementById('menu').style. height = '100%';
             document.getElementById('conteudo').style.marginLeft = '15%';

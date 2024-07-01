@@ -2,21 +2,15 @@
     // Verifica se os dados da venda foram enviados
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Exemplo de como você pode acessar os dados enviados
-        $id = $_POST['id'];
-        $user_id = $_POST['user_id'];
+        
         $usuario_id = $_POST['usuario_id'];
-        $servico_id = $_POST['servico_id'];
-        $nome = $_POST['nome'];
-        $cnpj = $_POST['cnpj'];
-        $telefone = $_POST['telefone'];
-        $servico = $_POST['servico'];
-        $data_serv = $_POST['data_serv'];
-        $cidade = $_POST['cidade'];
-        $estado = $_POST['estado'];
-        $endereco = $_POST['endereco'];
-        $forma_pagamento = $_POST['forma_pagamento'];
-        $valor = $_POST['valor'];
-        $data_insercao = $_POST['data_insercao'];
+        $total_debito = $_POST['total_debito'];
+        $total_credito = $_POST['total_credito'];
+        $total_dinheiro = $_POST['total_dinheiro'];
+        $total_pix = $_POST['total_pix'];
+        $total_valor = $_POST['total_valor'];
+        $total_quantidade = $_POST['total_quantidade'];
+        
     } else {
         // Se os dados não foram enviados corretamente, redireciona de volta para a página anterior
         header('Location: index.php');
@@ -67,45 +61,48 @@
 </head>
 <body>
     <button><a href="sair.php">sair</a></button>
-    <button><a href="vendas.php">Voltar</a></button>
+    <button><a href="meuRelatorio.php">Voltar</a></button>
     <h1>Nota Fiscal</h1>
     <table>
-        <tr>
+    <!--
+         <tr>
             <th>ID</th>
             <td><?php echo $id; ?></td>
         </tr>
-        <!--<tr>
+        <tr>
             <th>User ID</th>
             <td><?php echo $user_id; ?></td>
-        </tr>-->
+        </tr>
+    -->
         <tr>
             <th>Usuário ID</th>
             <td><?php echo $usuario_id; ?></td>
         </tr>
-        <!--<tr>
-            <th>Serviço ID</th>
-            <td><?php echo $servico_id; ?></td>
-        </tr>-->
         <tr>
-            <th>Cliente</th>
-            <td><?php echo $nome; ?></td>
+            <th>Débito</th>
+            <td><?php echo $total_debito; ?></td>
         </tr>
         <tr>
-            <th>CNPJ / Cpf</th>
-            <td><?php echo $cnpj; ?></td>
+            <th>Crédito</th>
+            <td><?php echo $total_credito; ?></td>
         </tr>
         <tr>
-            <th>Telefone</th>
-            <td><?php echo $telefone; ?></td>
+            <th>Dinheiro</th>
+            <td><?php echo $total_dinheiro; ?></td>
         </tr>
         <tr>
-            <th>Produtos</th>
-            <td><?php echo $servico; ?></td>
+            <th>Pix</th>
+            <td><?php echo $total_pix; ?></td>
         </tr>
         <tr>
-            <th>Data do Serviço</th>
-            <td><?php echo $data_serv; ?></td>
+            <th>Valor Total</th>
+            <td><?php echo $total_valor; ?></td>
         </tr>
+        <tr>
+            <th>Total Vendas</th>
+            <td><?php echo $total_quantidade; ?></td>
+        </tr>
+    <!--
         <tr>
             <th>Cidade</th>
             <td><?php echo $cidade; ?></td>
@@ -131,7 +128,7 @@
             <td><?php echo $data_insercao; ?></td>
         </tr>
 
-        
+    -->    
     </table>
 
     <h2>Dados da empresa</h2>
