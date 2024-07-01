@@ -64,9 +64,9 @@
         <h1>Login</h1>
         <h3>Cadastro de usuarios</h3>
         <form action="testeLogin.php"method="POST">
-        <input type="text" name="nome" placeholder="nome">
+        <input type="text" name="nome" placeholder="nome"required>
         <br><br>
-        <input type="password" name="senha" placeholder="senha">
+        <input type="password" name="senha" placeholder="senha"required>
         <br><br>
         <input class="inputsubmit" type="submit" name="submit" value="Enviar">
         </form>

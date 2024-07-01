@@ -245,15 +245,16 @@
                     <label for="serviço" class="labelInput">serviço</label>
                 </div>
                 
-
-                <!--<input type="radio" id="fachada" name="serviço" value="limpeza de fachada" <?php echo ($serviço == "limpeza de fachada") ? 'checked' : ''; ?> required>
+            <!--
+                <input type="radio" id="fachada" name="serviço" value="limpeza de fachada" <?php echo ($serviço == "limpeza de fachada") ? 'checked' : ''; ?> required>
                 <label for="fachada">Fachada</label>
 
                 <input type="radio" id="vidros" name="serviço" value="limpeza de vidros" <?php echo ($serviço == "limpeza de vidros") ? 'checked' : ''; ?> required>
                 <label for="vidros">Vidros</label>
                 
                 <input type="radio" id="outro" name="serviço" value="outro" <?php echo ($serviço == "outro") ? 'checked' : ''; ?> required>
-                <label for="outro">Outro</label>-->
+                <label for="outro">Outro</label>
+            -->
                 <br><br>
                 <label for="data_serv"><b>Data do Serviço</b></label>
                 <input type="date" name="data_serv" id="data_serv" value="<?php echo $data_serv ?>" required>  
@@ -275,13 +276,13 @@
                     <label for="endereco" class="labelInput">Endereço</label>
                 </div>
                 
-                
-                <!--<div class="inputbox">
+            <!--
+                <div class="inputbox">
                     <input type="text" name="forma_pagamento" id="forma_pagamento" class="inputUser" value="<?php echo $forma_pagamento ?>" required>
                     <label for="forma_pagamento" class="labelInput">Forma de pagamento</label>
                 </div>
-                <br><br>-->
-
+                <br><br>
+            -->
 
                 <p>pagamento</p>
                 <input type="radio" id="dinheiro" name="forma_pagamento" value="dinheiro" <?php echo ($serviço == "dinheiro") ? 'checked' : ''; ?> required>
@@ -296,14 +297,6 @@
                 <input type="radio" id="pix" name="forma_pagamento" value="pix" <?php echo ($serviço == "pix") ? 'checked' : ''; ?> required>
                 <label for="pix">Pix</label>
                 <br><br>
-
-
-
-
-
-
-
-
 
                 <div class="inputbox">
                     <input type="text" name="valor" id="valor" class="inputUser" value="<?php echo $valor ?>" required>

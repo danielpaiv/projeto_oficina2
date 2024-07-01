@@ -83,6 +83,8 @@
         .btn-abrir{
             color: white;
             font-size: 20px;
+            border:solid 1px;
+            padding: 3px;;
         }
         nav{
             height: 0%;
@@ -158,6 +160,7 @@
    
 </head>
 <body>
+
     <header>
         <!--criei uma class para usar no css e não ter conflito com outros links-->
         <a href="#" class="btn-abrir" onclick="abrirMenu()">&#9776; Menu Adm</a>
@@ -173,17 +176,25 @@
    
     <nav id="menu">
         <a href="#" onclick="facharMenu()">&times; Fechar</a>
+
         <a href="http://localhost/teste-usuario2/listar-adm/painel.php">Voltar</a>
+
         <a href="http://localhost/teste-usuario2/adm/index.php">Cadastrar User</a>
-        <a href="relatorio-periodo.php">relatorio por período</a>
-        <a href="relatorio-diario.php">relatorio Diario</a>
-        <a href="relatorio_vendas_por_servico copy.php">Relatório por itens</a>
-        <!--<a href="#">Mais opções</a>-->
+        <!--
+            <a href="relatorio-periodo.php">relatorio por período</a>
+            <a href="relatorio-diario.php">relatorio Diario</a>
+            <a href="relatorio_vendas_por_servico copy.php">Relatório por itens</a>
+            <a href="#">Mais opções</a>
+        -->
         <a href="#" id="showOptions">Mais opções</a>
         <div id="options" class="hidden">
+
             <a href="http://localhost/teste-usuario2/index.php">Menu User</a>
+
+            <a href="http://localhost/teste-usuario2/adm/formulario_copy.php">Cadastrar um Produto</a>
+
             <a href="Sair.php">Sair</a>
-            <a href="#"></a>
+
             <a href="#"></a>
         </div>
     </nav>
@@ -196,7 +207,7 @@
                 <div>
 
                     <section>
-                        <h1>Relatório de Vendas Geral</h1>
+                        <h1>Relatório de Valores Geral</h1>
                         <table border="1">
                             <thead>
                                 <tr>

@@ -220,7 +220,7 @@ $sql = "SELECT * FROM usuarios ORDER BY id DESC";
                     <th scope="col">endereco</th>-->
                     <th scope="col">valor</th>
                     <th scope="col">estoque</th>
-                    <!--<th scope="col"></th>-->
+                    <th scope="col">Editar</th>
                 </tr>
             </thead>
             <tbody class="box">
@@ -239,7 +239,16 @@ $sql = "SELECT * FROM usuarios ORDER BY id DESC";
                         //echo "<td>".$user_data['endereco']."</td>";
                         echo "<td>".$user_data['valor']."</td>";
                         echo "<td>".$user_data['estoque']."</td>";
-                                                  
+                        
+                        echo "<td>
+                        
+                        <a class= 'btn btn-primary' href='edit copy.php?id=$user_data[id]'>
+                        <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-pencil' viewBox='0 0 16 16'>
+                        <path d='M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325'/>
+                        </svg>
+                        </a>
+                        
+                        </td>";
                         echo "</td>";
                     }
                 ?>
@@ -274,7 +283,7 @@ $sql = "SELECT * FROM usuarios ORDER BY id DESC";
             const tr = table.getElementsByTagName('tr');
 
             for (let i = 1; i < tr.length; i++) {
-                const td = tr[i].getElementsByTagName('td')[5]; // coluna "Data de Serviço"
+                const td = tr[i].getElementsByTagName('td')[2]; // coluna "Data de Serviço"
                 if (td) {
                     const txtValue = td.textContent || td.innerText;
                     if (txtValue.indexOf(input) > -1) {

@@ -9,26 +9,26 @@
         header('Location: index.php');
     }
     $logado = $_SESSION['nome'];
-
+    //, strtotime('-1 day')
     // Obtém a data da consulta ou usa a data do dia anterior por padrão
-    $data_consulta = isset($_GET['data_consulta']) ? $_GET['data_consulta'] : date('Y-m-d', strtotime('-1 day'));
+    $data_consulta = isset($_GET['data_consulta']) ? $_GET['data_consulta'] : date('Y-m-d');
 
-// Consulta para obter a soma dos valores e quantidades de cada usuário por data específica
-$sql = "SELECT c.usuario_id, u.nome,
-        SUM(CASE WHEN forma_pagamento = 'debito' THEN valor ELSE 0 END) AS total_debito,
-        SUM(CASE WHEN forma_pagamento = 'credito' THEN valor ELSE 0 END) AS total_credito,
-        SUM(CASE WHEN forma_pagamento = 'dinheiro' THEN valor ELSE 0 END) AS total_dinheiro,
-        SUM(CASE WHEN forma_pagamento = 'pix' THEN valor ELSE 0 END) AS total_pix,
-        SUM(c.valor) AS total_valor,
-        COUNT(*) AS total_quantidade 
-        FROM carrinho c
-        JOIN usuarios u ON c.usuario_id = u.id
-        WHERE DATE(c.data_insercao) = ?
-        GROUP BY c.usuario_id";
-$stmt = $conexao->prepare($sql);
-$stmt->bind_param("s", $data_consulta);
-$stmt->execute();
-$result = $stmt->get_result();
+    // Consulta para obter a soma dos valores e quantidades de cada usuário por data específica
+    $sql = "SELECT c.usuario_id, u.nome,
+            SUM(CASE WHEN forma_pagamento = 'debito' THEN valor ELSE 0 END) AS total_debito,
+            SUM(CASE WHEN forma_pagamento = 'credito' THEN valor ELSE 0 END) AS total_credito,
+            SUM(CASE WHEN forma_pagamento = 'dinheiro' THEN valor ELSE 0 END) AS total_dinheiro,
+            SUM(CASE WHEN forma_pagamento = 'pix' THEN valor ELSE 0 END) AS total_pix,
+            SUM(c.valor) AS total_valor,
+            COUNT(*) AS total_quantidade 
+            FROM carrinho c
+            JOIN usuarios u ON c.usuario_id = u.id
+            WHERE DATE(c.data_insercao) = ?
+            GROUP BY c.usuario_id";
+    $stmt = $conexao->prepare($sql);
+    $stmt->bind_param("s", $data_consulta);
+    $stmt->execute();
+    $result = $stmt->get_result();
 ?>
 
 
@@ -37,7 +37,7 @@ $result = $stmt->get_result();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Relatório de Vendas</title>
+    <title>Relatório de Valores</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -87,6 +87,8 @@ $result = $stmt->get_result();
         .btn-abrir{
             color: white;
             font-size: 20px;
+            border:solid 1px;
+            padding: 3px;;
         }
         nav{
             height: 0%;
@@ -165,6 +167,7 @@ $result = $stmt->get_result();
    
 </head>
 <body>
+
     <header>
         <!--criei uma class para usar no css e não ter conflito com outros links-->
         <a href="#" class="btn-abrir" onclick="abrirMenu()">&#9776; Menu Adm</a>
@@ -181,13 +184,16 @@ $result = $stmt->get_result();
         <a href="#" onclick="facharMenu()">&times; Fechar</a>
         <a href="http://localhost/teste-usuario2/listar-adm/painel.php">Voltar</a>
         <a href="http://localhost/teste-usuario2/adm/index.php">Cadastrar User</a>
-        <a href="relatorio-periodo.php">relatorio por período</a>
-        <a href="relatorio-geral.php">relatorio Geral</a>
-        <a href="relatorio_vendas_por_servico copy.php">Relatório por itens</a>
-        <!--<a href="#">Mais opções</a>-->
+        <!--
+            <a href="relatorio-periodo.php">relatorio por período</a>
+            <a href="relatorio-geral.php">relatorio Geral</a>
+            <a href="relatorio_vendas_por_servico copy.php">Relatório por itens</a>
+            <a href="#">Mais opções</a>
+        -->
         <a href="#" id="showOptions">Mais opções</a>
         <div id="options" class="hidden">
             <a href="http://localhost/teste-usuario2/index.php">Menu User</a>
+            <a href="http://localhost/teste-usuario2/adm/formulario_copy.php">Cadastrar um Produto</a>
             <a href="Sair.php">Sair</a>
             <a href="#"></a>
             <a href="#"></a>
@@ -202,7 +208,7 @@ $result = $stmt->get_result();
                 <div>
 
                     <section>
-                        <h1>Relatório de Vendas Diário</h1>
+                        <h1>Relatório de Valores Diário</h1>
                         <form method="get" action="">
                             <label for="data_consulta">Selecionar Data:</label>
                             <input type="date" id="data_consulta" name="data_consulta" value="<?php echo $data_consulta; ?>">

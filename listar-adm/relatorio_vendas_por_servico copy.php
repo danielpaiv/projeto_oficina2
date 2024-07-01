@@ -6,8 +6,8 @@
         header('Location: login.php');
         exit;
     }
-
-    $data_consulta = isset($_GET['data_consulta']) ? $_GET['data_consulta'] : date('Y-m-d', strtotime('-1 day'));
+    //, strtotime('-1 day')
+    $data_consulta = isset($_GET['data_consulta']) ? $_GET['data_consulta'] : date('Y-m-d');
     $nome_usuario = isset($_GET['nome_usuario']) ? $_GET['nome_usuario'] : '';
 
     $sql = "SELECT c.usuario_id, u.nome, c.servico, SUM(c.valor) AS total_valor, COUNT(*) AS total_quantidade 
@@ -51,7 +51,7 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #060642;
+            background-color: #313b73ff;
         }
 
         h1 {
@@ -102,6 +102,8 @@
         .btn-abrir {
             color: white;
             font-size: 20px;
+            border:solid 1px;
+            padding: 3px;;
         }
 
         nav {
@@ -175,12 +177,19 @@
         label{
             color:white;
         }
+        div{
+            display: inline-block;
+            background-color: #060642 ;
+            padding: 20px;
+            text-align: center;
+            width: 99%;
+        }
     </style>
 </head>
 <body>
    
 
-        <header>
+    <header>
         <!--criei uma class para usar no css e não ter conflito com outros links-->
         <a href="#" class="btn-abrir" onclick="abrirMenu()">&#9776; Menu</a>
 
@@ -194,11 +203,27 @@
    
     <nav id="menu">
         <a href="#" onclick="facharMenu()">&times; Fechar</a>
-        <a href="relatorio-periodo.php">relatorio por período</a>
-        <a href="relatorio-diario.php">relatorio Diario</a>
-        <a href="relatorio-geral.php">relatorio Geral</a>
-        <a href="sair.php">Sair</a>
-        
+
+        <a href="http://localhost/teste-usuario2/listar-adm/painel.php">Voltar</a>
+
+        <a href="http://localhost/teste-usuario2/adm/index.php">Cadastrar User</a>
+        <!--
+            <a href="relatorio-periodo.php">relatorio por período</a>
+            <a href="relatorio-diario.php">relatorio Diario</a>
+            <a href="relatorio_vendas_por_servico copy.php">Relatório por itens</a>
+            <a href="#">Mais opções</a>
+        -->
+        <a href="#" id="showOptions">Mais opções</a>
+        <div id="options" class="hidden">
+
+            <a href="http://localhost/teste-usuario2/index.php">Menu User</a>
+
+            <a href="http://localhost/teste-usuario2/adm/formulario_copy.php">Cadastrar um Produto</a>
+
+            <a href="Sair.php">Sair</a>
+
+            <a href="#"></a>
+        </div>
     </nav>
 
     <main id="conteudo">
@@ -208,13 +233,15 @@
             <section>
                 <h1>Relatório de Vendas por Itens</h1>
 
-                    <!--<form method="get" action="">
+                <!--
+                    <form method="get" action="">
                         <label for="data_consulta">Selecionar Data:</label>
                         <input type="date" id="data_consulta" name="data_consulta" value="<?php echo $data_consulta; ?>">
                         <label for="nome_usuario">Nome do Usuário:</label>
                         <input type="text" id="nome_usuario" name="nome_usuario" value="<?php echo htmlspecialchars($nome_usuario); ?>">
                         <button type="submit">Consultar</button>
-                    </form>-->
+                    </form>
+                -->
                     
                     <form method="get" action="">
                         <label for="data_consulta">Selecionar Data:</label>
@@ -222,7 +249,7 @@
                         <button type="submit">Consultar</button>
                     </form>
                     <br>
-                    <label for="filtroNome">Filtrar por serviços:</label>
+                    <label for="filtroNome">Filtrar por Usuário:</label>
                     <input type="text" id="filtroNome" onkeyup="filtrarPorNome()">
                 <br><br>
 
@@ -289,6 +316,16 @@
     </main>
     
     <script>
+        document.getElementById('showOptions').addEventListener('click', function(event) {
+            event.preventDefault(); // Impede o comportamento padrão do link
+            var options = document.getElementById('options');
+            if (options.classList.contains('hidden')) {
+                options.classList.remove('hidden');
+            } else {
+                options.classList.add('hidden');
+            }
+        });
+        
         function abrirMenu() {
             document.getElementById('menu').style. height = '100%';
             document.getElementById('conteudo').style.marginLeft = '15%';

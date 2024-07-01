@@ -2,6 +2,9 @@
 session_start();
 include_once('conexao.php');
 
+// Define o fuso horário para o horário oficial de Brasília (UTC-3)
+date_default_timezone_set('America/Sao_Paulo');
+
 // Verifica se o usuário está logado
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php'); // Redireciona para a página de login se não estiver logado
@@ -25,7 +28,7 @@ foreach ($carrinho as $item) {
     $endereco = $item['endereco'];
     $forma_pagamento = $item['forma_pagamento'];
     $valor = $item['valor'];
-    //$data_insercao = date('Y-m-d H:i:s');
+    $data_insercao = date('Y-m-d H:i:s');
 
     $sql = "INSERT INTO carrinho (usuario_id, nome, cnpj, telefone, servico, data_serv, cidade, estado, endereco,forma_pagamento, valor, data_insercao) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conexao->prepare($sql);

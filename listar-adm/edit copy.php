@@ -1,54 +1,77 @@
 <?php
-session_start();
-include_once('config.php');
+    session_start();
+    include_once('config.php');
 
-// Verifica se o usuário está logado
-if (!isset($_SESSION['user_id'])) {
-    header('Location: login.php'); // Redireciona para a página de login se não estiver logado
-    exit;
-}
+    // Verifica se o usuário está logado
+    if (!isset($_SESSION['user_id'])) {
+        header('Location: edit.php'); // Redireciona para a página de login se não estiver logado
+        exit;
+    }
 
-//print_r($_SESSION);
-if((!isset($_SESSION['nome']) == true) and (!isset($_SESSION['senha']) == true))
-{
-    unset($_SESSION['nome']);
-    unset($_SESSION['senha']);
-    header('Location: index.php');
-}
- $logado = $_SESSION['nome'];
-
-//$sql = "SELECT * FROM usuarios ORDER BY id DESC";
-
-//$result = $conexao->query($sql);
-
-//print_r($result);
+    //print_r($_SESSION);
+    if((!isset($_SESSION['nome']) == true) and (!isset($_SESSION['senha']) == true))
+    {
+        unset($_SESSION['nome']);
+        unset($_SESSION['senha']);
+        header('Location: index.php');
+    }
+    $logado = $_SESSION['nome'];
+    $user_id = $_SESSION['user_id'];
 
 
-if (isset($_POST['submit'])) {
-    include_once('conexao.php');
+    //$sql = "SELECT * FROM usuarios ORDER BY id DESC";
 
-    $nome = $_POST['nome'];
-    $cnpj = $_POST['cnpj'];
-    $telefone = $_POST['telefone'];
-    $serviço = $_POST['serviço'];
-    $data_serv = $_POST['data_serv'];
-    $cidade = $_POST['cidade'];
-    $estado = $_POST['estado'];
-    $endereco = $_POST['endereco'];
-    $valor = $_POST['valor'];
-    $user_id = $_POST['user_id']; // Obtém o ID do usuário da sessão
-    $forma_pagamento = $_POST['forma_pagamento'];
-    $estoque = $_POST['estoque'];
+    //$result = $conexao->query($sql);
 
-    // Insere os dados no banco de dados, incluindo o ID do usuário
-    $stmt = $conexao->prepare("INSERT INTO clientes (user_id, nome, cnpj, telefone, serviço, data_serv, cidade, estado, endereco, forma_pagamento, valor, estoque) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssssssssssi", $user_id, $nome, $cnpj, $telefone, $serviço, $data_serv, $cidade, $estado, $endereco, $forma_pagamento, $valor, $estoque);
-    $stmt->execute();
+    //print_r($result);
+        //$nome = $cnpj = $telefone = $serviço = $data_serv = $cidade = $estado = $endereco = $valor = "";
 
-    header('Location: listaadm.php'); // Redireciona para a página de listagem após o cadastro
-    header('Location: http://localhost/teste-usuario2/listar-adm/listar-serv.php');
-    exit;
-}
+
+    if (!empty($_GET['id'])) 
+    {
+
+        include_once('config.php');
+
+        $id = $_GET['id'];
+
+        $sqlSelect = "SELECT * FROM clientes WHERE id=$id";
+
+        $result = $conexao->query($sqlSelect);
+
+        if($result->num_rows > 0 )
+        {
+            while($user_data = mysqli_fetch_assoc($result))
+            {
+                $nome = $user_data['nome'];
+                $cnpj = $user_data['cnpj'];
+                $telefone = $user_data['telefone'];
+                $serviço = $user_data['serviço'];
+                $data_serv = $user_data['data_serv'];
+                $cidade = $user_data['cidade'];
+                $estado = $user_data['estado'];
+                $endereco = $user_data['endereco'];
+                $forma_pagamento = $user_data['forma_pagamento'];
+                $valor = $user_data['valor'];
+                $user_id =$user_data['user_id']; // Obtém o ID do usuário da sessão
+                $estoque =$user_data['estoque'];
+
+                //print_r("USER : " .$nome);
+                
+            }
+        } 
+        
+             
+    }
+    
+    else {
+        // Tratar caso onde o id não é fornecido na URL
+            echo "ID do cliente não fornecido.";
+            exit;
+    }
+
+    // header('Location: listauser.php');
+    //exit;
+    
 ?>
 
 <!DOCTYPE html>
@@ -57,6 +80,7 @@ if (isset($_POST['submit'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>formulario | SERVIÇO</title>
+    <script src="adicionar.js"></script>
     <style>
         
         /* Seu CSS aqui */
@@ -185,17 +209,17 @@ if (isset($_POST['submit'])) {
     <nav> 
         <button><a href="sair.php" class="btn btn-danger me-5">Sair</a></button>
         
-        <button><a href="http://localhost/teste-usuario2/listar-adm/listar-serv.php" class="btn btn-danger me-5">Voltar</a></button>
+        <button><a href="listar-serv.php" class="btn btn-danger me-5">Voltar</a></button>
     </nav> 
     <div class="box">
-        <form action="formulario_copy.php" method="POST">
+        <form action="saveEdit copy.php" method="POST">
             <fieldset>
                 <legend><b>Formulario de Serviços</b></legend>
                 <br><br>
 
 
                 <div class="inputbox">
-                    <input type="text" name="user_id" id="user_id" class="inputUser" required>
+                    <input type="text" name="user_id" id="user_id" class="inputUser" value="<?php echo $user_id ?>" required>
                     <label for="user_id" class="labelInput">user_id</label>
                 </div>
                 <br><br>
@@ -206,77 +230,99 @@ if (isset($_POST['submit'])) {
                 </div>
                 <br><br>
                 <div class="inputbox">
-                    <input type="text" name="cnpj" id="cnpj" class="inputUser" >
+                    <input type="text" name="cnpj" id="cnpj" class="inputUser"  >
                     <label for="cnpj" class="labelInput">CNPJ</label>
                 </div>
                 <br><br>
                 <div class="inputbox">
-                    <input type="tel" name="telefone" id="telefone" class="inputUser" >
+                    <input type="tel" name="telefone" id="telefone" class="inputUser"  >
                     <label for="telefone" class="labelInput">Telefone</label>
                 </div>
                 <br><br>
-                
                 <p>Serviço de Limpeza</p>
             -->
                 <div class="inputbox">
-                    <input type="tel" name="serviço" id="serviço" class="inputUser" required>
+                    <input type="tel" name="serviço" id="serviço" class="inputUser" value="<?php echo $serviço ?>" required>
                     <label for="serviço" class="labelInput">Produto</label>
                 </div>
                 
             <!--
-                <input type="radio" id="fachada" name="serviço" value="limpeza de fachada" required>
+                <input type="radio" id="fachada" name="serviço" value="limpeza de fachada" <?php echo ($serviço == "limpeza de fachada") ? 'checked' : ''; ?> required>
                 <label for="fachada">Fachada</label>
-                <input type="radio" id="vidros" name="serviço" value="limpeza de vidros" required>
+
+                <input type="radio" id="vidros" name="serviço" value="limpeza de vidros" <?php echo ($serviço == "limpeza de vidros") ? 'checked' : ''; ?> required>
                 <label for="vidros">Vidros</label>
-                <input type="radio" id="outro" name="serviço" value="outro" required>
+                
+                <input type="radio" id="outro" name="serviço" value="outro" <?php echo ($serviço == "outro") ? 'checked' : ''; ?> required>
                 <label for="outro">Outro</label>
-            -->
+            -->    
                 <br><br>
-                <label for="data_serv"><b>Data do Serviço</b></label>
-                <input type="date" name="data_serv" id="data_serv" required>  
-                <br><br>
-            <!--
+                <label for="data_serv"><b>Data do Cadastro</b></label>
+                <input type="date" name="data_serv" id="data_serv" value="<?php echo $data_serv ?>" required>  
+                <br><br><br>
+            <!--    
                 <div class="inputbox">
                     <input type="text" name="cidade" id="cidade" class="inputUser" >
                     <label for="cidade" class="labelInput">Cidade</label>
                 </div>
                 <br><br>
+
                 <div class="inputbox">
-                    <input type="text" name="estado" id="estado" class="inputUser" >
+                    <input type="text" name="estado" id="estado" class="inputUser"  >
                     <label for="estado" class="labelInput">Estado</label>
                 </div>
                 <br><br>
+
                 <div class="inputbox">
-                    <input type="text" name="endereco" id="endereco" class="inputUser" >
+                    <input type="text" name="endereco" id="endereco" class="inputUser"  >
                     <label for="endereco" class="labelInput">Endereço</label>
                 </div>
-                <br>
-                <p>pagamento</p>
-                <input type="radio" id="dinheiro" name="forma_pagamento" value="dinheiro"  >
-                <label for="dinheiro">dinheiro</label>
-
-                <input type="radio" id="debito" name="forma_pagamento" value="debito"  >
-                <label for="debito">debito</label>
                 
-                <input type="radio" id="credito" name="forma_pagamento" value="credito"  >
-                <label for="credito">credito</label>
-
-                <input type="radio" id="pix" name="forma_pagamento" value="pix" >
-                <label for="pix">Pix</label>
-                <br><br>
-            -->
+                
                 <div class="inputbox">
-                    <input type="text" name="valor" id="valor" class="inputUser" required>
-                    <label for="valor" class="labelInput">Valor</label>
+                    <input type="text" name="forma_pagamento" id="forma_pagamento" class="inputUser" value="<?php echo $forma_pagamento ?>" required>
+                    <label for="forma_pagamento" class="labelInput">Forma de pagamento</label>
                 </div>
                 <br><br>
+
+
+                <p>pagamento</p>
+                <input type="radio" id="dinheiro" name="forma_pagamento" value="dinheiro" <?php echo ($serviço == "dinheiro") ? 'checked' : ''; ?> required>
+                <label for="dinheiro">dinheiro</label>
+
+                <input type="radio" id="debito" name="forma_pagamento" value="debito" <?php echo ($serviço == "debito") ? 'checked' : ''; ?> required>
+                <label for="debito">debito</label>
+                
+                <input type="radio" id="credito" name="forma_pagamento" value="credito" <?php echo ($serviço == "credito") ? 'checked' : ''; ?> required>
+                <label for="credito">credito</label>
+
+                <input type="radio" id="pix" name="forma_pagamento" value="pix" <?php echo ($serviço == "pix") ? 'checked' : ''; ?> required>
+                <label for="pix">Pix</label>
+                <br><br>
+
+
+
+
+
+
+
+            -->
+
                 <div class="inputbox">
-                    <input type="text" name="estoque" id="estoque" class="inputUser" required>
+                    <input type="text" name="valor" id="valor" class="inputUser" value="<?php echo $valor ?>" required>
+                    <label for="valor" class="labelInput">Valor</label>
+                </div><br><br>
+                <div class="inputbox">
+                    <input type="text" name="estoque" id="estoque" class="inputUser" value="<?php echo $estoque ?>" required>
                     <label for="estoque" class="labelInput">estoque</label>
                 </div>
                 <br><br>
-                <input type="submit" name="submit" id="submit">
+
+                <input type="hidden" name="id" value="<?php echo $id ?>">
+                <input type="submit" name="update" id="update">
+                
             </fieldset>
+            
         </form>
     </div>
 </body>
