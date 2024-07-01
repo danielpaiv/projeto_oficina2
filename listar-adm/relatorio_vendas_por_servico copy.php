@@ -97,6 +97,12 @@
             padding: 15px;
             display: flex;
             justify-content: space-between;
+            position: fixed;
+            width: 1625px;
+            margin-left: 20px;
+            margin-top: 10px;
+            
+            
         }
 
         .btn-abrir {
@@ -104,6 +110,33 @@
             font-size: 20px;
             border:solid 1px;
             padding: 3px;;
+        }
+         .btn-abrir:active {
+            color: red; /*Substitua 'red' pela cor desejada */
+            background-color: yellow; /* Opcional: Substitua 'yellow' pela cor de fundo desejada ao clicar */
+            border-color: blue; /* Opcional: Substitua 'blue' pela cor de borda desejada ao clicar */
+            border-width: 3px; /* Aumente a largura da borda para 3px*/
+             
+        }
+        .btn-abrir:hover{
+            background-color: yellow;
+            color: red;
+        }
+        .btn-b{
+            color: white;
+            font-size: 20px;
+            border:solid 1px;
+            padding: 3px;;
+        }
+        .btn-b.clicked {
+            color: black; /* Substitua 'red' pela cor desejada */
+            background-color: yellow; /* Opcional: Substitua 'yellow' pela cor de fundo desejada ao clicar */
+            border-color: blue; /* Opcional: Substitua 'blue' pela cor de borda desejada ao clicar */
+            border-width: 3px; /* Aumente a largura da borda para 3px */
+        }
+        .btn-b:hover{
+            background-color: black;
+            color: red;
         }
 
         nav {
@@ -182,8 +215,11 @@
             background-color: #060642 ;
             padding: 20px;
             text-align: center;
-            width: 99%;
+            width: 96%;
+            margin-top: 70px;
+            margin-left: 10px;
         }
+        
     </style>
 </head>
 <body>
@@ -193,11 +229,13 @@
         <!--criei uma class para usar no css e não ter conflito com outros links-->
         <a href="#" class="btn-abrir" onclick="abrirMenu()">&#9776; Menu</a>
 
-        <a href="relatorio-periodo.php"class="btn-abrir">relatorio por período</a>
+        <a href="relatorio_vendas_por_servico copy.php"class="btn-b">Relatório por itens</a>
 
-        <a href="relatorio-diario.php"class="btn-abrir">relatorio Diario</a>
+        <a href="relatorio-periodo.php"class="btn-b">relatorio por período</a>
 
-        <a href="relatorio-geral.php"class="btn-abrir">relatorio Geral</a>
+        <a href="relatorio-diario.php"class="btn-b">relatorio Diario</a>
+
+        <a href="relatorio-geral.php"class="btn-b">relatorio Geral</a>
 
     </header>
    
@@ -316,6 +354,21 @@
     </main>
     
     <script>
+
+        document.addEventListener("DOMContentLoaded", function() {
+            // Verifica o estado do botão no localStorage
+            var isClicked = localStorage.getItem("btn-b-clicked");
+            if (isClicked === "true") {
+                document.querySelector(".btn-b").classList.add("clicked");
+            }
+
+            // Adiciona o evento de clique ao botão
+            document.querySelector(".btn-b").addEventListener("click", function() {
+                this.classList.add("clicked");
+                localStorage.setItem("btn-b-clicked", "true");
+            });
+        });
+
         document.getElementById('showOptions').addEventListener('click', function(event) {
             event.preventDefault(); // Impede o comportamento padrão do link
             var options = document.getElementById('options');
