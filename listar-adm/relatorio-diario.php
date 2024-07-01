@@ -182,15 +182,16 @@
         }
         .hidden {
             display: none;
-            }
+            
+        }
 
-            #options a {
-                display: block;
-                margin: 5px 0;
-            }
-            label{
-                color:white;
-            }
+        #options a {
+            display: block;
+            margin: 5px 0;
+        }
+        label{
+            color:white;
+        }
     </style>
    
 </head>
