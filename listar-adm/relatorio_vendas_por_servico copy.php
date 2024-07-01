@@ -158,10 +158,11 @@
    
     <nav id="menu">
         <a href="#" onclick="facharMenu()">&times; Fechar</a>
-        <a href="vendas.php">Vendas</a>
-        <a href="listauser.php">Carrinho</a>
+        <a href="relatorio-periodo.php">relatorio por período</a>
+        <a href="relatorio-diario.php">relatorio Diario</a>
+        <a href="relatorio-geral.php">relatorio Geral</a>
         <a href="sair.php">Sair</a>
-        <a href="meuRelatorio.php">Relatorio por administradora</a>
+        
     </nav>
 
     <main id="conteudo">

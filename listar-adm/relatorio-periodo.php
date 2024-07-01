@@ -2,19 +2,21 @@
     session_start();
     include_once('conexao.php');
 
-    // Verifica se o usuário está logado
-    if ((!isset($_SESSION['nome']) == true) and (!isset($_SESSION['senha']) == true)) {
+    //print_r($_SESSION);
+    if((!isset($_SESSION['nome']) == true) and (!isset($_SESSION['senha']) == true))
+    {
         unset($_SESSION['nome']);
         unset($_SESSION['senha']);
         header('Location: index.php');
     }
     $logado = $_SESSION['nome'];
 
-    // Obtém a data da consulta ou usa a data do dia anterior por padrão
-    $data_consulta = isset($_GET['data_consulta']) ? $_GET['data_consulta'] : date('Y-m-d', strtotime('-1 day'));
+    // Verifica se as datas foram enviadas pelo formulário
+    $data_inicio = isset($_POST['data_inicio']) ? $_POST['data_inicio'] : '';
+    $data_fim = isset($_POST['data_fim']) ? $_POST['data_fim'] : '';
 
-// Consulta para obter a soma dos valores e quantidades de cada usuário por data específica
-$sql = "SELECT c.usuario_id, u.nome,
+    // Consulta para obter a soma dos valores e quantidades de cada usuário
+    $sql = "SELECT c.usuario_id, u.nome,
         SUM(CASE WHEN forma_pagamento = 'debito' THEN valor ELSE 0 END) AS total_debito,
         SUM(CASE WHEN forma_pagamento = 'credito' THEN valor ELSE 0 END) AS total_credito,
         SUM(CASE WHEN forma_pagamento = 'dinheiro' THEN valor ELSE 0 END) AS total_dinheiro,
@@ -22,15 +24,16 @@ $sql = "SELECT c.usuario_id, u.nome,
         SUM(c.valor) AS total_valor,
         COUNT(*) AS total_quantidade 
         FROM carrinho c
-        JOIN usuarios u ON c.usuario_id = u.id
-        WHERE DATE(c.data_insercao) = ?
-        GROUP BY c.usuario_id";
-$stmt = $conexao->prepare($sql);
-$stmt->bind_param("s", $data_consulta);
-$stmt->execute();
-$result = $stmt->get_result();
-?>
+        JOIN usuarios u ON c.usuario_id = u.id";
 
+    // Adiciona a condição de data se as datas forem fornecidas
+    if (!empty($data_inicio) && !empty($data_fim)) {
+        $sql .= " WHERE c.data_insercao BETWEEN '$data_inicio' AND '$data_fim'";
+    }
+
+    $sql .= " GROUP BY c.usuario_id";
+    $result = $conexao->query($sql);
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -39,6 +42,7 @@ $result = $stmt->get_result();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Relatório de Vendas</title>
     <style>
+        /* ... seu CSS existente ... */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -150,30 +154,30 @@ $result = $stmt->get_result();
         }
         .hidden {
             display: none;
-            }
+        }
 
-            #options a {
-                display: block;
-                margin: 5px 0;
-            }
-            label{
-                color:white;
-            }
+        #options a {
+            display: block;
+            margin: 5px 0;
+        }
+        label{
+            color:white;
+        }
     </style>
-   
 </head>
 <body>
     <header>
         <!--criei uma class para usar no css e não ter conflito com outros links-->
         <a href="#" class="btn-abrir" onclick="abrirMenu()">&#9776; Menu Adm</a>
-
     </header>
    
     <nav id="menu">
         <a href="#" onclick="facharMenu()">&times; Fechar</a>
         <a href="http://localhost/teste-usuario2/listar-adm/painel.php">Voltar</a>
         <a href="http://localhost/teste-usuario2/adm/index.php">Cadastrar User</a>
-        <a href="relatorio-diario.php">relatorio Diario</a>
+        <a href="relatorio-geral.php">Relatorio Geral</a>
+        <a href="relatorio-diario.php">Relatorio diário</a>
+        <a href="relatorio_vendas_por_servico copy.php">Relatório por itens</a>
         <!--<a href="#">Mais opções</a>-->
         <a href="#" id="showOptions">Mais opções</a>
         <div id="options" class="hidden">
@@ -185,60 +189,56 @@ $result = $stmt->get_result();
     </nav>
 
     <main id="conteudo">
+        <div class="center">
+            <div>
+                <section>
+                    <h1>Relatório de Vendas por período</h1>
+                    
+                    <!-- Formulário para seleção de datas -->
+                    <form method="POST" action="">
+                        <label for="data_inicio">Data Início:</label>
+                        <input type="date" id="data_inicio" name="data_inicio" value="<?php echo $data_inicio; ?>" required>
+                        <label for="data_fim">Data Fim:</label>
+                        <input type="date" id="data_fim" name="data_fim" value="<?php echo $data_fim; ?>" required>
+                        <button type="submit">Filtrar</button>
+                    </form>
 
-            <div class="center">
-                
-
-                <div>
-
-                    <section>
-                        <h1>Relatório de Vendas Geral</h1>
-                        <form method="get" action="">
-                            <label for="data_consulta">Selecionar Data:</label>
-                            <input type="date" id="data_consulta" name="data_consulta" value="<?php echo $data_consulta; ?>">
-                            <button type="submit">Consultar</button>
-                        </form>
-                        <table border="1">
-                            <thead>
-                                <tr>
-                                    <th>Usuário ID</th>
-                                    <th>Nome do Usuário</th>
-                                    
-                                    <th>Total Débito</th>
-                                    <th>Total Crédito</th>
-                                    <th>Total Dinheiro</th>
-                                    <th>Total Pix</th>
-                                    <th>Total Valor</th>
-                                    <th>Total Quantidade</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                while ($row = $result->fetch_assoc()) {
-                                    echo "<tr>";
-                                    echo "<td>" . $row['usuario_id'] . "</td>";
-                                    echo "<td>" . $row['nome'] . "</td>";
-                                   
-                                    echo "<td>" . $row['total_debito'] . "</td>";
-                                    echo "<td>" . $row['total_credito'] . "</td>";
-                                    echo "<td>" . $row['total_dinheiro'] . "</td>";
-                                    echo "<td>" . $row['total_pix'] . "</td>";
-                                    echo "<td>" . $row['total_valor'] . "</td>";
-                                    echo "<td>" . $row['total_quantidade'] . "</td>";
-                                    echo "</tr>";
-                                }
-                                ?>
-                            </tbody>
-                        </table>
-        
-                    </section>
-
+                    <table border="1">
+                        <thead>
+                            <tr>
+                                <th>Usuário ID</th>
+                                <th>Nome do Usuário</th>
+                                <th>Total Débito</th>
+                                <th>Total Crédito</th>
+                                <th>Total Dinheiro</th>
+                                <th>Total Pix</th>
+                                <th>Total Valor</th>
+                                <th>Total Quantidade</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            while ($row = $result->fetch_assoc()) {
+                                echo "<tr>";
+                                echo "<td>" . $row['usuario_id'] . "</td>";
+                                echo "<td>" . $row['nome'] . "</td>";
+                                echo "<td>" . $row['total_debito'] . "</td>";
+                                echo "<td>" . $row['total_credito'] . "</td>";
+                                echo "<td>" . $row['total_dinheiro'] . "</td>";
+                                echo "<td>" . $row['total_pix'] . "</td>";
+                                echo "<td>" . $row['total_valor'] . "</td>";
+                                echo "<td>" . $row['total_quantidade'] . "</td>";
+                                echo "</tr>";
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </section>
             </div>
-
+        </div>
     </main>
     
     <script>
-
         document.getElementById('showOptions').addEventListener('click', function(event) {
             event.preventDefault(); // Impede o comportamento padrão do link
             var options = document.getElementById('options');
@@ -250,18 +250,17 @@ $result = $stmt->get_result();
         });
 
         function abrirMenu() {
-            document.getElementById('menu').style. height = '100%';
+            document.getElementById('menu').style.height = '100%';
             document.getElementById('conteudo').style.marginLeft = '17%';
         }
         function facharMenu(){
-            document.getElementById('menu').style. height = '0%'
+            document.getElementById('menu').style.height = '0%';
             document.getElementById('conteudo').style.marginLeft = '0%';
         }
-        
     </script>
-
 </body>
 </html>
+
 
 
 
