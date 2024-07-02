@@ -62,7 +62,7 @@
 <body>
     <button><a href="sair.php">sair</a></button>
     <button><a href="meuRelatorio.php">Voltar</a></button>
-    <h1>Nota Fiscal</h1>
+    <h1>Relatório de valores</h1>
     <table>
     <!--
          <tr>

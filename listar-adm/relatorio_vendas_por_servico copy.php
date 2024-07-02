@@ -102,7 +102,7 @@
             position: fixed;
             width: 1625px;
             margin-left: 20px;
-            margin-top: 10px;
+            margin-top: 0px;
             
             
         }
@@ -239,6 +239,8 @@
 
         <a href="relatorio-geral.php"class="btn-b">relatorio Geral</a>
 
+        <a href="http://localhost/teste-usuario2/listar-adm/graficos/graficos_geral.php#"class="btn-b">Graficos</a>
+
     </header>
    
     <nav id="menu">
@@ -291,7 +293,7 @@
                     <br>
                     <label for="filtroNome">Filtrar por Usuário:</label>
                     <input type="text" id="filtroNome" onkeyup="filtrarPorNome()">
-
+                    <br><br>
                     <form method="post" action="exibir_relatorio.php" target="_blank">
                     <input type="hidden" name="data_consulta" value="<?php echo $data_consulta; ?>">
                     <button type="submit">Gerar Relatório</button>
@@ -402,7 +404,7 @@
             const table = document.getElementById('clientesTabela');
             const tr = table.getElementsByTagName('tr');
             for (let i = 1; i < tr.length; i++) {
-                const td = tr[i].getElementsByTagName('td')[1]; // coluna "Nome"
+                const td = tr[i].getElementsByTagName('td')[2]; // coluna "Nome"
                 if (td) {
                     const txtValue = td.textContent || td.innerText;
                     if (txtValue.toLowerCase().indexOf(filter) > -1) {

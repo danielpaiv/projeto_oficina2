@@ -1,7 +1,7 @@
 <?php
     session_start();
     include_once('conexao.php');
-
+    //date_default_timezone_set('America/Sao_Paulo');
     // Verifica se o usuário está logado
     if (!isset($_SESSION['user_id'])) {
         header('Location: login.php'); // Redireciona para a página de login se não estiver logado
@@ -9,7 +9,7 @@
     }
 
     $user_id = $_SESSION['user_id'];
-    $data_consulta = isset($_GET['data_consulta']) ? $_GET['data_consulta'] : date('Y-m-d');
+    $data_consulta = isset($_GET['data_consulta']) ? $_GET['data_consulta'] :  date('Y-m-d');
     //$data_atual = date('Y-m-d');
 
     // Consulta os dados apenas do usuário logado

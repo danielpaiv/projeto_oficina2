@@ -210,6 +210,9 @@
         <a href="relatorio-diario.php"class="btn-b">Relatorio diário</a>
 
         <a href="relatorio_vendas_por_servico copy.php"class="btn-b">Relatório por itens</a>
+
+        <a href="http://localhost/teste-usuario2/listar-adm/graficos/graficos_geral.php#"class="btn-b">Graficos</a>
+        
     </header>
    
     <nav id="menu">

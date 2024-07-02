@@ -2,38 +2,61 @@
     session_start();
     include_once('conexao.php');
 
-    //print_r($_SESSION);
-    if((!isset($_SESSION['nome']) == true) and (!isset($_SESSION['senha']) == true))
-    {
+    // Verifica se o usuário está logado
+    if ((!isset($_SESSION['nome']) == true) and (!isset($_SESSION['senha']) == true)) {
         unset($_SESSION['nome']);
         unset($_SESSION['senha']);
         header('Location: index.php');
     }
     $logado = $_SESSION['nome'];
+    //, strtotime('-1 day')
+    // Obtém a data da consulta ou usa a data do dia anterior por padrão
+    $data_consulta = isset($_GET['data_consulta']) ? $_GET['data_consulta'] : date('Y-m-d');
 
-
-
-    // Consulta para obter a soma dos valores e quantidades de cada usuário
+    // Consulta para obter a soma dos valores e quantidades de cada usuário por data específica
     $sql = "SELECT c.usuario_id, u.nome,
-        
-        SUM(CASE WHEN forma_pagamento = 'debito' THEN valor ELSE 0 END) AS total_debito,
-        SUM(CASE WHEN forma_pagamento = 'credito' THEN valor ELSE 0 END) AS total_credito,
-        SUM(CASE WHEN forma_pagamento = 'dinheiro' THEN valor ELSE 0 END) AS total_dinheiro,
-        SUM(CASE WHEN forma_pagamento = 'pix' THEN valor ELSE 0 END) AS total_pix,
-        SUM(c.valor) AS total_valor,
-        COUNT(*) AS total_quantidade 
+            SUM(CASE WHEN forma_pagamento = 'debito' THEN valor ELSE 0 END) AS total_debito,
+            SUM(CASE WHEN forma_pagamento = 'credito' THEN valor ELSE 0 END) AS total_credito,
+            SUM(CASE WHEN forma_pagamento = 'dinheiro' THEN valor ELSE 0 END) AS total_dinheiro,
+            SUM(CASE WHEN forma_pagamento = 'pix' THEN valor ELSE 0 END) AS total_pix,
+            SUM(c.valor) AS total_valor,
+            COUNT(*) AS total_quantidade 
             FROM carrinho c
             JOIN usuarios u ON c.usuario_id = u.id
+            WHERE DATE(c.data_insercao) = ?
             GROUP BY c.usuario_id";
-    $result = $conexao->query($sql);
+    $stmt = $conexao->prepare($sql);
+    $stmt->bind_param("s", $data_consulta);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    // Arrays para armazenar dados do gráfico
+    $usuarios = [];
+    $total_debitos = [];
+    $total_creditos = [];
+    $total_dinheiros = [];
+    $total_pixes = [];
+    $total_valores = [];
+    $total_quantidades = [];
+
+    while ($row = $result->fetch_assoc()) {
+        $usuarios[] = $row['nome'];
+        $total_debitos[] = $row['total_debito'];
+        $total_creditos[] = $row['total_credito'];
+        $total_dinheiros[] = $row['total_dinheiro'];
+        $total_pixes[] = $row['total_pix'];
+        $total_valores[] = $row['total_valor'];
+        $total_quantidades[] = $row['total_quantidade'];
+    }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Relatório de Vendas</title>
+    <title>Relatório de Valores</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -90,14 +113,14 @@
         .btn-abrir:active {
             color: red; /* Substitua 'red' pela cor desejada */
             background-color: yellow; /* Opcional: Substitua 'yellow' pela cor de fundo desejada ao clicar */
-            border-color: blue; /* Opcional: Substitua 'blue' pela cor de borda desejada ao clicar */
+            border-color: blue ; /* Opcional: Substitua 'blue' pela cor de borda desejada ao clicar */
             border-width: 3px; /* Aumente a largura da borda para 3px */
+            
         }
         .btn-abrir:hover{
             background-color: yellow;
             color: red;
         }
-    
         .btn-b{
             color: white;
             font-size: 20px;
@@ -178,14 +201,18 @@
         }
         .hidden {
             display: none;
-            }
+            
+        }
 
-            #options a {
-                display: block;
-                margin: 5px 0;
-            }
+        #options a {
+            display: block;
+            margin: 5px 0;
+        }
+        label{
+            color:white;
+        }
     </style>
-   
+   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
@@ -193,42 +220,33 @@
         <!--criei uma class para usar no css e não ter conflito com outros links-->
         <a href="#" class="btn-abrir" onclick="abrirMenu()">&#9776; Menu</a>
 
-        <a href="relatorio-geral.php"class="btn-b">Relatorio Geral</a>
-        
-        <a href="relatorio_vendas_por_servico copy.php"class="btn-b">Relatório por itens</a>
+        <a href="grafico_diario.php"class="btn-b">Gráfico Diario</a>
 
-        <a href="relatorio-periodo.php"class="btn-b">relatorio por período</a>
 
-        <a href="relatorio-diario.php"class="btn-b">relatorio Diario</a>
+        <a href="graficos_geral.php"class="btn-b">Grafico Geral</a>
 
-        <a href="http://localhost/teste-usuario2/listar-adm/graficos/graficos_geral.php#"class="btn-b">Graficos</a>
-
-        
     </header>
    
     <nav id="menu">
         <a href="#" onclick="facharMenu()">&times; Fechar</a>
-
-        <a href="http://localhost/teste-usuario2/listar-adm/painel.php">Voltar</a>
-
+        <a href="http://localhost/teste-usuario2/listar-adm/relatorio-geral.php">Voltar</a>
+    <!--    
         <a href="http://localhost/teste-usuario2/adm/index.php">Cadastrar User</a>
-        <!--
+        
             <a href="relatorio-periodo.php">relatorio por período</a>
-            <a href="relatorio-diario.php">relatorio Diario</a>
+            <a href="relatorio-geral.php">relatorio Geral</a>
             <a href="relatorio_vendas_por_servico copy.php">Relatório por itens</a>
             <a href="#">Mais opções</a>
-        -->
+        
         <a href="#" id="showOptions">Mais opções</a>
         <div id="options" class="hidden">
-
             <a href="http://localhost/teste-usuario2/index.php">Menu User</a>
-
             <a href="http://localhost/teste-usuario2/adm/formulario_copy.php">Cadastrar um Produto</a>
-
             <a href="Sair.php">Sair</a>
-
+            <a href="#"></a>
             <a href="#"></a>
         </div>
+    -->
     </nav>
 
     <main id="conteudo">
@@ -239,8 +257,14 @@
                 <div>
 
                     <section>
-                        <h1>Relatório de Valores Geral</h1>
+                        <h1>Relatório de Valores Diário</h1>
+                        <form method="get" action="">
+                            <label for="data_consulta">Selecionar Data:</label>
+                            <input type="date" id="data_consulta" name="data_consulta" value="<?php echo $data_consulta; ?>">
+                            <button type="submit">Consultar</button>
+                        </form>
                         <table border="1">
+                        <!--
                             <thead>
                                 <tr>
                                     <th>Usuário ID</th>
@@ -254,6 +278,7 @@
                                     <th>Total Quantidade</th>
                                 </tr>
                             </thead>
+                        -->
                             <tbody>
                                 <?php
                                 while ($row = $result->fetch_assoc()) {
@@ -272,7 +297,7 @@
                                 ?>
                             </tbody>
                         </table>
-        
+                        <canvas id="myChart" width="645" height="200"></canvas>
                     </section>
 
             </div>
@@ -280,6 +305,67 @@
     </main>
     
     <script>
+
+document.addEventListener("DOMContentLoaded", function() {
+            var ctx = document.getElementById('myChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: <?php echo json_encode($usuarios); ?>,
+                    datasets: [
+                        {
+                            label: 'Total Débito',
+                            data: <?php echo json_encode($total_debitos); ?>,
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Total Crédito',
+                            data: <?php echo json_encode($total_creditos); ?>,
+                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Total Dinheiro',
+                            data: <?php echo json_encode($total_dinheiros); ?>,
+                            backgroundColor: 'rgba(255, 206, 86, 0.2)',
+                            borderColor: 'rgba(255, 206, 86, 1)',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Total Pix',
+                            data: <?php echo json_encode($total_pixes); ?>,
+                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Total Valor',
+                            data: <?php echo json_encode($total_valores); ?>,
+                            backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                            borderColor: 'rgba(153, 102, 255, 1)',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Total Quantidade',
+                            data: <?php echo json_encode($total_quantidades); ?>,
+                            backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                            borderColor: 'rgba(255, 159, 64, 1)',
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        });
 
         document.addEventListener("DOMContentLoaded", function() {
             // Verifica o estado do botão no localStorage

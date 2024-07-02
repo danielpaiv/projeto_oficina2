@@ -215,6 +215,7 @@
                                 <th>Total Pix</th>
                                 <th>Total Valor</th>
                                 <th>Total Quantidade</th>
+                                <th>Imprimir</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -228,7 +229,7 @@
                                 echo "<td>" . $row['total_pix'] . "</td>";
                                 echo "<td>" . $row['total_valor'] . "</td>";
                                 echo "<td>" . $row['total_quantidade'] . "</td>";
-                                echo "<td><button onclick='criarNotaFiscal(".json_encode($row).")'>Nota Fiscal</button></td>";
+                                echo "<td><button onclick='criarNotaFiscal(".json_encode($row).")'>Imprimir Relatório</button></td>";
                                 echo "</tr>";
                             }
                             ?>
