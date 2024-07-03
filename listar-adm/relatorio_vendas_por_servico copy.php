@@ -289,14 +289,14 @@
                         <label for="data_consulta">Selecionar Data:</label>
                         <input type="date" id="data_consulta" name="data_consulta" value="<?php echo $data_consulta; ?>">
                         <button type="submit">Consultar</button>
-                    </form>
-                    <br>
-                    <label for="filtroNome">Filtrar por Usuário:</label>
-                    <input type="text" id="filtroNome" onkeyup="filtrarPorNome()">
-                    <br><br>
-                    <form method="post" action="exibir_relatorio.php" target="_blank">
-                    <input type="hidden" name="data_consulta" value="<?php echo $data_consulta; ?>">
-                    <button type="submit">Gerar Relatório</button>
+                        </form>
+                        <br>
+                        <label for="filtroNome">Filtrar por Usuário:</label>
+                        <input type="text" id="filtroNome" onkeyup="filtrarPorNome()">
+                        <br><br>
+                        <form method="post" action="exibir_relatorio.php" target="_blank">
+                        <input type="hidden" name="data_consulta" value="<?php echo $data_consulta; ?>">
+                        <button type="submit">Gerar Relatório</button>
                 </form>
                 <br>
                 <br><br>

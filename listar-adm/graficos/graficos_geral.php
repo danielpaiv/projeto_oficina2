@@ -199,12 +199,15 @@
                 margin: 5px 0;
             }
     </style>
+    <!--Biblioteca para renderizar o grafico de colunas-->
    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!--Biblioteca para renderizar os rotulos de dados do gráfico-->
+   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
 </head>
 <body>
 
     <header>
-        <!--criei uma class para usar no css e não ter conflito com outros links-->
+        <!--criei uma nova  class para usar no css e não ter conflito com outros links-->
         <a href="#" class="btn-abrir" onclick="abrirMenu()">&#9776; Menu</a>
 
         <a href="graficos_geral.php"class="btn-b">Grafico Geral</a>
@@ -286,12 +289,14 @@
                     </section>
 
             </div>
-            <canvas id="myChart" width="615" height="200"></canvas>
+            <!--canvas para redenrizar o gráfico-->
+            <canvas id="myChart" width="500" height="200"></canvas>
     </main>
 
     
     
     <script>
+        //scrip para redenrizar o gráfico
          document.addEventListener("DOMContentLoaded", function() {
             var ctx = document.getElementById('myChart').getContext('2d');
             var myChart = new Chart(ctx, {
@@ -299,7 +304,9 @@
                 data: {
                     labels: <?php echo json_encode($usuarios); ?>,
                     datasets: [
+                    /*
                         {
+                        
                             label: 'Total Débito',
                             data: <?php echo json_encode($total_debitos); ?>,
                             backgroundColor: 'rgba(75, 192, 192, 0.2)',
@@ -327,6 +334,7 @@
                             borderColor: 'rgba(255, 99, 132, 1)',
                             borderWidth: 1
                         },
+                    */
                         {
                             label: 'Total Valor',
                             data: <?php echo json_encode($total_valores); ?>,
@@ -348,12 +356,23 @@
                         y: {
                             beginAtZero: true
                         }
+                    },
+                    //Codigo para renderizar os rotulos de dados
+                    plugins: {
+                    datalabels: {
+                        anchor: 'end',
+                        align: 'top',
+                        formatter: function(value, context) {
+                            return value;
+                        }
+                        }
                     }
-                }
+                },
+                //Plugins para registrar os rotulos de dados
+                plugins: [ChartDataLabels]
             });
         });
-
-
+        //script para os botões superior com animação
         document.addEventListener("DOMContentLoaded", function() {
             // Verifica o estado do botão no localStorage
             var isClicked = localStorage.getItem("btn-b-clicked");
@@ -367,7 +386,7 @@
                 localStorage.setItem("btn-b-clicked", "true");
             });
         });
-
+        //script para barra menu lateral secundário
         document.getElementById('showOptions').addEventListener('click', function(event) {
             event.preventDefault(); // Impede o comportamento padrão do link
             var options = document.getElementById('options');
@@ -377,12 +396,12 @@
                 options.classList.add('hidden');
             }
         });
-
+        //script para barra menu lateral primário
         function abrirMenu() {
             document.getElementById('menu').style. height = '100%';
             document.getElementById('conteudo').style.marginLeft = '17%';
-        }
-        function facharMenu(){
+            }
+            function facharMenu(){
             document.getElementById('menu').style. height = '0%'
             document.getElementById('conteudo').style.marginLeft = '0%';
         }
