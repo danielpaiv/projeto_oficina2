@@ -91,6 +91,9 @@
         header{
             background-color: rgb(21, 4, 98  );
             padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
         }
         .btn-abrir{
             color: white;
@@ -161,16 +164,50 @@
         label{
             color:white;
         }
+        .btn-abrir{
+            color: white;
+            font-size: 20px;
+            border:solid 1px;
+            padding: 3px;;
+            text-decoration: none;
+        }
+        .btn-abrir:active{
+            color: red; /* Substitua 'red' pela cor desejada */
+            background-color: yellow; /* Opcional: Substitua 'yellow' pela cor de fundo desejada ao clicar */
+            border-color: blue; /* Opcional: Substitua 'blue' pela cor de borda desejada ao clicar */
+            border-width: 3px; /* Aumente a largura da borda para 3px */
+        }
+        .btn-abrir:hover{
+            background-color: yellow;
+            color: red;
+        }
+        .btn-b{
+            color: white;
+            font-size: 20px;
+            border:solid 1px;
+            padding: 3px;;
+        }
+        .btn-b.clicked {
+            color: black; /* Substitua 'red' pela cor desejada */
+            background-color: yellow; /* Opcional: Substitua 'yellow' pela cor de fundo desejada ao clicar */
+            border-color: blue; /* Opcional: Substitua 'blue' pela cor de borda desejada ao clicar */
+            border-width: 3px; /* Aumente a largura da borda para 3px */
+        }
+        .btn-b:hover{
+            background-color: black;
+            color: red;
+        }
 
     </style>
 </head>
 <body>
    
 
-        <header>
+    <header>
         <!--criei uma class para usar no css e não ter conflito com outros links-->
         <a href="#" class="btn-abrir" onclick="abrirMenu()">&#9776; Menu</a>
 
+        <a href="sangrias.php" class="btn-b">Sagrias</a>
     </header>
    
     <nav id="menu">
