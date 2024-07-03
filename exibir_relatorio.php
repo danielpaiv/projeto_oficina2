@@ -1,28 +1,28 @@
 <?php
-session_start();
-include_once('conexao.php');
+    session_start();
+    include_once('conexao.php');
 
-if (!isset($_SESSION['user_id'])) {
-    header('Location: login.php');
-    exit;
-}
+    if (!isset($_SESSION['user_id'])) {
+        header('Location: login.php');
+        exit;
+    }
 
-$user_id = $_POST['user_id'];
-$data_consulta = isset($_POST['data_consulta']) ? $_POST['data_consulta'] : date('Y-m-d');
+    $user_id = $_POST['user_id'];
+    $data_consulta = isset($_POST['data_consulta']) ? $_POST['data_consulta'] : date('Y-m-d');
 
-// Consulta para obter os totais de serviços por data específica
-$sql = "SELECT usuario_id, 
-            servico,
-            SUM(valor) AS total_valor,
-            COUNT(*) AS total_quantidade 
-        FROM carrinho 
-        WHERE usuario_id = ? AND DATE(data_insercao) = ?
-        GROUP BY usuario_id, servico";
+    // Consulta para obter os totais de serviços por data específica
+    $sql = "SELECT usuario_id, 
+                servico,
+                SUM(valor) AS total_valor,
+                COUNT(*) AS total_quantidade 
+            FROM carrinho 
+            WHERE usuario_id = ? AND DATE(data_insercao) = ?
+            GROUP BY usuario_id, servico";
 
-$stmt = $conexao->prepare($sql);
-$stmt->bind_param("is", $user_id, $data_consulta);
-$stmt->execute();
-$result = $stmt->get_result();
+    $stmt = $conexao->prepare($sql);
+    $stmt->bind_param("is", $user_id, $data_consulta);
+    $stmt->execute();
+    $result = $stmt->get_result();
 ?>
 
 <!DOCTYPE html>
@@ -86,9 +86,27 @@ $result = $stmt->get_result();
         .print-button:hover {
             background-color: #45a049;
         }
+        a{
+            text-decoration:none;
+
+        }
+        .btn-abrir{
+            color: white;
+            font-size: 20px;
+            border:solid 1px;
+            padding: 3px;;
+            text-decoration: none;
+            top: 10px;
+        }
     </style>
 </head>
 <body>
+    <header>
+        <a href="relatorio_vendas_por_servico.php"class="btn-abrir">Voltar</a>
+    </header>
+
+    
+    
     <h1>Relatório de Vendas</h1>
     <table border="1">
         <thead>

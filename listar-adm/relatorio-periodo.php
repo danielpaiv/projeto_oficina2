@@ -211,6 +211,8 @@
 
         <a href="relatorio_vendas_por_servico copy.php"class="btn-b">Relatório por itens</a>
 
+        <a href="sangrias copy.php" class="btn-b">Sangrias</a>
+
         <a href="http://localhost/teste-usuario2/listar-adm/graficos/graficos_geral.php#"class="btn-b">Graficos</a>
         
     </header>

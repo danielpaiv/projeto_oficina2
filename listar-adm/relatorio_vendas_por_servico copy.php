@@ -239,6 +239,8 @@
 
         <a href="relatorio-geral.php"class="btn-b">relatorio Geral</a>
 
+        <a href="sangrias copy.php" class="btn-b">Sangrias</a>
+
         <a href="http://localhost/teste-usuario2/listar-adm/graficos/graficos_geral.php#"class="btn-b">Graficos</a>
 
     </header>
