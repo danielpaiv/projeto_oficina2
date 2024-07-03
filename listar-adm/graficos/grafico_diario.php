@@ -213,6 +213,8 @@
         }
     </style>
    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+   
 </head>
 <body>
 
@@ -257,7 +259,7 @@
                 <div>
 
                     <section>
-                        <h1>Relatório de Valores Diário</h1>
+                        
                         <form method="get" action="">
                             <label for="data_consulta">Selecionar Data:</label>
                             <input type="date" id="data_consulta" name="data_consulta" value="<?php echo $data_consulta; ?>">
@@ -297,7 +299,7 @@
                                 ?>
                             </tbody>
                         </table>
-                        <canvas id="myChart" width="645" height="200"></canvas>
+                        <canvas id="myChart" width="630" height="200" ></canvas>
                     </section>
 
             </div>
@@ -307,65 +309,75 @@
     <script>
 
 document.addEventListener("DOMContentLoaded", function() {
-            var ctx = document.getElementById('myChart').getContext('2d');
-            var myChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: <?php echo json_encode($usuarios); ?>,
-                    datasets: [
-                        {
-                            label: 'Total Débito',
-                            data: <?php echo json_encode($total_debitos); ?>,
-                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                            borderColor: 'rgba(75, 192, 192, 1)',
-                            borderWidth: 1
-                        },
-                        {
-                            label: 'Total Crédito',
-                            data: <?php echo json_encode($total_creditos); ?>,
-                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                            borderColor: 'rgba(54, 162, 235, 1)',
-                            borderWidth: 1
-                        },
-                        {
-                            label: 'Total Dinheiro',
-                            data: <?php echo json_encode($total_dinheiros); ?>,
-                            backgroundColor: 'rgba(255, 206, 86, 0.2)',
-                            borderColor: 'rgba(255, 206, 86, 1)',
-                            borderWidth: 1
-                        },
-                        {
-                            label: 'Total Pix',
-                            data: <?php echo json_encode($total_pixes); ?>,
-                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                            borderColor: 'rgba(255, 99, 132, 1)',
-                            borderWidth: 1
-                        },
-                        {
-                            label: 'Total Valor',
-                            data: <?php echo json_encode($total_valores); ?>,
-                            backgroundColor: 'rgba(153, 102, 255, 0.2)',
-                            borderColor: 'rgba(153, 102, 255, 1)',
-                            borderWidth: 1
-                        },
-                        {
-                            label: 'Total Quantidade',
-                            data: <?php echo json_encode($total_quantidades); ?>,
-                            backgroundColor: 'rgba(255, 159, 64, 0.2)',
-                            borderColor: 'rgba(255, 159, 64, 1)',
-                            borderWidth: 1
-                        }
-                    ]
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: <?php echo json_encode($usuarios); ?>,
+                datasets: [
+                    {
+                        label: 'Total Débito',
+                        data: <?php echo json_encode($total_debitos); ?>,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Total Crédito',
+                        data: <?php echo json_encode($total_creditos); ?>,
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Total Dinheiro',
+                        data: <?php echo json_encode($total_dinheiros); ?>,
+                        backgroundColor: 'rgba(255, 206, 86, 0.2)',
+                        borderColor: 'rgba(255, 206, 86, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Total Pix',
+                        data: <?php echo json_encode($total_pixes); ?>,
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Total Valor',
+                        data: <?php echo json_encode($total_valores); ?>,
+                        backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                        borderColor: 'rgba(153, 102, 255, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Total Quantidade',
+                        data: <?php echo json_encode($total_quantidades); ?>,
+                        backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                        borderColor: 'rgba(255, 159, 64, 1)',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
                 },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
+                plugins: {
+                    datalabels: {
+                        anchor: 'end',
+                        align: 'top',
+                        formatter: function(value, context) {
+                            return value;
                         }
                     }
                 }
-            });
+            },
+            plugins: [ChartDataLabels]
         });
+    });
 
         document.addEventListener("DOMContentLoaded", function() {
             // Verifica o estado do botão no localStorage
