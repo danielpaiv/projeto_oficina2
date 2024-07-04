@@ -197,7 +197,7 @@
                 <br>
                 <br>
                 <div class="inputbox">
-                    <input type="text" name="senha" id="senha" class="inputUser" required>
+                    <input type="password" name="senha" id="senha" class="inputUser" required>
                     <label for="senha" class="labelInput">senha</label>
                 </div>
                 <br>

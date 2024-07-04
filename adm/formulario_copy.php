@@ -190,7 +190,7 @@ if (isset($_POST['submit'])) {
     <div class="box">
         <form action="formulario_copy.php" method="POST">
             <fieldset>
-                <legend><b>Formulario de Serviços</b></legend>
+                <legend><b>Cadastro de Produtos</b></legend>
                 <br><br>
 
 

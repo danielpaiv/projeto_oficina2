@@ -85,9 +85,21 @@
         .print-button:hover {
             background-color: #45a049;
         }
+        .btn-abrir{
+            color: white;
+            font-size: 20px;
+            border:solid 1px;
+            padding: 3px;;
+            text-decoration: none;
+            top: 10px;
+        }
     </style>
 </head>
 <body>
+    <header>
+        <a href="relatorio_vendas_por_servico copy.php"class="btn-abrir">Voltar</a>
+    </header>
+
     <h1>Relatório de Vendas</h1>
     <table border="1">
         <thead>
