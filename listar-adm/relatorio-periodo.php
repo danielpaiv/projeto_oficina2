@@ -83,11 +83,14 @@
             text-decoration: none;
         }
         header{
-            background-color: rgb(21, 4, 98  );
+            background-color: rgb(21, 4, 98);
             padding: 15px;
             display: flex;
             justify-content: space-between;
-            margin-top: 10px;
+            position: fixed;
+            width: 1625px;
+            margin-left: 20px;
+            margin-top: 1px;;
         }
         .btn-abrir{
             color: white;
@@ -173,7 +176,10 @@
             background-color: #060642 ;
             padding: 5px;
             text-align: center;
-            width: 99%;
+            width: 97.5%;
+            margin-top: 70px;;
+            margin-left: 10px;
+            
         }
         legend{
             color: white;

@@ -102,7 +102,7 @@
             position: fixed;
             width: 1625px;
             margin-left: 20px;
-            margin-top: 0px;
+            margin-top: 1px;
             
             
         }
@@ -217,7 +217,7 @@
             background-color: #060642 ;
             padding: 20px;
             text-align: center;
-            width: 96%;
+            width: 95.7%;
             margin-top: 70px;
             margin-left: 10px;
         }
@@ -308,7 +308,7 @@
                         <tr>
                             <th>Usuário ID</th>
                             <th>Nome do Usuário</th>
-                            <th>Serviço</th>
+                            <th>Produtos</th>
                             <th>Total Valor</th>
                             <th>Total Quantidade</th>
                         </tr>
@@ -406,7 +406,7 @@
             const table = document.getElementById('clientesTabela');
             const tr = table.getElementsByTagName('tr');
             for (let i = 1; i < tr.length; i++) {
-                const td = tr[i].getElementsByTagName('td')[2]; // coluna "Nome"
+                const td = tr[i].getElementsByTagName('td')[1]; // coluna "Nome"
                 if (td) {
                     const txtValue = td.textContent || td.innerText;
                     if (txtValue.toLowerCase().indexOf(filter) > -1) {

@@ -1,63 +1,69 @@
 <?php
-   session_start();
-   include_once('conexao.php');
+session_start();
+include_once('conexao.php');
 
-   if (!isset($_SESSION['nome']) || !isset($_SESSION['senha'])) {
-       unset($_SESSION['nome']);
-       unset($_SESSION['senha']);
-       header('Location: index.php');
-       exit;
-   }
+if (!isset($_SESSION['nome']) || !isset($_SESSION['senha'])) {
+    unset($_SESSION['nome']);
+    unset($_SESSION['senha']);
+    header('Location: index.php');
+    exit;
+}
 
-   $logado = $_SESSION['nome'];
+$logado = $_SESSION['nome'];
 
-   if (!isset($_SESSION['user_id'])) {
-       header('Location: login.php');
-       exit;
-   }
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login.php');
+    exit;
+}
 
-   $user_id = $_SESSION['user_id'];
-   $data_consulta = isset($_GET['data_consulta']) ? $_GET['data_consulta'] : date('Y-m-d');
+$user_id = $_SESSION['user_id'];
+$data_consulta = isset($_GET['data_consulta']) ? $_GET['data_consulta'] : date('Y-m-d');
 
-   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-       $valor_sangria = floatval($_POST['valor_sangria']);
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $valor_sangria = floatval($_POST['valor_sangria']);
 
-       // Inserir a sangria na tabela de sangrias
-       $sql_insert = "INSERT INTO sangrias (usuario_id, valor_sangria, data_sangria) VALUES (?, ?, NOW())";
-       $stmt_insert = $conexao->prepare($sql_insert);
-       $stmt_insert->bind_param("id", $user_id, $valor_sangria);
-       $stmt_insert->execute();
+    // Inserir a sangria na tabela de sangrias
+    $sql_insert = "INSERT INTO sangrias (usuario_id, valor_sangria, data_sangria) VALUES (?, ?, NOW())";
+    $stmt_insert = $conexao->prepare($sql_insert);
+    $stmt_insert->bind_param("id", $user_id, $valor_sangria);
+    $stmt_insert->execute();
 
-       echo "<p>Sangria de R$ " . number_format($valor_sangria, 2, ',', '.') . " registrada com sucesso.</p>";
-       header('Location: meurelatorio.php');
-   }
+    // Redirecionar para a página de impressão com mais informações
+    echo "<script>
+            window.onload = function() {
+                window.open('imprimir.php?valor_sangria=" . $valor_sangria . "&usuario_id=" . $user_id . "&nome_usuario=" . urlencode($logado) . "', '_blank');
+                window.location.href = 'meurelatorio.php';
+            };
+          </script>";
+}
 
-   // Consulta os dados apenas do usuário logado e da data selecionada
-   $sql = "SELECT * FROM sangrias WHERE usuario_id = ? AND DATE(data_sangria) = ? ORDER BY id DESC";
-   $stmt = $conexao->prepare($sql);
-   $stmt->bind_param("is", $user_id, $data_consulta);
-   $stmt->execute();
-   $result = $stmt->get_result();
+// Consulta os dados apenas do usuário logado e da data selecionada
+$sql = "SELECT * FROM sangrias WHERE usuario_id = ? AND DATE(data_sangria) = ? ORDER BY id DESC";
+$stmt = $conexao->prepare($sql);
+$stmt->bind_param("is", $user_id, $data_consulta);
+$stmt->execute();
+$result = $stmt->get_result();
 
-   // Calcular a soma dos valores de sangria
-   $sql_sum = "SELECT SUM(valor_sangria) AS total_sangria FROM sangrias WHERE usuario_id = ? AND DATE(data_sangria) = ?";
-   $stmt_sum = $conexao->prepare($sql_sum);
-   $stmt_sum->bind_param("is", $user_id, $data_consulta);
-   $stmt_sum->execute();
-   $result_sum = $stmt_sum->get_result();
-   $total_sangria = $result_sum->fetch_assoc()['total_sangria'];
+// Calcular a soma dos valores de sangria
+$sql_sum = "SELECT SUM(valor_sangria) AS total_sangria FROM sangrias WHERE usuario_id = ? AND DATE(data_sangria) = ?";
+$stmt_sum = $conexao->prepare($sql_sum);
+$stmt_sum->bind_param("is", $user_id, $data_consulta);
+$stmt_sum->execute();
+$result_sum = $stmt_sum->get_result();
+$total_sangria = $result_sum->fetch_assoc()['total_sangria'];
 
-   // Calcular o valor total do carrinho considerando apenas pagamentos em dinheiro
-   $sql_cart = "SELECT SUM(valor) AS total_carrinho FROM carrinho WHERE usuario_id = ? AND DATE(data_insercao) = ? AND forma_pagamento = 'dinheiro'";
-   $stmt_cart = $conexao->prepare($sql_cart);
-   $stmt_cart->bind_param("is", $user_id, $data_consulta);
-   $stmt_cart->execute();
-   $result_cart = $stmt_cart->get_result();
-   $total_carrinho = $result_cart->fetch_assoc()['total_carrinho'];
+// Calcular o valor total do carrinho considerando apenas pagamentos em dinheiro
+$sql_cart = "SELECT SUM(valor) AS total_carrinho FROM carrinho WHERE usuario_id = ? AND DATE(data_insercao) = ? AND forma_pagamento = 'dinheiro'";
+$stmt_cart = $conexao->prepare($sql_cart);
+$stmt_cart->bind_param("is", $user_id, $data_consulta);
+$stmt_cart->execute();
+$result_cart = $stmt_cart->get_result();
+$total_carrinho = $result_cart->fetch_assoc()['total_carrinho'];
 
-   // Calcular a diferença entre o total do carrinho e o total da sangria
-   $diferenca = $total_carrinho - $total_sangria;
+// Calcular a diferença entre o total do carrinho e o total da sangria
+$diferenca = $total_carrinho - $total_sangria;
 ?>
+
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -265,7 +271,7 @@
                     <tr class="table">
                         <th scope="col">id</th>
                         <th scope="col">user_id</th>
-                        <th scope="col">usuario_id</th>
+                        <!--<th scope="col">usuario_id</th>-->
                         <th scope="col">valor_sangria</th>
                         <th scope="col">data_sangria</th>
                         <!--<th>Editar</th>-->
@@ -277,7 +283,7 @@
                         echo "<tr>";
                         echo "<td>".$user_data['id']."</td>";
                         echo "<td>".$user_data['usuario_id']."</td>";
-                        echo "<td>".$user_data['valor_sangria']."</td>";
+                        //echo "<td>".$user_data['usuario_id']."</td>";
                         echo "<td>".$user_data['valor_sangria']."</td>";
                         echo "<td>".$user_data['data_sangria']."</td>";
                         //echo "<td></td>";
