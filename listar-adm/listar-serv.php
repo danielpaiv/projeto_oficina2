@@ -232,7 +232,7 @@ $sql = "SELECT * FROM usuarios ORDER BY id DESC";
                         //echo "<td>".$user_data['nome']."</td>";
                         //echo "<td>".$user_data['cnpj']."</td>";
                         //echo "<td>".$user_data['telefone']."</td>";
-                        echo "<td>".$user_data['serviço']."</td>";
+                        echo "<td>".$user_data['servico']."</td>";
                         echo "<td>".$user_data['data_serv']."</td>";
                         //echo "<td>".$user_data['cidade']."</td>";
                         //echo "<td>".$user_data['estado']."</td>";

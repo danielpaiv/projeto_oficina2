@@ -147,6 +147,7 @@
         }
         th,td{
             padding: 5px 10px;
+            font-size:30px
         }
         th{
             background-color: rgb(21, 4, 98);

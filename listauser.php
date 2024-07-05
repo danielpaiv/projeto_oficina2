@@ -417,7 +417,7 @@
                         <th scope="col">nome</th>
                         <th scope="col">cnpj</th>
                         <th scope="col">telefone</th>-->
-                        <th scope="col">serviço</th>
+                        <th scope="col">servico</th>
                         <th scope="col">Data cadastro</th>
                         <!--<th scope="col">cidade</th>
                         <th scope="col">estado</th>
@@ -438,7 +438,7 @@
                         //echo "<td>" . $user_data['nome'] . "</td>";
                         //echo "<td>" . $user_data['cnpj'] . "</td>";
                         //echo "<td>" . $user_data['telefone'] . "</td>";
-                        echo "<td>" . $user_data['serviço'] . "</td>";
+                        echo "<td>" . $user_data['servico'] . "</td>";
                         echo "<td>" . $user_data['data_serv'] . "</td>";
                         //echo "<td>" . $user_data['cidade'] . "</td>";
                         //echo "<td>" . $user_data['estado'] . "</td>";
@@ -634,39 +634,41 @@
         listaCarrinho.innerHTML = '';
         carrinho.forEach(servico => {
             const li = document.createElement('li');
-            li.textContent = `Nome: ${servico.nome}, Serviço: ${servico.serviço},forma_pagamento: ${servico.forma_pagamento}, Valor: ${servico.valor}`;
+            li.textContent = `Nome: ${servico.nome}, Servico: ${servico.servico},forma_pagamento: ${servico.forma_pagamento}, Valor: ${servico.valor}`;
             listaCarrinho.appendChild(li);
         });
             
         }
 
         function finalizarCompra() {
-            if (carrinho.length === 0) {
-                alert("Seu carrinho está vazio. Adicione itens antes de finalizar a compra.");
-                return;
-            }
+    if (carrinho.length === 0) {
+        alert("Seu carrinho está vazio. Adicione itens antes de finalizar a compra.");
+        return;
+    }
 
-            console.log('Dados a serem enviados:', JSON.stringify(carrinho)); // Verificar dados enviados
-            fetch('processar_carrinho.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(carrinho),
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Success:', data);
-                alert("Compra finalizada com sucesso!");
-                carrinho = []; // Limpar o carrinho
-                localStorage.removeItem('carrinho'); // Limpar o localStorage
-                atualizarCarrinho();
-                window.location.href = "vendas.php"; // Redirecionar para a página de vendas
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
-        }       
+    console.log('Dados a serem enviados:', JSON.stringify(carrinho)); // Verificar dados enviados
+    fetch('processar_carrinho.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(carrinho),
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Success:', data);
+        alert("Compra finalizada com sucesso!");
+        carrinho = []; // Limpar o carrinho
+        localStorage.removeItem('carrinho'); // Limpar o localStorage
+        atualizarCarrinho();
+        window.location.href = "vendas.php"; // Redirecionar para a página de vendas
+    })
+    .catch((error) => {
+        console.error('Erro ao enviar dados:', error);
+        alert("Erro ao finalizar a compra. Por favor, tente novamente.");
+    });
+}
+
 
 
 

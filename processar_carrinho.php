@@ -21,7 +21,7 @@ foreach ($carrinho as $item) {
     $nome = $item['nome'];
     $cnpj = $item['cnpj'];
     $telefone = $item['telefone'];
-    $servico = $item['serviço'];
+    $servico = $item['servico'];
     $data_serv = $item['data_serv'];
     $cidade = $item['cidade'];
     $estado = $item['estado'];
@@ -30,7 +30,7 @@ foreach ($carrinho as $item) {
     $valor = $item['valor'];
     $data_insercao = date('Y-m-d H:i:s');
 
-    $sql = "INSERT INTO carrinho (usuario_id, nome, cnpj, telefone, servico, data_serv, cidade, estado, endereco,forma_pagamento, valor, data_insercao) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO carrinho (usuario_id, nome, cnpj, telefone, servico, data_serv, cidade, estado, endereco, forma_pagamento, valor, data_insercao) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conexao->prepare($sql);
     $stmt->bind_param("isssssssssds", $user_id, $nome, $cnpj, $telefone, $servico, $data_serv, $cidade, $estado, $endereco, $forma_pagamento, $valor, $data_insercao);
     $stmt->execute();
@@ -39,3 +39,5 @@ foreach ($carrinho as $item) {
 $response = ['status' => 'success'];
 echo json_encode($response);
 ?>
+
+

@@ -45,7 +45,7 @@
                 $nome = $user_data['nome'];
                 $cnpj = $user_data['cnpj'];
                 $telefone = $user_data['telefone'];
-                $serviço = $user_data['serviço'];
+                $servico = $user_data['servico'];
                 $data_serv = $user_data['data_serv'];
                 $cidade = $user_data['cidade'];
                 $estado = $user_data['estado'];
@@ -241,8 +241,8 @@
                 <br><br>
                 <!--<p>Serviço de Limpeza</p>-->
                 <div class="inputbox">
-                    <input type="tel" name="serviço" id="serviço" class="inputUser" value="<?php echo $serviço ?>" required>
-                    <label for="serviço" class="labelInput">serviço</label>
+                    <input type="tel" name="servico" id="servico" class="inputUser" value="<?php echo $servico ?>" required>
+                    <label for="servico" class="labelInput">serviço</label>
                 </div>
                 
             <!--
@@ -285,16 +285,16 @@
             -->
 
                 <p>pagamento</p>
-                <input type="radio" id="dinheiro" name="forma_pagamento" value="dinheiro" <?php echo ($serviço == "dinheiro") ? 'checked' : ''; ?> required>
+                <input type="radio" id="dinheiro" name="forma_pagamento" value="dinheiro" <?php echo ($servico == "dinheiro") ? 'checked' : ''; ?> required>
                 <label for="dinheiro">dinheiro</label>
 
-                <input type="radio" id="debito" name="forma_pagamento" value="debito" <?php echo ($serviço == "debito") ? 'checked' : ''; ?> required>
+                <input type="radio" id="debito" name="forma_pagamento" value="debito" <?php echo ($servico == "debito") ? 'checked' : ''; ?> required>
                 <label for="debito">debito</label>
                 
-                <input type="radio" id="credito" name="forma_pagamento" value="credito" <?php echo ($serviço == "credito") ? 'checked' : ''; ?> required>
+                <input type="radio" id="credito" name="forma_pagamento" value="credito" <?php echo ($servico == "credito") ? 'checked' : ''; ?> required>
                 <label for="credito">credito</label>
 
-                <input type="radio" id="pix" name="forma_pagamento" value="pix" <?php echo ($serviço == "pix") ? 'checked' : ''; ?> required>
+                <input type="radio" id="pix" name="forma_pagamento" value="pix" <?php echo ($servico == "pix") ? 'checked' : ''; ?> required>
                 <label for="pix">Pix</label>
                 <br><br>
 

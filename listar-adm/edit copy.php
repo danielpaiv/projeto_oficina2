@@ -45,7 +45,7 @@
                 $nome = $user_data['nome'];
                 $cnpj = $user_data['cnpj'];
                 $telefone = $user_data['telefone'];
-                $serviço = $user_data['serviço'];
+                $servico = $user_data['servico'];
                 $data_serv = $user_data['data_serv'];
                 $cidade = $user_data['cidade'];
                 $estado = $user_data['estado'];
@@ -242,7 +242,7 @@
                 <p>Serviço de Limpeza</p>
             -->
                 <div class="inputbox">
-                    <input type="tel" name="serviço" id="serviço" class="inputUser" value="<?php echo $serviço ?>" required>
+                    <input type="tel" name="servico" id="serviço" class="inputUser" value="<?php echo $servico ?>" required>
                     <label for="serviço" class="labelInput">Produto</label>
                 </div>
                 

@@ -27,7 +27,7 @@
         $nome = $_POST['nome'];
         $cnpj = $_POST['cnpj'];
         $telefone = $_POST['telefone'];
-        $serviço = $_POST['serviço'];
+        $servico = $_POST['servico'];
         $data_serv = $_POST['data_serv'];
         $cidade = $_POST['cidade'];
         $estado = $_POST['estado'];

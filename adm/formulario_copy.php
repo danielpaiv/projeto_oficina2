@@ -30,7 +30,7 @@ if (isset($_POST['submit'])) {
     $nome = $_POST['nome'];
     $cnpj = $_POST['cnpj'];
     $telefone = $_POST['telefone'];
-    $serviço = $_POST['serviço'];
+    $servico = $_POST['servico'];
     $data_serv = $_POST['data_serv'];
     $cidade = $_POST['cidade'];
     $estado = $_POST['estado'];
@@ -41,8 +41,8 @@ if (isset($_POST['submit'])) {
     $estoque = $_POST['estoque'];
 
     // Insere os dados no banco de dados, incluindo o ID do usuário
-    $stmt = $conexao->prepare("INSERT INTO clientes (user_id, nome, cnpj, telefone, serviço, data_serv, cidade, estado, endereco, forma_pagamento, valor, estoque) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssssssssssi", $user_id, $nome, $cnpj, $telefone, $serviço, $data_serv, $cidade, $estado, $endereco, $forma_pagamento, $valor, $estoque);
+    $stmt = $conexao->prepare("INSERT INTO clientes (user_id, nome, cnpj, telefone, servico, data_serv, cidade, estado, endereco, forma_pagamento, valor, estoque) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssssssssssi", $user_id, $nome, $cnpj, $telefone, $servico, $data_serv, $cidade, $estado, $endereco, $forma_pagamento, $valor, $estoque);
     $stmt->execute();
 
     header('Location: listaadm.php'); // Redireciona para a página de listagem após o cadastro
@@ -219,8 +219,8 @@ if (isset($_POST['submit'])) {
                 <p>Serviço de Limpeza</p>
             -->
                 <div class="inputbox">
-                    <input type="tel" name="serviço" id="serviço" class="inputUser" required>
-                    <label for="serviço" class="labelInput">Produto</label>
+                    <input type="tel" name="servico" id="servico" class="inputUser" required>
+                    <label for="servico" class="labelInput">Produto</label>
                 </div>
                 
             <!--

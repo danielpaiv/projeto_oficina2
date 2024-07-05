@@ -109,10 +109,12 @@
             padding: 8px;
             border: 1px solid #ddd;
             text-align: left;
+            font-size:30px
         }
 
         th {
             background-color: #f2f2f2;
+            font-size:30px
         }
 
         tr:nth-child(even) {
@@ -259,10 +261,10 @@
    
     <nav id="menu">
         <a href="#" onclick="facharMenu()">&times; Fechar</a>
-        <a href="vendas.php">Vendas</a>
-        <a href="listauser.php">Carrinho</a>
+        <a href="painel.php">Voltar</a>
+       <!-- <a href="listauser.php">Carrinho</a>-->
         <a href="sair.php">Sair</a>
-        <a href="relatorio_vendas_por_servico.php">Relatório por itens</a>
+        <!--<a href="relatorio_vendas_por_servico.php">Relatório por itens</a>-->
     </nav>
 
     <h1>Relatório de Sangrias</h1>
@@ -293,15 +295,15 @@
         -->
             
             <table id="clientesTabela" class="box">
-            <!--
-                <thead>
+            
+                <!--<thead>
                     <tr class="table">
                         <th scope="col">id</th>
                         <th scope="col">user_id</th>
                         <th scope="col">usuario_id</th>
                         <th scope="col">valor_sangria</th>
                         <th scope="col">data_sangria</th>
-                        <!--<th>Editar</th>
+                        <th>Editar</th>
                     </tr>
                 </thead>
                 <tbody class="box">
@@ -316,9 +318,9 @@
                         //echo "<td></td>";
                         echo "</tr>"; // Fechar a linha da tabela
                     }
-                    ?>
+                    ?>-->
                 </tbody>
-            -->
+            
                 <tfoot>
                     <tr>
                         <th colspan="2">Total Sangria</th>
