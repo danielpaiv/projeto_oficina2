@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     echo "<script>
             window.onload = function() {
                 window.open('imprimir.php?valor_sangria=" . $valor_sangria . "&usuario_id=" . $user_id . "&nome_usuario=" . urlencode($logado) . "', '_blank');
-                window.location.href = 'meurelatorio.php';
+                window.location.href = '';
             };
           </script>";
 }
