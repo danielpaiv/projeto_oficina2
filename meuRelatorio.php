@@ -198,6 +198,75 @@
             color: red;
         }
 
+        @media (max-width: 768px) {
+            table {
+                width: 100%;
+                font-size: 16px;
+            }
+
+            th, td {
+                font-size: 16px;
+            }
+
+            header {
+                columns:3;
+                flex-direction: column;
+                align-items: flex-start;
+                margin-left: 5px;
+                
+            }
+
+            .btn-abrir, .btn-b {
+                font-size: 18px;
+            }
+
+            nav {
+                width: 200px;
+            }
+
+            nav a {
+                font-size: 20px;
+            }
+            div{
+                margin-top: 100px;
+                margin-left: 5px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            table {
+                width: 100%;
+                font-size: 6px;
+            }
+
+            th, td {
+                font-size: 6px;
+            }
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+                margin-left: 0px;
+                
+            }
+
+            .btn-abrir, .btn-b {
+                font-size: 16px;
+            }
+
+            nav {
+                width: 150px;
+            }
+
+            nav a {
+                font-size: 18px;
+            }
+            div{
+                margin-top: 20px;
+                margin-left: -19px;
+                width: 403px;
+            }
+        }
+
     </style>
 </head>
 <body>

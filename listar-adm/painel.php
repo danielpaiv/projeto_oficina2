@@ -26,49 +26,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Menu Pricipal</title>
     <style>
-        body{
+        body {
             font-family: Arial, Helvetica, sans-serif;
-            background-color:#000066;; 
-            /*text-align: center;*/
+            background-color: #000066;
         }
-        .btn{
-        color:white ;
-        padding: 5px;
-        text-decoration: none;
-        
+
+        .btn {
+            color: white;
+            text-decoration: none;
         }
-        button{
+
+        button {
             border-radius: 5px;
             text-decoration: none;
             border: none;
             padding: 15px;
-            background-image: linear-gradient(to right,rgb(130, 20, 220), rgb(44, 31, 220));
-
-        }
-        .box{
-            columns: 3;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%,-50%);
-            background-color: rgba(0, 0, 0, 0.6);
-            padding: 30px;
-            border-radius: 30px;
-            width: 50%;
-            right: 0%;
-            color: white;
-            
-            
+            background-image: linear-gradient(to right, rgb(130, 20, 220), rgb(44, 31, 220));
+            margin: 5px;
         }
 
         .box {
             display: flex;
-            justify-content: space-between;
+            flex-wrap: wrap;
+            justify-content: center;
             align-items: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            border-radius: 30px;
+            width: 90%;
+            max-width: 400px;
+            color: white;
         }
 
         .box button {
-            margin: 0 10px; /* Ajuste este valor conforme necessário */
+            width: 100%;
+            margin: 5px 0;
+        }
+
+        .box a {
+            width: 100%;
+            display: block;
+            text-align: center;
         }
 
     </style>

@@ -221,6 +221,50 @@
             margin-top: 70px;
             margin-left: 10px;
         }
+        @media (max-width: 400px) {
+            .table-container {
+                width: 100%;
+                overflow-x: auto;
+            }
+
+            table {
+                width: 50%;
+            }
+        }
+        @media (max-width: 400px) {
+            table {
+                width: 0%;
+                font-size: 7px;
+            }
+
+            th, td {
+                font-size: 7px;
+            }
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+                margin-left: 0px;
+                
+            }
+
+            .btn-abrir, .btn-b {
+                font-size: 16px;
+            }
+
+            nav {
+                width: 150px;
+            }
+
+            nav a {
+                font-size: 18px;
+            }
+            div{
+                margin-top: 100px;
+                margin-left: 0px;
+            }
+        }
+
+       
         
     </style>
 </head>

@@ -244,6 +244,65 @@
         h2{
             color:white;
         }
+        @media (max-width: 768px) {
+            table {
+                width: 100%;
+                font-size: 16px;
+            }
+
+            th, td {
+                font-size: 16px;
+            }
+
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+                margin-left: 5px;
+            }
+
+            .btn-abrir, .btn-b {
+                font-size: 18px;
+            }
+
+            nav {
+                width: 200px;
+            }
+
+            nav a {
+                font-size: 20px;
+            }
+            div{
+                margin-top: 100px;
+                margin-left: 5px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            table {
+                width: 100%;
+                font-size: 10px;
+            }
+
+            th, td {
+                font-size: 10px;
+            }
+
+            .btn-abrir, .btn-b {
+                font-size: 16px;
+            }
+
+            nav {
+                width: 150px;
+            }
+
+            nav a {
+                font-size: 18px;
+            }
+            div{
+                margin-top: 110px;
+                margin-left: 2px;
+            }
+        }
 
     </style>
 </head>
