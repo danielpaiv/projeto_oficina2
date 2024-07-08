@@ -92,7 +92,7 @@
         .box{
             columns: 1;
             position: absolute;
-            top: 65%;
+            top: 55%;
             left: 50%;
             transform: translate(-50%,-50%);
             background-color: rgba(0, 0, 0, 0.6);

@@ -278,9 +278,9 @@
 
         <a href="relatorio-periodo.php"class="btn-b">relatorio por período</a>
 
-        <a href="relatorio-geral.php"class="btn-b">Relatorio Geral</a>
+        <a href="relatorio-geral.php"class="btn-b">Relatorio de Valores Geral</a>
 
-        <a href="relatorio-diario.php"class="btn-b">Relatorio diário</a>
+        <a href="relatorio-diario.php"class="btn-b">Relatorio diáriorelatorio de Valores Diario</a>
 
         <a href="relatorio_vendas_por_servico copy.php"class="btn-b">Relatório por itens</a>
 

@@ -266,13 +266,13 @@
         <!--criei uma class para usar no css e não ter conflito com outros links-->
         <a href="#" class="btn-abrir" onclick="abrirMenu()">&#9776; Menu</a>
 
-        <a href="relatorio-geral.php"class="btn-b">Relatorio Geral</a>
+        <a href="relatorio-geral.php"class="btn-b">Relatorio de Valores Geral</a>
         
         <a href="relatorio_vendas_por_servico copy.php"class="btn-b">Relatório por itens</a>
 
         <a href="relatorio-periodo.php"class="btn-b">relatorio por período</a>
 
-        <a href="relatorio-diario.php"class="btn-b">relatorio Diario</a>
+        <a href="relatorio-diario.php"class="btn-b">relatorio de Valores Diario</a>
 
         <a href="sangrias copy.php" class="btn-b">Sangrias</a>
 

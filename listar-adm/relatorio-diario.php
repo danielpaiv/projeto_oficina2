@@ -274,11 +274,11 @@
         <!--criei uma class para usar no css e não ter conflito com outros links-->
         <a href="#" class="btn-abrir" onclick="abrirMenu()">&#9776; Menu</a>
 
-        <a href="relatorio-diario.php"class="btn-b">relatorio Diario</a>
+        <a href="relatorio-diario.php"class="btn-b">relatorio de Valores Diario</a>
 
         <a href="relatorio-periodo.php"class="btn-b">relatorio por período</a>
 
-        <a href="relatorio-geral.php"class="btn-b">relatorio Geral</a>
+        <a href="relatorio-geral.php"class="btn-b">Relatorio de Valores Geral</a>
 
         <a href="relatorio_vendas_por_servico copy.php"class="btn-b">Relatório por itens</a>
 
@@ -318,13 +318,17 @@
                 <div>
 
                     <section>
+
+                    <label for="filtroNome">Filtrar por id do usuario:</label>
+                    <input type="text" id="filtroNome" onkeyup="filtrarPorNome()">
+
                         <h1>Relatório de Valores Diário</h1>
                         <form method="get" action="">
                             <label for="data_consulta">Selecionar Data:</label>
                             <input type="date" id="data_consulta" name="data_consulta" value="<?php echo $data_consulta; ?>">
                             <button type="submit">Consultar</button>
                         </form>
-                        <table border="1">
+                        <table id="clientesTabela" border="1">
                             <thead>
                                 <tr>
                                     <th>Usuário ID</th>
@@ -364,6 +368,25 @@
     </main>
     
     <script>
+
+        function filtrarPorNome() {
+            const input = document.getElementById('filtroNome');
+            const filter = input.value.toLowerCase();
+            const table = document.getElementById('clientesTabela');
+            const tr = table.getElementsByTagName('tr');
+
+            for (let i = 1; i < tr.length; i++) {
+                const td = tr[i].getElementsByTagName('td')[1]; // coluna "Nome"
+                if (td) {
+                    const txtValue = td.textContent || td.innerText;
+                    if (txtValue.toLowerCase().indexOf(filter) > -1) {
+                        tr[i].style.display = '';
+                    } else {
+                        tr[i].style.display = 'none';
+                    }
+                }
+            }
+        }
 
         document.addEventListener("DOMContentLoaded", function() {
             // Verifica o estado do botão no localStorage
