@@ -28,71 +28,71 @@
         header('Location: login.php'); // Redireciona para a página de login se não estiver logado
         exit;
     }
-/*
-    $user_id = $_SESSION['user_id'];
+    /*
+        $user_id = $_SESSION['user_id'];
 
-    // Consulta os dados apenas do usuário logado
-    $sql = "SELECT * FROM clientes WHERE user_id = ? ORDER BY id DESC";
-    $stmt = $conexao->prepare($sql);
-    $stmt->bind_param("i", $user_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-*/
-
-
-    //print_r($_SESSION);
-    if((!isset($_SESSION['nome']) == true) and (!isset($_SESSION['senha']) == true))
-    {
-        unset($_SESSION['nome']);
-        unset($_SESSION['senha']);
-        header('Location: index.php');
-    }
-    $logado = $_SESSION['nome'];
-
-    //$sql = "SELECT * FROM usuarios ORDER BY id DESC";
-
-    //$result = $conexao->query($sql);
-
-    //print_r($result);
+        // Consulta os dados apenas do usuário logado
+        $sql = "SELECT * FROM clientes WHERE user_id = ? ORDER BY id DESC";
+        $stmt = $conexao->prepare($sql);
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    */
 
 
+        //print_r($_SESSION);
+        if((!isset($_SESSION['nome']) == true) and (!isset($_SESSION['senha']) == true))
+        {
+            unset($_SESSION['nome']);
+            unset($_SESSION['senha']);
+            header('Location: index.php');
+        }
+        $logado = $_SESSION['nome'];
+
+        //$sql = "SELECT * FROM usuarios ORDER BY id DESC";
+
+        //$result = $conexao->query($sql);
+
+        //print_r($result);
 
 
-/*    $user_id = $_SESSION['user_id'];
-
-    // Consulta os dados apenas do usuário logado
-    $sql = "SELECT * FROM clientes WHERE user_id = ? ORDER BY id DESC";
-    $stmt = $conexao->prepare($sql);
-    $stmt->bind_param("i", $user_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
 
 
-    //print_r($_SESSION);
-    if((!isset($_SESSION['nome']) == true) and (!isset($_SESSION['senha']) == true))
-    {
-        unset($_SESSION['nome']);
-        unset($_SESSION['senha']);
-        header('Location: index.php');
-    }
-    $logado = $_SESSION['nome'];
+    /*    $user_id = $_SESSION['user_id'];
 
-    //$sql = "SELECT * FROM usuarios ORDER BY id DESC";
+        // Consulta os dados apenas do usuário logado
+        $sql = "SELECT * FROM clientes WHERE user_id = ? ORDER BY id DESC";
+        $stmt = $conexao->prepare($sql);
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-    //$result = $conexao->query($sql);
 
-    //print_r($result);
-*/
+        //print_r($_SESSION);
+        if((!isset($_SESSION['nome']) == true) and (!isset($_SESSION['senha']) == true))
+        {
+            unset($_SESSION['nome']);
+            unset($_SESSION['senha']);
+            header('Location: index.php');
+        }
+        $logado = $_SESSION['nome'];
 
-    include_once('conexao.php');
-    //print_r($_SESSION);
-   
+        //$sql = "SELECT * FROM usuarios ORDER BY id DESC";
 
-    $sql = "SELECT * FROM clientes ORDER BY id DESC";
+        //$result = $conexao->query($sql);
 
-    $result = $conexao->query($sql);
+        //print_r($result);
+    */
 
-    //print_r($result);
+        include_once('conexao.php');
+        //print_r($_SESSION);
+    
+
+        $sql = "SELECT * FROM clientes ORDER BY id DESC";
+
+        $result = $conexao->query($sql);
+
+        //print_r($result);
 
 
 ?>
@@ -616,10 +616,10 @@
 
         function adicionarAoCarrinho(servico) {
             // Verificar se há itens no carrinho
-            if (carrinho.length > 0) {
-                alert("Você já tem itens no carrinho. Por favor, finalize ou cancele a venda atual antes de adicionar novos itens.");
-                return;
-            }
+            //if (carrinho.length > 0) {
+             //   alert("Você já tem itens no carrinho. Por favor, finalize ou cancele a venda atual antes de adicionar novos itens.");
+            //    return;
+            //}
 
             // Verificar estoque antes de adicionar
             if (servico.estoque > 0) {
@@ -751,33 +751,35 @@
         }
 
         function finalizarCompra() {
-    if (carrinho.length === 0) {
-        alert("Seu carrinho está vazio. Adicione itens antes de finalizar a compra.");
-        return;
-    }
+            if (carrinho.length === 0) {
+                alert("Seu carrinho está vazio. Adicione itens antes de finalizar a compra.");
+                return;
+            }
 
-    console.log('Dados a serem enviados:', JSON.stringify(carrinho)); // Verificar dados enviados
-    fetch('processar_carrinho.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(carrinho),
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Success:', data);
-        alert("Compra finalizada com sucesso!");
-        carrinho = []; // Limpar o carrinho
-        localStorage.removeItem('carrinho'); // Limpar o localStorage
-        atualizarCarrinho();
-        window.location.href = "vendas.php"; // Redirecionar para a página de vendas
-    })
-    .catch((error) => {
-        console.error('Erro ao enviar dados:', error);
-        alert("Erro ao finalizar a compra. Por favor, tente novamente.");
-    });
-}
+            fetch('processar_carrinho.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(carrinho),
+            })
+            
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                alert("Compra finalizada com sucesso!");
+                localStorage.setItem('carrinhoFinalizado', JSON.stringify(carrinho));
+                carrinho = []; // Limpar o carrinho
+                localStorage.removeItem('carrinho'); // Limpar o localStorage
+                window.location.href = 'imprimir copy.php'; // Redirecionar para a página de impressão
+                
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+            
+        }
+
 
 
 

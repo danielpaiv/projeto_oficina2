@@ -193,7 +193,7 @@ $sql = "SELECT * FROM usuarios ORDER BY id DESC";
     <nav>
     <button><a href="sair.php">Sair</a></button>
     <button><a href="painel.php">Voltar</a></button>
-    <button><a href="https://lightcoral-cassowary-439946.hostingersite.com/adm/formulario_copy.php">Novo serviço</a></button>
+    <button><a href="http://localhost/projeto_oficina/adm/formulario_copy.php">Novo serviço</a></button>
     </nav>
 
 

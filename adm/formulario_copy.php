@@ -46,7 +46,7 @@ if (isset($_POST['submit'])) {
     $stmt->execute();
 
     //header('Location: listaadm.php'); // Redireciona para a página de listagem após o cadastro
-    header('Location: https://lightcoral-cassowary-439946.hostingersite.com/listar-adm/listar-serv.php');
+    header('Location: http://localhost/projeto_oficina/listar-adm/listar-serv.php');
     exit;
 }
 ?>

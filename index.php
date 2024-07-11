@@ -60,7 +60,7 @@
 <body>
 
 <!--<button><a href="http://localhost/teste-usuario2/adm/index.php"class="btn btn-danger me-5">Cadastrar Usuario</a></button>-->
-<button><a href="https://lightcoral-cassowary-439946.hostingersite.com/listar-adm/index.php" class="btn btn-danger me-5">Menu Adm</a></button>
+<button><a href="http://localhost/projeto_oficina/listar-adm/index.php" class="btn btn-danger me-5">Menu Adm</a></button>
     
     <div class="box">
         <h1>Login</h1>
