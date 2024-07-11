@@ -246,6 +246,7 @@
                 flex-direction: column;
                 align-items: flex-start;
                 margin-left: 0px;
+                 width: 390px;
                 
             }
 
@@ -260,10 +261,19 @@
             nav a {
                 font-size: 18px;
             }
-            div{
+            .box{
                 margin-top: 20px;
-                margin-left: -19px;
+                margin-left: -20px;
                 width: 403px;
+            }
+            input{
+                color:white;
+            }
+            .center{
+                margin-top: 210px;
+                margin-left: -16px;
+                 width: 390px;
+                  margin-top: 20px;
             }
         }
 
@@ -301,7 +311,7 @@
 <body>
     <main id="conteudo">
         <div class="center">
-            <div>
+            
                 <section>
 
                     <h1>Relatório por administradora</h1>

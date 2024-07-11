@@ -133,7 +133,7 @@
             display: flex;
             justify-content: space-between;
             position: fixed;
-            width: 1625px;
+            width: 1455px;
             margin-left: 20px;
             margin-top: -19px;
         }
@@ -302,7 +302,16 @@
                 margin-top: 110px;
                 margin-left: 2px;
             }
+             input{
+            color:white;
         }
+        .m-5{
+                margin-top: 110px;
+                margin-left: -12px;
+                 width: 310px;
+            }
+        }
+       
 
     </style>
 </head>
@@ -326,8 +335,11 @@
     <nav id="menu">
         <a href="#" onclick="facharMenu()">&times; Fechar</a>
         <a href="painel.php">Voltar</a>
+        
        <!-- <a href="listauser.php">Carrinho</a>-->
+       
         <a href="sair.php">Sair</a>
+        
         <!--<a href="relatorio_vendas_por_servico.php">Relatório por itens</a>-->
     </nav>
 

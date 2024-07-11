@@ -106,7 +106,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carrinho de Vendas</title>
      <style>
-        body{
+             body{
             font-family: Arial, Helvetica, sans-serif;
             margin: 0px;
             background-color: #137897;
@@ -116,8 +116,14 @@
             text-decoration: none;
         }
         header{
-            background-color: rgb(21, 4, 98  );
-            padding: 10px;
+             background-color: rgb(21, 4, 98);
+            padding: 1px;
+            display: flex;
+            justify-content: space-between;
+            width: 0px;
+            margin-left: 0px;
+            margin-top: 1px;;
+            
         }
         .btn-abrir{
             color: white;
@@ -333,22 +339,22 @@
                 margin: 5px 0;
             }*/
         .fixed-info {
-            position: fixed;
-            top: 80;
-            left: 1320;
-            width: 12%;
+            position: ;
+            top: 0;
+            left: 0%;
+            width: 52%;
             background-color: black;
-            padding: 10px;
+            padding: 0px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             z-index: 1000;
         }
         .fixed{
             position: fixed;
-            width: 100%;
+            width: 99%;
             top: 0;
         }
         .m-5{
-            position: fixed;
+            position: ;
             width: 98%
         }
 
@@ -419,15 +425,31 @@
                 margin-left: -10px;
             }
             #carrinho {
-                width: 96%;
+                width: 106%;
                 padding: 5px;
                 margin-left: 2px;
+                margin-top: 80px;
             }
 
             #listaCarrinho li {
                 padding: 3px 0;
             }
+            .fixed{
+            position: fixed;
+            width: 99%;
+            top: 0;
+             display: flex;
+            justify-content: space-between;
+            
+            }
+            #filtroNome{
+                color:white;
+            }
+            .m-5{
+                width: 115%;
+            }
         }
+        
         
        
         
@@ -435,31 +457,42 @@
     </style>
 </head>
 <body>
-    <div class="fixed-info">
+    <!--<div class="fixed-info">
         <p>Nome: <?php echo $nome; ?></p>
         <p>ID: <?php echo $user_id; ?></p>
-    </div>
+    </div>-->
    
 
     <header class="fixed">
     <!--criei uma class para usar no css e não ter conflito com outros links-->
     <a href="#" class="btn-abrir" onclick="abrirMenu()">&#9776; Menu</a>
+    
+    <p>Nome: <?php echo $nome; ?></p><p>ID: <?php echo $user_id; ?></p>
+        
 
     </header>
     <!--<div id="botoesVenda" class="box"></div>-->
    
     <nav id="menu" >
         <a href="#" onclick="facharMenu()">&times; Fechar</a>
+        
         <a href="vendas.php">Minhas vendas</a>
-        <a href="http://localhost/teste-usuario2/listar-adm/index.php">Cadastrar serviços</a>
-        <a href="sair.php">Sair</a>
+        
+        <!--<a href="http://localhost/teste-usuario2/listar-adm/index.php">Cadastrar serviços</a>
+        
         <!--<a href="#">Mais opções</a>-->
 
         <a href="#" id="showOptions">Mais opções</a>
         <div id="options" class="hidden">
-            <a href="http://localhost/teste-usuario2/listar-adm/index.php">Adm</a>
+            
+            <!--<a href="http://localhost/teste-usuario2/listar-adm/index.php">Adm</a>-->
+            
             <a href="meuRelatorio.php">Relatorio por administradora</a>
+            
             <a href="relatorio_vendas_por_servico.php">Relatório por itens</a>
+            
+            <a href="sair.php">Sair</a>
+            
             <!--<a href="#">Opção 4</a>-->
         </div>
     </nav>

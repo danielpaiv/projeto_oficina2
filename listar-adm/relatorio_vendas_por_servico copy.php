@@ -100,7 +100,7 @@
             display: flex;
             justify-content: space-between;
             position: fixed;
-            width: 1625px;
+             width: 1455px;
             margin-left: 20px;
             margin-top: 1px;
             
@@ -262,6 +262,14 @@
                 margin-top: 100px;
                 margin-left: 0px;
             }
+            input{
+                color:white;
+            }
+             .report-container{
+                margin-top: 210px;
+                margin-left: -18px;
+                 width: 490px;
+            }
         }
 
        
@@ -285,30 +293,32 @@
 
         <a href="sangrias copy.php" class="btn-b">Sangrias</a>
 
-        <a href="http://localhost/teste-usuario2/listar-adm/graficos/graficos_geral.php#"class="btn-b">Graficos</a>
+        <a href="https://lightcoral-cassowary-439946.hostingersite.com/listar-adm/graficos/graficos_geral.php#"class="btn-b">Graficos</a>
 
     </header>
    
     <nav id="menu">
         <a href="#" onclick="facharMenu()">&times; Fechar</a>
 
-        <a href="http://localhost/teste-usuario2/listar-adm/painel.php">Voltar</a>
+        <a href="painel.php">Voltar</a>
 
-        <a href="http://localhost/teste-usuario2/adm/index.php">Cadastrar User</a>
+        <a href="https://lightcoral-cassowary-439946.hostingersite.com/adm/index.php">Cadastrar User</a>
         <!--
             <a href="relatorio-periodo.php">relatorio por período</a>
             <a href="relatorio-diario.php">relatorio Diario</a>
             <a href="relatorio_vendas_por_servico copy.php">Relatório por itens</a>
             <a href="#">Mais opções</a>
-        -->
+        
         <a href="#" id="showOptions">Mais opções</a>
         <div id="options" class="hidden">
+            
+            <a href="Sair.php">Sair</a>-->
 
-            <a href="http://localhost/teste-usuario2/index.php">Menu User</a>
+            <!--<a href="http://localhost/teste-usuario2/index.php">Menu User</a>
 
-            <a href="http://localhost/teste-usuario2/adm/formulario_copy.php">Cadastrar um Produto</a>
+            <a href="http://localhost/teste-usuario2/adm/formulario_copy.php">Cadastrar um Produto</a>-->
 
-            <a href="Sair.php">Sair</a>
+            
 
             <a href="#"></a>
         </div>

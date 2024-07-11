@@ -1,8 +1,8 @@
 <?php
     $dbhost = 'localhost';
-    $dbUsername = 'root';
-    $dbpassword ='';
-    $dbName = 'banco_dados';
+    $dbUsername = 'u151972251_vendaspdv';
+    $dbpassword ='Danipaiva1991@';
+    $dbName = 'u151972251_pdvvendas';
     
 
     $conexao = new mysqli($dbhost,$dbUsername,$dbpassword,$dbName);

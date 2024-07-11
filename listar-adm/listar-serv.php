@@ -179,6 +179,9 @@ $sql = "SELECT * FROM usuarios ORDER BY id DESC";
             #listaCarrinho li {
                 padding: 3px 0;
             }
+            input{
+                 background-color: white;
+            }
         }
        
         
@@ -189,8 +192,8 @@ $sql = "SELECT * FROM usuarios ORDER BY id DESC";
 <body>
     <nav>
     <button><a href="sair.php">Sair</a></button>
-    <button><a href="http://localhost/teste-usuario2/listar-adm/painel.php">Voltar</a></button>
-    <button><a href="http://localhost/teste-usuario2/adm/formulario_copy.php">Novo serviço</a></button>
+    <button><a href="painel.php">Voltar</a></button>
+    <button><a href="https://lightcoral-cassowary-439946.hostingersite.com/adm/formulario_copy.php">Novo serviço</a></button>
     </nav>
 
 

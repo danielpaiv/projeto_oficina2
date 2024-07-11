@@ -13,7 +13,7 @@
             column-count: 1;
             background-color: rgba(0, 0, 0, 0.6);
             position: absolute;
-            top: 50%;
+            top: 55%;
             left: 50%;
             transform: translate(-50%,-50%);
             padding: 80px;
@@ -58,11 +58,11 @@
 </head>
 <body>
 
-<button><a href="http://localhost/teste-usuario2/index.php"class="btn btn-danger me-5">Volta</a></button>
+<button><a href="https://lightcoral-cassowary-439946.hostingersite.com/index.php"class="btn btn-danger me-5">Volta</a></button>
     
     <div>
         <h1>Login</h1>
-        <h3>Cadastro de usuarios</h3>
+        <h3>Gestão Adm</h3>
         <form action="testeLogin.php"method="POST">
         <input type="text" name="nome" placeholder="nome"required>
         <br><br>

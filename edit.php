@@ -92,7 +92,7 @@
         .box{
             columns: 1;
             position: absolute;
-            top: 55%;
+            top: 62%;
             left: 50%;
             transform: translate(-50%,-50%);
             background-color: rgba(0, 0, 0, 0.6);
@@ -148,7 +148,7 @@
             outline: none;
             font-size: 15px;
         }
-        #submit{
+        #update{
             background-image: linear-gradient(to right,rgb(130, 20, 220), rgb(44, 31, 220));
             width: 100%;
             border: none;
@@ -158,7 +158,7 @@
             cursor: pointer;
             border-radius: 10px;
         }
-        #submit:hover{
+        #update:hover{
             background-image: linear-gradient(to right,rgb(27, 20, 220), rgb(102, 14, 184));
         }
         .btn{
@@ -187,7 +187,7 @@
         @media screen and (max-width: 400px){
             .box{
                 width: 100%;
-                top:75%;
+                top:95%;
             }
         }
         @media screen and (max-width: 400px){
@@ -203,6 +203,7 @@
             color:black;
             border:black;
         }
+        
     </style>
 </head>
 <body>

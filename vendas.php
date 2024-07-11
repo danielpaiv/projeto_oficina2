@@ -237,6 +237,9 @@
                 margin-top: 20px;
                 margin-left: 0px;
             }
+            input{
+                color:white;
+            }
         }
 
     </style>
@@ -260,7 +263,9 @@
         <a href="#" id="showOptions">Mais opções</a>
             <div id="options" class="hidden">
                 <a href="http://localhost/teste-usuario2/listar-adm/index.php">Adm</a>
-                <a href="meurelatorio.php">Relatório por admistradora</a>
+                
+                <a href="meuRelatorio.php">Relatorio por administradora</a>
+                
                 <a href="relatorio_vendas_por_servico.php">Relatório por itens</a>
                 <!--<a href="#">Opção 4</a>-->
             </div>

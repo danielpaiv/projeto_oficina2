@@ -45,8 +45,8 @@ if (isset($_POST['submit'])) {
     $stmt->bind_param("sssssssssssi", $user_id, $nome, $cnpj, $telefone, $servico, $data_serv, $cidade, $estado, $endereco, $forma_pagamento, $valor, $estoque);
     $stmt->execute();
 
-    header('Location: listaadm.php'); // Redireciona para a página de listagem após o cadastro
-    header('Location: http://localhost/teste-usuario2/listar-adm/listar-serv.php');
+    //header('Location: listaadm.php'); // Redireciona para a página de listagem após o cadastro
+    header('Location: https://lightcoral-cassowary-439946.hostingersite.com/listar-adm/listar-serv.php');
     exit;
 }
 ?>
@@ -179,13 +179,17 @@ if (isset($_POST['submit'])) {
             color:black;
             border:black;
         }
+        .box{
+            top:55%;
+            
+        }
     </style>
 </head>
 <body>
     <nav> 
         <button><a href="sair.php" class="btn btn-danger me-5">Sair</a></button>
         
-        <button><a href="http://localhost/teste-usuario2/listar-adm/listar-serv.php" class="btn btn-danger me-5">Voltar</a></button>
+        <button><a href="https://lightcoral-cassowary-439946.hostingersite.com/listar-adm/listar-serv.php" class="btn btn-danger me-5">Voltar</a></button>
     </nav> 
     <div class="box">
         <form action="formulario_copy.php" method="POST">
@@ -219,7 +223,7 @@ if (isset($_POST['submit'])) {
                 <p>Serviço de Limpeza</p>
             -->
                 <div class="inputbox">
-                    <input type="tel" name="servico" id="servico" class="inputUser" required>
+                    <input type="text" name="servico" id="servico" class="inputUser" required>
                     <label for="servico" class="labelInput">Produto</label>
                 </div>
                 

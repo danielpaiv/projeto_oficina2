@@ -84,7 +84,7 @@
             display: flex;
             justify-content: space-between;
             position: fixed;
-            width: 1625px;
+             width: 1455px;
             margin-left: 20px;
             margin-top: 1px;;
         }
@@ -264,6 +264,18 @@
                 margin-top: 100px;
                 margin-left: 0px;
             }
+            input{
+                color:white;
+            }
+            .box{
+                margin-top: 210px;
+                margin-left: -18px;
+                 width: 350px;
+            }
+            .center{
+                margin-top: 100px;
+                
+            }
         }
     </style>
    
@@ -284,7 +296,7 @@
 
         <a href="sangrias copy.php" class="btn-b">Sangrias</a>
 
-        <a href="http://localhost/teste-usuario2/listar-adm/graficos/graficos_geral.php#"class="btn-b">Graficos</a>
+        <a href="https://lightcoral-cassowary-439946.hostingersite.com/listar-adm/graficos/graficos_geral.php"class="btn-b">Graficos</a>
 
         
 
@@ -292,34 +304,38 @@
    
     <nav id="menu">
         <a href="#" onclick="facharMenu()">&times; Fechar</a>
-        <a href="http://localhost/teste-usuario2/listar-adm/painel.php">Voltar</a>
-        <a href="http://localhost/teste-usuario2/adm/index.php">Cadastrar User</a>
+        <a href="painel.php">Voltar</a>
+        <a href="https://lightcoral-cassowary-439946.hostingersite.com/adm/index.php">Cadastrar User</a>
         <!--
             <a href="relatorio-periodo.php">relatorio por período</a>
             <a href="relatorio-geral.php">relatorio Geral</a>
             <a href="relatorio_vendas_por_servico copy.php">Relatório por itens</a>
             <a href="#">Mais opções</a>
-        -->
+        
         <a href="#" id="showOptions">Mais opções</a>
         <div id="options" class="hidden">
-            <a href="http://localhost/teste-usuario2/index.php">Menu User</a>
-            <a href="http://localhost/teste-usuario2/adm/formulario_copy.php">Cadastrar um Produto</a>
+            
+            <a href="#">Menu User</a>
+            
+            <a href="#">Cadastrar um Produto</a>
+            
             <a href="Sair.php">Sair</a>
+            
             <a href="#"></a>
-            <a href="#"></a>
+            <a href="#"></a>-->
         </div>
     </nav>
 
     <main id="conteudo">
 
-            <div class="center">
+            
                 
 
-                <div>
+                <div class="box">
 
                     <section>
 
-                    <label for="filtroNome">Filtrar por id do usuario:</label>
+                    <label for="filtroNome">Filtrar por nome do usuario:</label>
                     <input type="text" id="filtroNome" onkeyup="filtrarPorNome()">
 
                         <h1>Relatório de Valores Diário</h1>

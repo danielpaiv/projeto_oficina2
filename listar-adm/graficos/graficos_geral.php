@@ -219,7 +219,7 @@
     <nav id="menu">
         <a href="#" onclick="facharMenu()">&times; Fechar</a>
 
-        <a href="http://localhost/teste-usuario2/listar-adm/relatorio-geral.php">Voltar</a>
+        <a href="https://lightcoral-cassowary-439946.hostingersite.com/listar-adm/relatorio-geral.php">Voltar</a>
     <!--
         <a href="http://localhost/teste-usuario2/adm/index.php">Cadastrar User</a>
         

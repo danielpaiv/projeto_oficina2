@@ -73,7 +73,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%,-50%);
-            background-image: linear-gradient(to right,rgb(133, 135, 33), rgb(255, 238, 48));
+            background-image: linear-gradient(to right,rgb(133, 135, 0), rgb(255, 238, 1));
             padding: 15px;
             border-radius: 15px;
             width: 30%;
@@ -141,6 +141,28 @@
             padding: 7px;
             position: absolute;
         }
+        @media screen and (max-width: 400px){
+            
+            body{
+                width:100%
+                
+            }
+         @media screen and (max-width: 400px){
+            
+            
+            .box{
+                right:90px;
+                width:80%
+                
+                    
+            }
+            @media screen and (max-width: 400px){
+                .inputbox{
+                    right:-30px;
+                    width:70%
+                    
+                }
+            }
        
        
 
@@ -154,7 +176,7 @@
 
         <br><br>
 <body>
-    <h1>Olá Adm !</h1>
+    <!--<h1>Olá Adm !</h1>
     <br><br><br><br><br>
     <h2>Sistema de registro de fucionário.</h2>
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
@@ -162,6 +184,8 @@
         <a href="#">Acesse o sistema aqui</a>
         
     </div>>-->
+    <br><br><br>
+    
    
     
         <div class="box">
@@ -173,7 +197,7 @@
                 <br>
 
                 <div class="inputbox">
-                    <input type="text" name="user_id" id="user_id" class="inputUser" required>
+                    <input type="number" name="user_id" id="user_id" class="inputUser" required>
                     <label for="user_id" class="labelInput">user_id</label>
                 </div>
                 <br><br>

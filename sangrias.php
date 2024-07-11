@@ -288,6 +288,9 @@
                 margin-top: 100px;
                 margin-left: 0px;
             }
+            input{
+                color:white;
+            }
         }
 
     </style>

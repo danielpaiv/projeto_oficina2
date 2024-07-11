@@ -77,13 +77,13 @@
 </head>
 <body>
     <div class="box">
-    <button><a href="http://localhost/teste-usuario2/listar-adm/listar-serv.php"class="btn btn-danger me-5">Produtos</a></button>
+    <button><a href="listar-serv.php"class="btn btn-danger me-5">Produtos</a></button>
 
-    <button><a href="http://localhost/teste-usuario2/listar-adm/listar-vendas.php" class="btn btn-danger me-5">vendas</a></button>
+    <button><a href="listar-vendas.php" class="btn btn-danger me-5">vendas</a></button>
 
-    <button><a href="http://localhost/teste-usuario2/listar-adm/relatorio-geral.php" class="btn btn-danger me-5">Relatórios</a></button>
+    <button><a href="relatorio-geral.php" class="btn btn-danger me-5">Relatórios</a></button>
 
-    <button><a href="http://localhost/phpmyadmin/index.php" class="btn btn-danger me-5">Editar esteque</a></button>
+    <button><a href="#" class="btn btn-danger me-5">Editar estoque</a></button>
 
     <button><a href="sair.php" class="btn btn-danger me-5">Sair</a></button>
     </div>

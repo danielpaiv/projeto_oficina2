@@ -145,6 +145,9 @@
         label{
             color:white;
         }
+        input{
+            color:white;
+        }
     </style>
 </head>
 <body>

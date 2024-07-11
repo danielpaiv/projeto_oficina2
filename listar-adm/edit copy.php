@@ -79,7 +79,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>formulario | SERVIÇO</title>
+    <title>Edição de Produto</title>
     <script src="adicionar.js"></script>
     <style>
         
@@ -148,7 +148,7 @@
             outline: none;
             font-size: 15px;
         }
-        #submit{
+        #update{
             background-image: linear-gradient(to right,rgb(130, 20, 220), rgb(44, 31, 220));
             width: 100%;
             border: none;
@@ -158,7 +158,7 @@
             cursor: pointer;
             border-radius: 10px;
         }
-        #submit:hover{
+        #update:hover{
             background-image: linear-gradient(to right,rgb(27, 20, 220), rgb(102, 14, 184));
         }
         .btn{
@@ -203,6 +203,9 @@
             color:black;
             border:black;
         }
+        .box{
+            top:55%;
+        }
     </style>
 </head>
 <body>
@@ -214,7 +217,7 @@
     <div class="box">
         <form action="saveEdit copy.php" method="POST">
             <fieldset>
-                <legend><b>Formulario de Serviços</b></legend>
+                <legend><b>Formulario de Edição</b></legend>
                 <br><br>
 
 
@@ -242,7 +245,7 @@
                 <p>Serviço de Limpeza</p>
             -->
                 <div class="inputbox">
-                    <input type="tel" name="servico" id="serviço" class="inputUser" value="<?php echo $servico ?>" required>
+                    <input type="text" name="servico" id="serviço" class="inputUser" value="<?php echo $servico ?>" required>
                     <label for="serviço" class="labelInput">Produto</label>
                 </div>
                 
@@ -309,11 +312,11 @@
             -->
 
                 <div class="inputbox">
-                    <input type="text" name="valor" id="valor" class="inputUser" value="<?php echo $valor ?>" required>
+                    <input type="number" name="valor" id="valor" class="inputUser" value="<?php echo $valor ?>" required>
                     <label for="valor" class="labelInput">Valor</label>
                 </div><br><br>
                 <div class="inputbox">
-                    <input type="text" name="estoque" id="estoque" class="inputUser" value="<?php echo $estoque ?>" required>
+                    <input type="number" name="estoque" id="estoque" class="inputUser" value="<?php echo $estoque ?>" required>
                     <label for="estoque" class="labelInput">estoque</label>
                 </div>
                 <br><br>

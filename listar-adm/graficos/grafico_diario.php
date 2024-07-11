@@ -211,7 +211,20 @@
         label{
             color:white;
         }
+         @media (max-width: 400px){
+            input{
+                color:white;
+            }
+         }
+         
+         
+         
+         
     </style>
+    
+    
+    
+    
     <!--Biblioteca para renderizar o grafico de colunas-->
    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!--Biblioteca para renderizar os rotulos de dados do gráfico-->
@@ -233,7 +246,7 @@
    
     <nav id="menu">
         <a href="#" onclick="facharMenu()">&times; Fechar</a>
-        <a href="http://localhost/teste-usuario2/listar-adm/relatorio-geral.php">Voltar</a>
+        <a href="https://lightcoral-cassowary-439946.hostingersite.com/listar-adm/relatorio-geral.php">Voltar</a>
     <!--    
         <a href="http://localhost/teste-usuario2/adm/index.php">Cadastrar User</a>
         
