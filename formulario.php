@@ -1,53 +1,53 @@
 <?php
-session_start();
-include_once('config.php');
+    session_start();
+    include_once('config.php');
 
-// Verifica se o usuário está logado
-if (!isset($_SESSION['user_id'])) {
-    header('Location: login.php'); // Redireciona para a página de login se não estiver logado
-    exit;
-}
+    // Verifica se o usuário está logado
+    if (!isset($_SESSION['user_id'])) {
+        header('Location: login.php'); // Redireciona para a página de login se não estiver logado
+        exit;
+    }
 
-//print_r($_SESSION);
-if((!isset($_SESSION['nome']) == true) and (!isset($_SESSION['senha']) == true))
-{
-    unset($_SESSION['nome']);
-    unset($_SESSION['senha']);
-    header('Location: index.php');
-}
- $logado = $_SESSION['nome'];
+    //print_r($_SESSION);
+    if((!isset($_SESSION['nome']) == true) and (!isset($_SESSION['senha']) == true))
+    {
+        unset($_SESSION['nome']);
+        unset($_SESSION['senha']);
+        header('Location: index.php');
+    }
+    $logado = $_SESSION['nome'];
 
-//$sql = "SELECT * FROM usuarios ORDER BY id DESC";
+    //$sql = "SELECT * FROM usuarios ORDER BY id DESC";
 
-//$result = $conexao->query($sql);
+    //$result = $conexao->query($sql);
 
-//print_r($result);
+    //print_r($result);
 
 
-if (isset($_POST['submit'])) {
-    include_once('conexao.php');
+    if (isset($_POST['submit'])) {
+        include_once('conexao.php');
 
-    $nome = $_POST['nome'];
-    $cnpj = $_POST['cnpj'];
-    $telefone = $_POST['telefone'];
-    $serviço = $_POST['serviço'];
-    $data_serv = $_POST['data_serv'];
-    $cidade = $_POST['cidade'];
-    $estado = $_POST['estado'];
-    $endereco = $_POST['endereco'];
-    $valor = $_POST['valor'];
-    $user_id = $_POST['user_id']; // Obtém o ID do usuário da sessão
-    $forma_pagamento = $_POST['forma_pagamento'];
+        $nome = $_POST['nome'];
+        $cnpj = $_POST['cnpj'];
+        $telefone = $_POST['telefone'];
+        $serviço = $_POST['serviço'];
+        $data_serv = $_POST['data_serv'];
+        $cidade = $_POST['cidade'];
+        $estado = $_POST['estado'];
+        $endereco = $_POST['endereco'];
+        $valor = $_POST['valor'];
+        $user_id = $_POST['user_id']; // Obtém o ID do usuário da sessão
+        $forma_pagamento = $_POST['forma_pagamento'];
 
-    // Insere os dados no banco de dados, incluindo o ID do usuário
-    $stmt = $conexao->prepare("INSERT INTO clientes (user_id, nome, cnpj, telefone, serviço, data_serv, cidade, estado, endereco, forma_pagamento, valor) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("ssssssssssi", $user_id, $nome, $cnpj, $telefone, $serviço, $data_serv, $cidade, $estado, $endereco, $forma_pagamento, $valor);
-    $stmt->execute();
+        // Insere os dados no banco de dados, incluindo o ID do usuário
+        $stmt = $conexao->prepare("INSERT INTO clientes (user_id, nome, cnpj, telefone, serviço, data_serv, cidade, estado, endereco, forma_pagamento, valor) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("ssssssssssi", $user_id, $nome, $cnpj, $telefone, $serviço, $data_serv, $cidade, $estado, $endereco, $forma_pagamento, $valor);
+        $stmt->execute();
 
-    header('Location: listaadm.php'); // Redireciona para a página de listagem após o cadastro
-    header('Location: listauser.php');
-    exit;
-}
+        header('Location: listaadm.php'); // Redireciona para a página de listagem após o cadastro
+        header('Location: listauser.php');
+        exit;
+    }
 ?>
 
 <!DOCTYPE html>
