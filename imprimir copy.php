@@ -65,6 +65,7 @@ if (!isset($_SESSION['user_id'])) {
                 <tr>
                     <th>Cliente</th>
                     <th>Serviço</th>
+                    <th>Quantidade</th>
                     <th>Forma de Pagamento</th>
                     <th>Valor (R$)</th>
                 </tr>
@@ -72,7 +73,7 @@ if (!isset($_SESSION['user_id'])) {
             <tbody id="listaServicos"></tbody>
             <tfoot>
                 <tr class="total">
-                    <td colspan="3">Total</td>
+                    <td colspan="4">Total</td>
                     <td id="totalValue"></td>
                 </tr>
             </tfoot>
@@ -87,13 +88,25 @@ if (!isset($_SESSION['user_id'])) {
 
         let total = 0;
 
-        carrinho.forEach(servico => {
+        // Agrupar serviços por nome e forma de pagamento
+        const servicosAgrupados = carrinho.reduce((acc, servico) => {
+            const key = `${servico.nome}-${servico.servico}-${servico.forma_pagamento}`;
+            if (!acc[key]) {
+                acc[key] = { ...servico, quantidade: 0 };
+            }
+            acc[key].quantidade += 1;
+            acc[key].valor = parseFloat(acc[key].valor) * acc[key].quantidade;
+            return acc;
+        }, {});
+
+        Object.values(servicosAgrupados).forEach(servico => {
             const tr = document.createElement('tr');
             tr.innerHTML = `
                 <td>${servico.nome}</td>
                 <td>${servico.servico}</td>
+                <td>${servico.quantidade}</td>
                 <td>${servico.forma_pagamento}</td>
-                <td>${servico.valor}</td>
+                <td>${servico.valor.toFixed(2)}</td>
             `;
             listaServicos.appendChild(tr);
 

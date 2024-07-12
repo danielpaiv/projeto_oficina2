@@ -503,7 +503,7 @@
             <h2>Carrinho de Serviços</h2>
             <ul id="listaCarrinho"></ul>
             <button onclick="finalizarCompra()">Finalizar Compra</button>
-            <button id="botoesVenda"></button>
+            <!--<button id="botoesVenda"></button>-->
         </div>
         <br>
         <br>

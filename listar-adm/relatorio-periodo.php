@@ -303,7 +303,7 @@
 
         <a href="painel.php">Voltar</a>
 
-        <a href="https://lightcoral-cassowary-439946.hostingersite.com/adm/index.php">Cadastrar User</a>
+        <a href="http://localhost/projeto_oficina/adm/index.php">Cadastrar User</a>
         <!--
             <a href="relatorio-periodo.php">relatorio por período</a>
             <a href="relatorio-geral.php">relatorio Geral</a>
