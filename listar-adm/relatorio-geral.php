@@ -299,8 +299,10 @@
         <a href="#" onclick="facharMenu()">&times; Fechar</a>
 
         <a href="painel.php">Voltar</a>
-
+        <a href="despesas.php">Cadastrar Despesas</a>
         <a href="http://localhost/projeto_oficina/adm/index.php">Cadastrar User</a>
+
+        
         <!--
             <a href="relatorio-periodo.php">relatorio por período</a>
             <a href="relatorio-diario.php">relatorio Diario</a>
