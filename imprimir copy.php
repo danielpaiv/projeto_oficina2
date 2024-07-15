@@ -67,6 +67,7 @@ if (!isset($_SESSION['user_id'])) {
                     <th>Serviço</th>
                     <th>Quantidade</th>
                     <th>Forma de Pagamento</th>
+                    <th>Valor Unitário</th>
                     <th>Valor (R$)</th>
                 </tr>
             </thead>
@@ -82,41 +83,45 @@ if (!isset($_SESSION['user_id'])) {
     </div>
 
     <script>
-        const carrinho = JSON.parse(localStorage.getItem('carrinhoFinalizado')) || [];
-    const listaServicos = document.getElementById('listaServicos');
-    const totalValue = document.getElementById('totalValue');
+      // Obtém os dados do carrinho do localStorage, ou inicializa com um array vazio
+const carrinho = JSON.parse(localStorage.getItem('carrinhoFinalizado')) || [];
+const listaServicos = document.getElementById('listaServicos');
+const totalValue = document.getElementById('totalValue');
 
-    let total = 0;
+let total = 0;
 
-    // Agrupar serviços por nome, tipo de serviço e forma de pagamento
-    const servicosAgrupados = carrinho.reduce((acc, servico) => {
-        const key = `${servico.nome}-${servico.servico}-${servico.forma_pagamento}`;
-        if (!acc[key]) {
-            acc[key] = { ...servico, quantidade: 0, valorTotal: 0 };
-        }
-        acc[key].quantidade += 1;
-        acc[key].valorTotal += parseFloat(servico.valor); // Adiciona o valor do serviço ao valor total
-        return acc;
-    }, {});
+// Agrupar serviços por nome, tipo de serviço e forma de pagamento
+const servicosAgrupados = carrinho.reduce((acc, servico) => {
+    const key = `${servico.nome}-${servico.servico}-${servico.forma_pagamento}`;
+    if (!acc[key]) {
+        acc[key] = { ...servico, quantidade: 0, valorTotal: 0 };
+    }
+    acc[key].quantidade += 1;
+    acc[key].valorTotal += parseFloat(servico.valor); // Adiciona o valor do serviço ao valor total
+    return acc;
+}, {});
 
-    Object.values(servicosAgrupados).forEach(servico => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-            <td>${servico.nome}</td>
-            <td>${servico.servico}</td>
-            <td>${servico.quantidade}</td>
-            <td>${servico.forma_pagamento}</td>
-            <td>${servico.valorTotal.toFixed(2)}</td> 
-        `;
-        listaServicos.appendChild(tr);
+// Adicionar os serviços agrupados na tabela e calcular o total geral
+Object.values(servicosAgrupados).forEach(servico => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+        <td>${servico.nome}</td>
+        <td>${servico.servico}</td>
+        <td>${servico.quantidade}</td>
+        <td>${servico.forma_pagamento}</td>
+        <td>${parseFloat(servico.valor).toFixed(2)}</td> <!-- Mostra o valor unitário do serviço -->
+        <td>${servico.valorTotal.toFixed(2)}</td> <!-- Mostra o valor total do serviço -->
+    `;
+    listaServicos.appendChild(tr);
 
-        total += servico.valorTotal; // Adiciona o valor total do serviço ao total geral
-    });
+    total += servico.valorTotal; // Adiciona o valor total do serviço ao total geral
+});
 
-    totalValue.textContent = total.toFixed(2);
+// Exibir o valor total geral
+totalValue.textContent = total.toFixed(2);
 
-    // Limpar o localStorage após carregar os dados
-    localStorage.removeItem('carrinhoFinalizado');
+// Limpar o localStorage após carregar os dados
+localStorage.removeItem('carrinhoFinalizado');
     </script>
 </body>
 </html>
