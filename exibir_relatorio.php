@@ -23,6 +23,21 @@
     $stmt->bind_param("is", $user_id, $data_consulta);
     $stmt->execute();
     $result = $stmt->get_result();
+
+    // Consulta para obter o total geral de valores e quantidades
+    $sql_total = "SELECT SUM(valor) AS total_geral_valor, SUM(total_quantidade) AS total_geral_quantidade 
+    FROM (
+        SELECT SUM(valor) AS valor, COUNT(*) AS total_quantidade 
+        FROM carrinho 
+        WHERE usuario_id = ? AND DATE(data_insercao) = ?
+        GROUP BY usuario_id, servico
+    ) AS subquery";
+
+$stmt_total = $conexao->prepare($sql_total);
+$stmt_total->bind_param("is", $user_id, $data_consulta);
+$stmt_total->execute();
+$result_total = $stmt_total->get_result();
+$total = $result_total->fetch_assoc();
 ?>
 
 <!DOCTYPE html>
@@ -127,6 +142,12 @@
                 echo "<td>" . $row['total_quantidade'] . "</td>";
                 echo "</tr>";
             }
+            // Exibir total geral
+            echo "<tr>";
+            echo "<td colspan='2'><strong>Total Geral</strong></td>";
+            echo "<td><strong>" . $total['total_geral_valor'] . "</strong></td>";
+            echo "<td><strong>" . $total['total_geral_quantidade'] . "</strong></td>";
+            echo "</tr>";
             ?>
         </tbody>
     </table>

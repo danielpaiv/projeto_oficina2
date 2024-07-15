@@ -1,28 +1,43 @@
 <?php
-    session_start();
-    include_once('conexao.php');
-
-    if (!isset($_SESSION['user_id'])) {
-        header('Location: login.php');
-        exit;
-    }
-
-    $user_id = $_SESSION['user_id'];
-    $data_consulta = isset($_GET['data_consulta']) ? $_GET['data_consulta'] : date('Y-m-d');
-
-    // Consulta para obter os totais de serviços por data específica
-    $sql = "SELECT usuario_id, 
-                servico,
-                SUM(valor) AS total_valor,
-                COUNT(*) AS total_quantidade 
-            FROM carrinho 
-            WHERE usuario_id = ? AND DATE(data_insercao) = ?
-            GROUP BY usuario_id, servico";
-
-    $stmt = $conexao->prepare($sql);
-    $stmt->bind_param("is", $user_id, $data_consulta);
-    $stmt->execute();
-    $result = $stmt->get_result();
+     session_start();
+     include_once('conexao.php');
+ 
+     if (!isset($_SESSION['user_id'])) {
+         header('Location: login.php');
+         exit;
+     }
+ 
+     $user_id = $_SESSION['user_id'];
+     $data_consulta = isset($_GET['data_consulta']) ? $_GET['data_consulta'] : date('Y-m-d');
+ 
+     // Consulta para obter os totais de serviços por data específica
+     $sql = "SELECT usuario_id, 
+                 servico,
+                 SUM(valor) AS total_valor,
+                 COUNT(*) AS total_quantidade 
+             FROM carrinho 
+             WHERE usuario_id = ? AND DATE(data_insercao) = ?
+             GROUP BY usuario_id, servico";
+ 
+     $stmt = $conexao->prepare($sql);
+     $stmt->bind_param("is", $user_id, $data_consulta);
+     $stmt->execute();
+     $result = $stmt->get_result();
+ 
+     // Consulta para obter o total geral de valores e quantidades
+     $sql_total = "SELECT SUM(valor) AS total_geral_valor, SUM(total_quantidade) AS total_geral_quantidade 
+                   FROM (
+                       SELECT SUM(valor) AS valor, COUNT(*) AS total_quantidade 
+                       FROM carrinho 
+                       WHERE usuario_id = ? AND DATE(data_insercao) = ?
+                       GROUP BY usuario_id, servico
+                   ) AS subquery";
+ 
+     $stmt_total = $conexao->prepare($sql_total);
+     $stmt_total->bind_param("is", $user_id, $data_consulta);
+     $stmt_total->execute();
+     $result_total = $stmt_total->get_result();
+     $total = $result_total->fetch_assoc();
 ?>
 
 
@@ -197,18 +212,23 @@
                     </thead>
                     <tbody>
                         <?php
-                         while ($row = $result->fetch_assoc()) {
-                            echo "<tr>";
-                            echo "<td>" . $row['usuario_id'] . "</td>";
-                            echo "<td>" . $row['servico'] . "</td>";
-                            echo "<td>" . $row['total_valor'] . "</td>";
-                            echo "<td>" . $row['total_quantidade'] . "</td>";
-                            echo "</tr>";
+                            while ($row = $result->fetch_assoc()) {
+                                echo "<tr>";
+                                echo "<td>" . $row['usuario_id'] . "</td>";
+                                echo "<td>" . $row['servico'] . "</td>";
+                                echo "<td>" . $row['total_valor'] . "</td>";
+                                echo "<td>" . $row['total_quantidade'] . "</td>";
+                                echo "</tr>";
                             }
+                            // Exibir total geral
+                            echo "<tr>";
+                            echo "<td colspan='2'><strong>Total Geral</strong></td>";
+                            echo "<td><strong>" . $total['total_geral_valor'] . "</strong></td>";
+                            echo "<td><strong>" . $total['total_geral_quantidade'] . "</strong></td>";
+                            echo "</tr>";
                         ?>
                     </tbody>
                 </table>
-       
             </section>
 
         </div>

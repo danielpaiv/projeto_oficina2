@@ -1,34 +1,49 @@
 <?php
-    session_start();
-    include_once('conexao.php');
-
-    // Verifica se o usuário está logado
-    if ((!isset($_SESSION['nome']) == true) and (!isset($_SESSION['senha']) == true)) {
-        unset($_SESSION['nome']);
-        unset($_SESSION['senha']);
-        header('Location: index.php');
-    }
-    $logado = $_SESSION['nome'];
-    //, strtotime('-1 day')
-    // Obtém a data da consulta ou usa a data do dia anterior por padrão
-    $data_consulta = isset($_GET['data_consulta']) ? $_GET['data_consulta'] : date('Y-m-d');
-
-    // Consulta para obter a soma dos valores e quantidades de cada usuário por data específica
-    $sql = "SELECT c.usuario_id, u.nome,
-            SUM(CASE WHEN forma_pagamento = 'debito' THEN valor ELSE 0 END) AS total_debito,
-            SUM(CASE WHEN forma_pagamento = 'credito' THEN valor ELSE 0 END) AS total_credito,
-            SUM(CASE WHEN forma_pagamento = 'dinheiro' THEN valor ELSE 0 END) AS total_dinheiro,
-            SUM(CASE WHEN forma_pagamento = 'pix' THEN valor ELSE 0 END) AS total_pix,
-            SUM(c.valor) AS total_valor,
-            COUNT(*) AS total_quantidade 
-            FROM carrinho c
-            JOIN usuarios u ON c.usuario_id = u.id
-            WHERE DATE(c.data_insercao) = ?
-            GROUP BY c.usuario_id";
-    $stmt = $conexao->prepare($sql);
-    $stmt->bind_param("s", $data_consulta);
-    $stmt->execute();
-    $result = $stmt->get_result();
+     session_start();
+     include_once('conexao.php');
+ 
+     // Verifica se o usuário está logado
+     if ((!isset($_SESSION['nome']) == true) and (!isset($_SESSION['senha']) == true)) {
+         unset($_SESSION['nome']);
+         unset($_SESSION['senha']);
+         header('Location: index.php');
+     }
+     $logado = $_SESSION['nome'];
+ 
+     // Obtém a data da consulta ou usa a data do dia anterior por padrão
+     $data_consulta = isset($_GET['data_consulta']) ? $_GET['data_consulta'] : date('Y-m-d');
+ 
+     // Consulta para obter a soma dos valores e quantidades de cada usuário por data específica
+     $sql = "SELECT c.usuario_id, u.nome,
+             SUM(CASE WHEN forma_pagamento = 'debito' THEN valor ELSE 0 END) AS total_debito,
+             SUM(CASE WHEN forma_pagamento = 'credito' THEN valor ELSE 0 END) AS total_credito,
+             SUM(CASE WHEN forma_pagamento = 'dinheiro' THEN valor ELSE 0 END) AS total_dinheiro,
+             SUM(CASE WHEN forma_pagamento = 'pix' THEN valor ELSE 0 END) AS total_pix,
+             SUM(c.valor) AS total_valor,
+             COUNT(*) AS total_quantidade 
+             FROM carrinho c
+             JOIN usuarios u ON c.usuario_id = u.id
+             WHERE DATE(c.data_insercao) = ?
+             GROUP BY c.usuario_id";
+     $stmt = $conexao->prepare($sql);
+     $stmt->bind_param("s", $data_consulta);
+     $stmt->execute();
+     $result = $stmt->get_result();
+ 
+     // Consulta para obter o total geral de valores e quantidades para a data específica
+     $sql_total_geral = "SELECT SUM(CASE WHEN forma_pagamento = 'debito' THEN valor ELSE 0 END) AS total_geral_debito,
+                               SUM(CASE WHEN forma_pagamento = 'credito' THEN valor ELSE 0 END) AS total_geral_credito,
+                               SUM(CASE WHEN forma_pagamento = 'dinheiro' THEN valor ELSE 0 END) AS total_geral_dinheiro,
+                               SUM(CASE WHEN forma_pagamento = 'pix' THEN valor ELSE 0 END) AS total_geral_pix,
+                               SUM(c.valor) AS total_geral_valor,
+                               COUNT(*) AS total_geral_quantidade 
+                        FROM carrinho c
+                        WHERE DATE(c.data_insercao) = ?";
+     $stmt_total = $conexao->prepare($sql_total_geral);
+     $stmt_total->bind_param("s", $data_consulta);
+     $stmt_total->execute();
+     $result_total = $stmt_total->get_result();
+     $total_geral = $result_total->fetch_assoc();
 ?>
 
 
@@ -373,6 +388,17 @@
                                     echo "<td>" . $row['total_quantidade'] . "</td>";
                                     echo "</tr>";
                                 }
+
+                                    // Exibir total geral ao final da tabela
+                                    echo "<tr>";
+                                    echo "<td colspan='2'><strong>Total Geral</strong></td>";
+                                    echo "<td><strong>" . $total_geral['total_geral_debito'] . "</strong></td>";
+                                    echo "<td><strong>" . $total_geral['total_geral_credito'] . "</strong></td>";
+                                    echo "<td><strong>" . $total_geral['total_geral_dinheiro'] . "</strong></td>";
+                                    echo "<td><strong>" . $total_geral['total_geral_pix'] . "</strong></td>";
+                                    echo "<td><strong>" . $total_geral['total_geral_valor'] . "</strong></td>";
+                                    echo "<td><strong>" . $total_geral['total_geral_quantidade'] . "</strong></td>";
+                                    echo "</tr>";
                                 ?>
                             </tbody>
                         </table>
