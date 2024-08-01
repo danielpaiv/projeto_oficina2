@@ -21,7 +21,7 @@ if (isset($_POST['submit']) && !empty($_POST['nome']) && !empty($_POST['senha'])
         $_SESSION['user_id'] = $user_data['id']; // Armazena o user_id na sessão
         $_SESSION['nome'] = $user_data['nome'];
         $_SESSION['senha'] = $user_data['senha'];
-        header('Location: listauser.php');
+        header('Location: painel.php');
     }
 } else {
     header('Location: index.php');
