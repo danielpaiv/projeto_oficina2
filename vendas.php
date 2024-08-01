@@ -255,7 +255,7 @@
    
     <nav id="menu">
         <a href="#" onclick="facharMenu()">&times; Fechar</a>
-        <a href="listauser.php">Voltar</a>
+        <a href="painel.php">Painel</a>
         <a href="sair.php">Sair</a>
         <!--<a href=""></a>
         <a href="#">Mais opções</a>-->

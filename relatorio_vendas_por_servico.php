@@ -177,7 +177,7 @@
     <nav id="menu">
         <a href="#" onclick="facharMenu()">&times; Fechar</a>
         <a href="vendas.php">Vendas</a>
-        <a href="listauser.php">Carrinho</a>
+        <a href="painel.php">Painel</a>
         <a href="sair.php">Sair</a>
         <a href="meuRelatorio.php">Relatorio por administradora</a>
     </nav>

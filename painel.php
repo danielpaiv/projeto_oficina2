@@ -81,9 +81,9 @@
 
     <button><a href="mesa_2.php" class="btn btn-danger me-5">Mesa 2</a></button>
 
-    <button><a href="#" class="btn btn-danger me-5">Vasio</a></button>
+    <button><a href="mesa_3.php" class="btn btn-danger me-5">Mesa 3</a></button>
 
-    <button><a href="#" class="btn btn-danger me-5">Vasio</a></button>
+    <button><a href="mesa_4.php" class="btn btn-danger me-5">Mesa 4</a></button>
 
     <button><a href="sair.php" class="btn btn-danger me-5">Sair</a></button>
     </div>

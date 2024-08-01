@@ -388,7 +388,7 @@ $user_id = $_SESSION['user_id'];
     <header class="fixed">
         <a href="#" class="btn-abrir" onclick="abrirMenu()">&#9776; Menu</a>
         <p>Nome: <?php echo $nome; ?></p><p>ID: <?php echo $user_id; ?></p>
-         <h2>Mesa 2</h2>
+         <h2>Mesa 3</h2>
     </header>
     
     <nav id="menu">
@@ -488,7 +488,7 @@ $user_id = $_SESSION['user_id'];
         }
 
         const userId = <?php echo json_encode($user_id); ?>;
-        let carrinho = JSON.parse(localStorage.getItem('carrinho_mesa_2_' + userId)) || [];
+        let carrinho = JSON.parse(localStorage.getItem('carrinho_mesa_3_' + userId)) || [];
 
         function adicionarAoCarrinho(servico) {
             if (servico.estoque > 0) {
@@ -506,7 +506,7 @@ $user_id = $_SESSION['user_id'];
                 .then(data => {
                     if (data.success) {
                         servico.estoque -= 1;
-                        localStorage.setItem('carrinho_mesa_2_' + userId, JSON.stringify(carrinho));
+                        localStorage.setItem('carrinho_mesa_3_' + userId, JSON.stringify(carrinho));
                         setTimeout(() => {
                             alert("Serviço adicionado ao carrinho! Certifique-se de perguntar ao cliente se vai querer dados na nota.");
                             window.location.reload();
@@ -524,7 +524,7 @@ $user_id = $_SESSION['user_id'];
         }
 
         function carregarCarrinho() {
-            const carrinhoLocal = localStorage.getItem('carrinho_mesa_2_' + userId);
+            const carrinhoLocal = localStorage.getItem('carrinho_mesa_3_' + userId);
             if (carrinhoLocal) {
                 carrinho = JSON.parse(carrinhoLocal);
                 atualizarCarrinho();
@@ -543,7 +543,7 @@ $user_id = $_SESSION['user_id'];
                 listaCarrinho.appendChild(li);
             });
 
-            localStorage.setItem('carrinho_mesa_2_' + userId, JSON.stringify(carrinho));
+            localStorage.setItem('carrinho_mesa_3_' + userId, JSON.stringify(carrinho));
         }
 
         function finalizarCompra() {
@@ -568,7 +568,7 @@ $user_id = $_SESSION['user_id'];
                 localStorage.setItem('carrinhoFinalizado_mesa_2_' + userId, JSON.stringify(carrinho));
 
                 carrinho = []; // Limpar o carrinho
-                localStorage.removeItem('carrinho_mesa_2_' + userId); // Limpar o localStorage
+                localStorage.removeItem('carrinho_mesa_3_' + userId); // Limpar o localStorage
                 atualizarCarrinho();
                 window.location.href = "imprimir copy.php"; // Redirecionar para a página de vendas
             })
@@ -602,7 +602,7 @@ $user_id = $_SESSION['user_id'];
                 });
 
                 carrinho = [];
-                localStorage.removeItem('carrinho_mesa_2_' + userId);
+                localStorage.removeItem('carrinho_mesa_3_' + userId);
                 alert("Venda cancelada!");
                 window.location.reload();
             }
@@ -616,7 +616,7 @@ $user_id = $_SESSION['user_id'];
         function confirmarVenda() {
             alert("Venda confirmada!");
             carrinho = [];
-            localStorage.removeItem('carrinho_mesa_2_' + userId);
+            localStorage.removeItem('carrinho_mesa_3_' + userId);
             window.location.reload();
         }
 

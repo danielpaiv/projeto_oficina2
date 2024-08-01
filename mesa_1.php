@@ -398,7 +398,7 @@ $user_id = $_SESSION['user_id'];
         <div id="options" class="hidden">
             <a href="meuRelatorio.php">Relatorio por administradora</a>
             <a href="relatorio_vendas_por_servico.php">Relatório por itens</a>
-            <a href="mesa_1.php">Mesa 1</a>
+            <a href="painel.php">Painel</a>
             <a href="sair.php">Sair</a>
         </div>
     </nav>
