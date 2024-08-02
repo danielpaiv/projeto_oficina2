@@ -41,7 +41,9 @@
 
         $result = $conexao->query($sqlUpdate); 
 
-        header('Location: listauser.php');
+        $arquivo_atual = $_POST['arquivo_atual']; // Obtém o nome do arquivo atual do formulário
+        header("Location: $arquivo_atual");
+        exit;
 
 
 

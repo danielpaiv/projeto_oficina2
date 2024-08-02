@@ -308,7 +308,7 @@
                     <label for="estoque" class="labelInput">estoque</label>
                 </div>
                 <br><br>
-                <input type="hidden" name="arquivo_atual" value="mesa_1.php">
+                <input type="hidden" name="arquivo_atual" value="mesa_4.php">
                 <input type="hidden" name="id" value="<?php echo $id ?>">
                 <input type="submit" name="update" id="update">
                 

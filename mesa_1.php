@@ -412,8 +412,13 @@ $user_id = $_SESSION['user_id'];
         <br>
         <br>
         <div class="m-5">
+
             <label for="filtroNome">Filtrar por nome:</label>
             <input type="text" id="filtroNome" onkeyup="filtrarPorNome()">
+
+            <label for="filtroId">Filtrar por id:</label>
+            <input type="text" id="filtroId" onkeyup="filtrarPorId()">
+
             <br>
             <br>
             <table id="clientesTabela" class="box">
@@ -629,6 +634,25 @@ $user_id = $_SESSION['user_id'];
 
             for (let i = 1; i < tr.length; i++) {
                 const td = tr[i].getElementsByTagName('td')[1]; // coluna "Nome"
+                if (td) {
+                    const txtValue = td.textContent || td.innerText;
+                    if (txtValue.toLowerCase().indexOf(filter) > -1) {
+                        tr[i].style.display = '';
+                    } else {
+                        tr[i].style.display = 'none';
+                    }
+                }
+            }
+        }
+
+        function filtrarPorId() {
+            const input = document.getElementById('filtroId');
+            const filter = input.value.toLowerCase();
+            const table = document.getElementById('clientesTabela');
+            const tr = table.getElementsByTagName('tr');
+
+            for (let i = 1; i < tr.length; i++) {
+                const td = tr[i].getElementsByTagName('td')[0]; // coluna "Nome"
                 if (td) {
                     const txtValue = td.textContent || td.innerText;
                     if (txtValue.toLowerCase().indexOf(filter) > -1) {
