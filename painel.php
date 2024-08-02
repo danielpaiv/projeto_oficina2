@@ -73,6 +73,13 @@
             text-align: center;
         }
 
+        .btn-danger:hover{
+            background-color: black;
+            color: red;
+            padding:10px;
+            width: 94%;
+        }
+
     </style>
 </head>
 <body>

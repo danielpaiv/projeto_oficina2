@@ -72,7 +72,7 @@
             display: block;
             text-align: center;
         }
-
+        
         .btn-danger:hover{
             background-color: black;
             color: red;
@@ -84,13 +84,13 @@
 </head>
 <body>
     <div class="box">
-    <button><a href="listar-serv.php"class="btn btn-danger me-5">Produtos</a></button>
+    <button><a href="formulario_copy.php"class="btn btn-danger me-5">Cadastrar Produto</a></button>
 
-    <button><a href="listar-vendas.php" class="btn btn-danger me-5">vendas</a></button>
+    <button><a href="formulario.php" class="btn btn-danger me-5">Cadastrar Usuário</a></button>
 
-    <button><a href="relatorio-geral.php" class="btn btn-danger me-5">Relatórios</a></button>
+    <!--<button><a href="relatorio-geral.php" class="btn btn-danger me-5">Relatórios</a></button>
 
-    <button><a href="#" class="btn btn-danger me-5">Editar estoque</a></button>
+    <button><a href="#" class="btn btn-danger me-5">Editar estoque</a></button>-->
 
     <button><a href="sair.php" class="btn btn-danger me-5">Sair</a></button>
     </div>

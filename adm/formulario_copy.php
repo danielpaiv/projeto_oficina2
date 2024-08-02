@@ -189,7 +189,7 @@ if (isset($_POST['submit'])) {
     <nav> 
         <button><a href="sair.php" class="btn btn-danger me-5">Sair</a></button>
         
-        <button><a href="https://lightcoral-cassowary-439946.hostingersite.com/listar-adm/listar-serv.php" class="btn btn-danger me-5">Voltar</a></button>
+        <button><a href="painel.php" class="btn btn-danger me-5">Voltar</a></button>
     </nav> 
     <div class="box">
         <form action="formulario_copy.php" method="POST">
