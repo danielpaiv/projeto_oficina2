@@ -392,7 +392,7 @@ $user_id = $_SESSION['user_id'];
     </header>
     
     <nav id="menu">
-        <a href="#" onclick="facharMenu()">&times; Fechar</a>
+        <a href="#" onclick="fecharMenu()">&times; Fechar</a>
         <a href="vendas.php">Minhas vendas</a>
         <a href="#" id="showOptions">Mais opções</a>
         <div id="options" class="hidden">
