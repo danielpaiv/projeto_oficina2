@@ -1,4 +1,7 @@
 <?php
+
+date_default_timezone_set('America/Sao_Paulo');
+
     if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['valor_sangria']) && isset($_GET['usuario_id']) && isset($_GET['nome_usuario'])) {
         $valor_sangria = floatval($_GET['valor_sangria']);
         $usuario_id = intval($_GET['usuario_id']);

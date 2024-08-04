@@ -1,6 +1,8 @@
 <?php
      session_start();
      include_once('conexao.php');
+
+     date_default_timezone_set('America/Sao_Paulo');
  
      if (!isset($_SESSION['user_id'])) {
          header('Location: login.php');

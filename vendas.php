@@ -1,6 +1,8 @@
 <?php
     session_start();
     include_once('conexao.php');
+
+    date_default_timezone_set('America/Sao_Paulo');
     //date_default_timezone_set('America/Sao_Paulo');
     // Verifica se o usuário está logado
     if (!isset($_SESSION['user_id'])) {

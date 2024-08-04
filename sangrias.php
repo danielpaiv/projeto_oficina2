@@ -2,6 +2,8 @@
     session_start();
     include_once('conexao.php');
 
+    date_default_timezone_set('America/Sao_Paulo');
+
     if (!isset($_SESSION['nome']) || !isset($_SESSION['senha'])) {
         unset($_SESSION['nome']);
         unset($_SESSION['senha']);
