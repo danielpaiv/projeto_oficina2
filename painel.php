@@ -92,6 +92,8 @@
 
     <button><a href="mesa_4.php" class="btn btn-danger me-5">Mesa 4</a></button>
 
+    <button><a href="carrinho.php" class="btn btn-danger me-5">Carrinho</a></button>
+
     <button><a href="sair.php" class="btn btn-danger me-5">Sair</a></button>
     </div>
 </body>

@@ -1,103 +1,16 @@
 <?php
-    session_start();
-    include_once('conexao.php');
+session_start();
+include_once('conexao.php');
 
-    //exibe o usuario logado simples
-    $nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Nome não definido';
-    $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 'ID não definido';
+// Verifica se o usuário está logado
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login.php'); // Redireciona para a página de login se não estiver logado
+    exit;
+}
 
-
-    // exibe o usuario logado avançado co css Certifique-se de que as chaves 'nome' e 'id' existem na sessão
-    if (isset($_SESSION['nome']) && isset($_SESSION['user_id'])) {
-        
-    
-        echo 'Nome: ' . $_SESSION['nome'] . '<br>';
-            
-        
-        echo 'ID: ' . $_SESSION['user_id'] . '<br>';
-        } 
-        
-        else {
-            
-        
-        echo 'Nome e ID não estão definidos na sessão.';
-    }
-
-    // Verifica se o usuário está logado
-    if (!isset($_SESSION['user_id'])) {
-        header('Location: login.php'); // Redireciona para a página de login se não estiver logado
-        exit;
-    }
-    /*
-        $user_id = $_SESSION['user_id'];
-
-        // Consulta os dados apenas do usuário logado
-        $sql = "SELECT * FROM clientes WHERE user_id = ? ORDER BY id DESC";
-        $stmt = $conexao->prepare($sql);
-        $stmt->bind_param("i", $user_id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-    */
-
-
-        //print_r($_SESSION);
-        if((!isset($_SESSION['nome']) == true) and (!isset($_SESSION['senha']) == true))
-        {
-            unset($_SESSION['nome']);
-            unset($_SESSION['senha']);
-            header('Location: index.php');
-        }
-        $logado = $_SESSION['nome'];
-
-        //$sql = "SELECT * FROM usuarios ORDER BY id DESC";
-
-        //$result = $conexao->query($sql);
-
-        //print_r($result);
-
-
-
-
-    /*    $user_id = $_SESSION['user_id'];
-
-        // Consulta os dados apenas do usuário logado
-        $sql = "SELECT * FROM clientes WHERE user_id = ? ORDER BY id DESC";
-        $stmt = $conexao->prepare($sql);
-        $stmt->bind_param("i", $user_id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-
-
-        //print_r($_SESSION);
-        if((!isset($_SESSION['nome']) == true) and (!isset($_SESSION['senha']) == true))
-        {
-            unset($_SESSION['nome']);
-            unset($_SESSION['senha']);
-            header('Location: index.php');
-        }
-        $logado = $_SESSION['nome'];
-
-        //$sql = "SELECT * FROM usuarios ORDER BY id DESC";
-
-        //$result = $conexao->query($sql);
-
-        //print_r($result);
-    */
-
-        include_once('conexao.php');
-        //print_r($_SESSION);
-    
-
-        $sql = "SELECT * FROM clientes ORDER BY id DESC";
-
-        $result = $conexao->query($sql);
-
-        //print_r($result);
-
-
+$nome = $_SESSION['nome'];
+$user_id = $_SESSION['user_id'];
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -105,8 +18,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carrinho de Vendas</title>
-     <style>
-             body{
+    <style>
+        /* Seu CSS aqui */
+        
+           /* Seu CSS aqui */
+        
+           body{
             font-family: Arial, Helvetica, sans-serif;
             margin: 0px;
             background-color: #137897;
@@ -127,7 +44,7 @@
         }
         .btn-abrir{
             color: white;
-            font-size: 20px;
+            font-size: 30px;
         }
         nav{
             height: 0%;
@@ -211,7 +128,7 @@
         }
             
         nav {
-        margin-bottom: 20px;
+        margin-bottom: 30px;
         }
 
         button {
@@ -266,10 +183,11 @@
             border: 1px solid #ddd;
             padding: 10px;
             background-color: blue;
-            width: 50%;
+            width: 30%;
+            top: 120px;
         }
         #carrinho h2 {
-            margin-top: blue;
+            margin-top: 150px;
         }
 
         #listaCarrinho {
@@ -358,7 +276,7 @@
             width: 98%
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 800px) {
             table {
                 width: 100%;
                 font-size: 16px;
@@ -372,7 +290,7 @@
                 columns:3;
                 flex-direction: column;
                 align-items: flex-start;
-                margin-left: 5px;
+                margin-left: 3px;
                 
             }
 
@@ -391,6 +309,16 @@
                 margin-top: 100px;
                 margin-left: 5px;
             }
+            .btn-abrir{
+                color: white;
+                font-size: 30px;
+            }
+            #carrinho {
+            border: 1px solid #ddd;
+            padding: 10px;
+            background-color: blue;
+            width: 95%;
+        }
         }
 
         @media (max-width: 400px) {
@@ -425,7 +353,7 @@
                 margin-left: -10px;
             }
             #carrinho {
-                width: 106%;
+                width: 95%;
                 padding: 5px;
                 margin-left: 2px;
                 margin-top: 80px;
@@ -448,91 +376,57 @@
             .m-5{
                 width: 115%;
             }
+            
+            .btn-abrir{
+                color: white;
+                font-size: 30px;
+            }
         }
-        
-        
-       
-        
-
     </style>
 </head>
 <body>
-    <!--<div class="fixed-info">
-        <p>Nome: <?php echo $nome; ?></p>
-        <p>ID: <?php echo $user_id; ?></p>
-    </div>-->
-   
-
     <header class="fixed">
-    <!--criei uma class para usar no css e não ter conflito com outros links-->
-    <a href="#" class="btn-abrir" onclick="abrirMenu()">&#9776; Menu</a>
-    
-    <p>Nome: <?php echo $nome; ?></p><p>ID: <?php echo $user_id; ?></p>
-        
-
+        <a href="#" class="btn-abrir" onclick="abrirMenu()">&#9776; Menu</a>
+        <p>Nome: <?php echo $nome; ?></p><p>ID: <?php echo $user_id; ?></p>
+        <h2>Carrinho</h2>
     </header>
-    <!--<div id="botoesVenda" class="box"></div>-->
-   
-    <nav id="menu" >
-        <a href="#" onclick="facharMenu()">&times; Fechar</a>
-        
+    
+    <nav id="menu">
+        <a href="#" onclick="fecharMenu()">&times; Fechar</a>
         <a href="vendas.php">Minhas vendas</a>
-        
-        <!--<a href="http://localhost/teste-usuario2/listar-adm/index.php">Cadastrar serviços</a>
-        
-        <!--<a href="#">Mais opções</a>-->
-
         <a href="#" id="showOptions">Mais opções</a>
         <div id="options" class="hidden">
-            
-            <!--<a href="http://localhost/teste-usuario2/listar-adm/index.php">Adm</a>-->
-            
             <a href="meuRelatorio.php">Relatorio por administradora</a>
-            
             <a href="relatorio_vendas_por_servico.php">Relatório por itens</a>
-            
+            <a href="painel.php">Painel</a>
             <a href="sair.php">Sair</a>
-            
-            <!--<a href="#">Opção 4</a>-->
         </div>
     </nav>
     <br>
     <main id="conteudo">
-
         <div id="carrinho" class="carrinho">
             <h2>Carrinho de Serviços</h2>
             <ul id="listaCarrinho"></ul>
             <button onclick="finalizarCompra()">Finalizar Compra</button>
-            <!--<button id="botoesVenda"></button>-->
         </div>
         <br>
         <br>
-
         <div class="m-5">
-            
+
             <label for="filtroNome">Filtrar por nome:</label>
             <input type="text" id="filtroNome" onkeyup="filtrarPorNome()">
-            <!--
-            <label for="filtroData"><b>Data de Serviço</b></label>
-            <input type="date" id="filtroData" onchange="filtrarPorData()">
-            -->
-            <br>
-            <br>
 
+            <label for="filtroId">Filtrar por id:</label>
+            <input type="text" id="filtroId" onkeyup="filtrarPorId()">
+
+            <br>
+            <br>
             <table id="clientesTabela" class="box">
                 <thead>
                     <tr class="table">
                         <th scope="col">id</th>
-                        <!--<th scope="col">user_id</th>
-                        <th scope="col">nome</th>
-                        <th scope="col">cnpj</th>
-                        <th scope="col">telefone</th>-->
                         <th scope="col">servico</th>
                         <th scope="col">Data cadastro</th>
-                        <!--<th scope="col">cidade</th>
-                        <th scope="col">estado</th>
-                        <th scope="col">endereco</th>
-                        <th scope="col">forma_pagamento</th>-->
                         <th scope="col">valor</th>
                         <th scope="col">estoque</th>
                         <th scope="col">Adicionar ao Carrinho</th>
@@ -541,6 +435,8 @@
                 </thead>
                 <tbody class="box">
                     <?php
+                    $sql = "SELECT * FROM clientes ORDER BY id DESC";
+                    $result = $conexao->query($sql);
                     while ($user_data = $result->fetch_assoc()) {
                         echo "<tr>";
                         echo "<td>" . $user_data['id'] . "</td>";
@@ -559,7 +455,7 @@
                         echo "<td><button onclick='adicionarAoCarrinho(" . json_encode($user_data) . ")'>Adicionar</button></td>";
                         echo "<td>
                         
-                        <a class= 'btn btn-primary' href='edit.php?id=$user_data[id]'>
+                        <a class= 'btn btn-primary' href='edit_5.php?id=$user_data[id]'>
                         <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-pencil' viewBox='0 0 16 16'>
                         <path d='M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325'/>
                         </svg>
@@ -572,14 +468,11 @@
                 </tbody>
             </table>
         </div>
-        
-
     </main>
-    
-    <script>
 
+    <script>
         document.getElementById('showOptions').addEventListener('click', function(event) {
-            event.preventDefault(); // Impede o comportamento padrão do link
+            event.preventDefault();
             var options = document.getElementById('options');
             if (options.classList.contains('hidden')) {
                 options.classList.remove('hidden');
@@ -589,44 +482,23 @@
         });
 
         function abrirMenu() {
-            document.getElementById('menu').style. height = '100%';
+            document.getElementById('menu').style.height = '100%';
             document.getElementById('conteudo').style.marginLeft = '16%';
-            }
-            function facharMenu(){
-            document.getElementById('menu').style. height = '0%'
+        }
+
+        function fecharMenu() {
+            document.getElementById('menu').style.height = '0%';
             document.getElementById('conteudo').style.marginLeft = '0%';
         }
 
-
-        let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
-
-        function adicionarAoCarrinho(servico) {
-            carrinho.push(servico);
-            console.log(carrinho);
-            alert("Serviço adicionado ao carrinho! certifeque de perguntar ao cliente se vai querer dados na nota");
-        }
-
-
-         function adicionarAoCarrinho(servico) {
-            carrinho.push(servico);
-            console.log(carrinho);
-            alert("Serviço adicionado ao carrinho! certifeque de perguntar ao cliente se vai querer dados na nota");
-            atualizarCarrinho();
-        }
+        const userId = <?php echo json_encode($user_id); ?>;
+        let carrinho = JSON.parse(localStorage.getItem('carrinho_carrinho_' + userId)) || [];
 
         function adicionarAoCarrinho(servico) {
-            // Verificar se há itens no carrinho
-            //if (carrinho.length > 0) {
-             //   alert("Você já tem itens no carrinho. Por favor, finalize ou cancele a venda atual antes de adicionar novos itens.");
-            //    return;
-            //}
-
-            // Verificar estoque antes de adicionar
             if (servico.estoque > 0) {
                 carrinho.push(servico);
                 atualizarCarrinho();
 
-                // Atualizar estoque no banco de dados
                 fetch('atualizar_estoque.php', {
                     method: 'POST',
                     headers: {
@@ -638,57 +510,80 @@
                 .then(data => {
                     if (data.success) {
                         servico.estoque -= 1;
-
-                        // Salvar carrinho no localStorage
-                        localStorage.setItem('carrinho', JSON.stringify(carrinho));
-
-                        // Exibir o alerta e recarregar a página
+                        localStorage.setItem('carrinho_carrinho_' + userId, JSON.stringify(carrinho));
                         setTimeout(() => {
-                            alert("Serviço adicionado ao carrinho! certifeque-se de perguntar ao cliente se vai querer dados na nota.");
+                            alert("Serviço adicionado ao carrinho! Certifique-se de perguntar ao cliente se vai querer dados na nota.");
                             window.location.reload();
                         }, 100);
                     } else {
                         alert("Erro ao atualizar o estoque.");
                     }
                 })
-            .catch((error) => {
-                console.error('Error:', error);
+                .catch((error) => {
+                    console.error('Error:', error);
                 });
-
             } else {
                 alert("Estoque esgotado!");
             }
         }
 
         function carregarCarrinho() {
-            const carrinhoLocal = localStorage.getItem('carrinho');
+            const carrinhoLocal = localStorage.getItem('carrinho_carrinho_' + userId);
             if (carrinhoLocal) {
                 carrinho = JSON.parse(carrinhoLocal);
                 atualizarCarrinho();
             }
         }
 
-        // Chamar essa função ao carregar a página
         window.onload = carregarCarrinho;
 
         function atualizarCarrinho() {
-            const carrinhoElement = document.getElementById('carrinho');
-            carrinhoElement.innerHTML = ''; // Limpar carrinho
+            const listaCarrinho = document.getElementById('listaCarrinho');
+            listaCarrinho.innerHTML = '';
 
             carrinho.forEach(servico => {
                 const li = document.createElement('li');
-                li.textContent = `${servico.nome} - ${servico.valor}`;
-                carrinhoElement.appendChild(li);
+                li.textContent = `${servico.servico} - ${servico.valor}`;
+                listaCarrinho.appendChild(li);
             });
 
-            // Atualizar no localStorage
-            localStorage.setItem('carrinho', JSON.stringify(carrinho));
-            
+            localStorage.setItem('carrinho_carrinho_' + userId, JSON.stringify(carrinho));
         }
+
+        function finalizarCompra() {
+            if (carrinho.length === 0) {
+                alert("Seu carrinho está vazio. Adicione itens antes de finalizar a compra.");
+                return;
+            }
+
+            console.log('Dados a serem enviados:', JSON.stringify(carrinho)); // Verificar dados enviados
+            fetch('processar_carrinho.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(carrinho),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                alert("Compra finalizada com sucesso!");
+
+                localStorage.setItem('carrinhoFinalizado_carrinho_' + userId, JSON.stringify(carrinho));
+
+                carrinho = []; // Limpar o carrinho
+                localStorage.removeItem('carrinho_carrinho_' + userId); // Limpar o localStorage
+                atualizarCarrinho();
+                window.location.href = "imprimir copy.php"; // Redirecionar para a página de vendas
+            })
+            .catch((error) => {
+                console.error('Erro ao enviar dados:', error);
+                alert("Erro ao finalizar a compra. Por favor, tente novamente.");
+            });
+        }
+
         function cancelarVenda() {
-            // Lógica para cancelar a venda
             if (confirm("Você tem certeza que deseja cancelar a venda?")) {
-                // Restaurar o estoque dos itens no carrinho
                 carrinho.forEach(servico => {
                     fetch('atualizar_estoque.php', {
                         method: 'POST',
@@ -700,7 +595,7 @@
                     .then(response => response.json())
                     .then(data => {
                         if (data.success) {
-                            // Estoque restaurado com sucesso
+                            servico.estoque += 1;
                         } else {
                             alert("Erro ao restaurar o estoque do serviço com ID: " + servico.id);
                         }
@@ -710,83 +605,26 @@
                     });
                 });
 
-                // Limpar o carrinho
                 carrinho = [];
-                localStorage.removeItem('carrinho');
+                localStorage.removeItem('carrinho_carrinho_' + userId);
                 alert("Venda cancelada!");
-                // Recarregar a página
                 window.location.reload();
             }
         }
+
         function exibirBotoesVenda() {
             const botoesContainer = document.getElementById('botoesVenda');
-            botoesContainer.innerHTML = `
-                
-                <button onclick="cancelarVenda()">Cancelar Venda</button>
-            `;
+            botoesContainer.innerHTML = '<button onclick="cancelarVenda()">Cancelar Venda</button>';
         }
+
         function confirmarVenda() {
-            // Lógica para confirmar a venda
             alert("Venda confirmada!");
-            // Limpar o carrinho e recarregar a página
             carrinho = [];
-            localStorage.removeItem('carrinho');
+            localStorage.removeItem('carrinho_carrinho_' + userId);
             window.location.reload();
         }
 
-        // Chamar a função para exibir os botões quando necessário
         exibirBotoesVenda();
-
-
-
-        function atualizarCarrinho() {
-        const listaCarrinho = document.getElementById('listaCarrinho');
-        listaCarrinho.innerHTML = '';
-        carrinho.forEach(servico => {
-            const li = document.createElement('li');
-            li.textContent = `Nome: ${servico.nome}, Servico: ${servico.servico},forma_pagamento: ${servico.forma_pagamento}, Valor: ${servico.valor}`;
-            listaCarrinho.appendChild(li);
-        });
-            
-        }
-
-        function finalizarCompra() {
-            if (carrinho.length === 0) {
-                alert("Seu carrinho está vazio. Adicione itens antes de finalizar a compra.");
-                return;
-            }
-
-            fetch('processar_carrinho.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(carrinho),
-            })
-            
-            .then(response => response.json())
-            .then(data => {
-                console.log('Success:', data);
-                alert("Compra finalizada com sucesso!");
-                localStorage.setItem('carrinhoFinalizado', JSON.stringify(carrinho));
-                carrinho = []; // Limpar o carrinho
-                localStorage.removeItem('carrinho'); // Limpar o localStorage
-                window.location.href = 'imprimir copy.php'; // Redirecionar para a página de impressão
-                
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
-            
-        }
-
-
-
-
-
-
-
-
 
         function filtrarPorNome() {
             const input = document.getElementById('filtroNome');
@@ -807,16 +645,17 @@
             }
         }
 
-        function filtrarPorData() {
-            const input = document.getElementById('filtroData').value;
+        function filtrarPorId() {
+            const input = document.getElementById('filtroId');
+            const filter = input.value.toLowerCase();
             const table = document.getElementById('clientesTabela');
             const tr = table.getElementsByTagName('tr');
 
             for (let i = 1; i < tr.length; i++) {
-                const td = tr[i].getElementsByTagName('td')[5]; // coluna "Data de Serviço"
+                const td = tr[i].getElementsByTagName('td')[0]; // coluna "Nome"
                 if (td) {
                     const txtValue = td.textContent || td.innerText;
-                    if (txtValue.indexOf(input) > -1) {
+                    if (txtValue.toLowerCase().indexOf(filter) > -1) {
                         tr[i].style.display = '';
                     } else {
                         tr[i].style.display = 'none';
@@ -824,9 +663,6 @@
                 }
             }
         }
-
-        
     </script>
-
 </body>
 </html>
