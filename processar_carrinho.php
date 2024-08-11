@@ -27,17 +27,16 @@ foreach ($carrinho as $item) {
     $estado = $item['estado'];
     $endereco = $item['endereco'];
     $forma_pagamento = $item['forma_pagamento'];
+    $espaco_mesa = $item['espaco_mesa']; // Adiciona a mesa selecionada
     $valor = $item['valor'];
     $data_insercao = date('Y-m-d H:i:s');
 
-    $sql = "INSERT INTO carrinho (usuario_id, nome, cnpj, telefone, servico, data_serv, cidade, estado, endereco, forma_pagamento, valor, data_insercao) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO carrinho (usuario_id, servico_id, nome, cnpj, telefone, servico, data_serv, cidade, estado, endereco, forma_pagamento, espaco_mesa, valor, data_insercao) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conexao->prepare($sql);
-    $stmt->bind_param("isssssssssds", $user_id, $nome, $cnpj, $telefone, $servico, $data_serv, $cidade, $estado, $endereco, $forma_pagamento, $valor, $data_insercao);
+    $stmt->bind_param("isssssssssssds", $user_id, $servico_id, $nome, $cnpj, $telefone, $servico, $data_serv, $cidade, $estado, $endereco, $forma_pagamento, $espaco_mesa, $valor, $data_insercao);
     $stmt->execute();
 }
 
 $response = ['status' => 'success'];
 echo json_encode($response);
 ?>
-
-

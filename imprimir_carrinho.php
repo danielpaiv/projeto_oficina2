@@ -14,12 +14,71 @@ if (!isset($_SESSION['user_id'])) {
     <title>Imprimir Nota</title>
     <style>
         body {
+           
             font-family: Arial, Helvetica, sans-serif;
             background-color: #fff;
             margin: 0;
             padding: 20px;
         }
-        .container {
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 14px;
+            text-align: left;
+        }
+        
+        /* Estilo do cabeçalho da tabela */
+        thead tr {
+            background-color: #f2f2f2;
+            color: #333;
+            text-align: center;
+        }
+        
+        /* Estilo das células da tabela */
+        th, td {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        
+        /* Estilo alternado para linhas da tabela */
+        tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        /* Estilo do valor total */
+        #totalValue {
+            font-weight: bold;
+            color: #333;
+        }
+        
+        /* Ajuste das larguras das colunas */
+        th:nth-child(1), td:nth-child(1) {
+            width: 15%;
+        }
+        
+        th:nth-child(2), td:nth-child(2) {
+            width: 15%;
+        }
+        
+        th:nth-child(3), td:nth-child(3) {
+            width: 15%;
+        }
+        
+        th:nth-child(4), td:nth-child(4) {
+            width: 15%;
+        }
+        
+        th:nth-child(5), td:nth-child(5) {
+            width: 15%;
+        }
+        
+        th:nth-child(6), td:nth-child(6) {
+            width: 15%;
+        }
+        /*.container {
             max-width: 800px;
             margin: auto;
             padding: 20px;
@@ -37,6 +96,7 @@ if (!isset($_SESSION['user_id'])) {
             padding: 10px;
             border: 1px solid #ddd;
             text-align: left;
+            width: 10%;
         }
         th {
             background-color: #f2f2f2;
@@ -47,13 +107,85 @@ if (!isset($_SESSION['user_id'])) {
         }
         button {
             display: block;
-            width: 100%;
+            width: 10%;
             padding: 10px;
             background-color: #4CAF50;
             color: white;
             border: none;
             cursor: pointer;
             margin-top: 20px;
+        }*/
+        
+        
+        
+        
+        @media (max-width: 400px) {
+            
+            body{
+                background-color:white;
+                width: 100%;
+                margin-left: 0px;
+            }
+            
+            h2{
+                text-align: center;
+            }
+            
+            
+            th, td {
+                width: 50%;
+                padding: 0px;
+                border: 1px solid #ddd;
+                text-align: center;
+                font-size:11.5px;
+                
+           
+            }
+            
+            .container {
+                max-width: 500px;
+                margin: auto;
+                padding: 10px;
+                border: 1px solid #ddd;
+                margin-left: -30px;
+            }
+            
+             table {
+                width: 10%;
+                border-collapse: collapse;
+                margin: 50px 0;
+                font-size: 5px;
+                text-align: left;
+            }
+            
+            /* Ajuste das larguras das colunas */
+            th:nth-child(1), td:nth-child(1) {
+                width: 15%;
+            }
+            
+            th:nth-child(2), td:nth-child(2) {
+                width: 15%;
+            }
+            
+            th:nth-child(3), td:nth-child(3) {
+                width: 15%;
+            }
+            
+            th:nth-child(4), td:nth-child(4) {
+                width: 15%;
+            }
+            
+            th:nth-child(5), td:nth-child(5) {
+                width: 15%;
+            }
+            
+            th:nth-child(6), td:nth-child(6) {
+                width: 15%;
+            }
+        
+        }
+        .total{
+            width: 15%;
         }
     </style>
 </head>
@@ -66,7 +198,7 @@ if (!isset($_SESSION['user_id'])) {
                     <th>Cliente</th>
                     <th>Serviço</th>
                     <th>Quantidade</th>
-                    <th>Forma de Pagamento</th>
+                    <!--<th>Forma de Pagamento</th>-->
                     <th>Valor Unitário</th>
                     <th>Valor (R$)</th>
                 </tr>
@@ -75,6 +207,7 @@ if (!isset($_SESSION['user_id'])) {
             <tfoot>
                 <tr class="total">
                     <td colspan="5">Total</td>
+                    
                     <td id="totalValue"></td>
                 </tr>
             </tfoot>
@@ -123,7 +256,7 @@ if (!isset($_SESSION['user_id'])) {
                     <td>${servico.nome}</td>
                     <td>${servico.servico}</td>
                     <td>${servico.quantidade}</td>
-                    <td>${servico.forma_pagamento}</td>
+                    
                     <td>${parseFloat(servico.valor).toFixed(2)}</td>
                     <td>${servico.valorTotal.toFixed(2)}</td>
                 `;

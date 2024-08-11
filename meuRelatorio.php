@@ -2,6 +2,8 @@
     session_start();
     include_once('conexao.php');
 
+    date_default_timezone_set('America/Sao_Paulo');
+
     //print_r($_SESSION);
     if((!isset($_SESSION['nome']) == true) and (!isset($_SESSION['senha']) == true))
     {

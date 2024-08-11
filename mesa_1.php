@@ -404,11 +404,30 @@ $user_id = $_SESSION['user_id'];
     </nav>
     <br>
     <main id="conteudo">
-        <div id="carrinho" class="carrinho">
-            <h2>Carrinho de Serviços</h2>
-            <ul id="listaCarrinho"></ul>
-            <button onclick="finalizarCompra()">Finalizar Compra</button>
-        </div>
+
+    <div id="carrinho" class="carrinho">
+        <h2>Carrinho de Serviços</h2>
+        <ul id="listaCarrinho"></ul>
+
+        <label for="formaPagamento">Forma de Pagamento:</label>
+        <select id="formaPagamento">
+            <option value="debito">Débito</option>
+            <option value="credito">Crédito</option>
+            <option value="dinheiro">Dinheiro</option>
+            <option value="pix">Pix</option>
+        </select>
+
+        <label for="espacoMesa">Selecione a mesa:</label>
+        <select id="espacoMesa">
+            <option value="mesa_1">Mesa 1</option>
+            <!--<option value="mesa_2">Mesa 2</option>
+            <option value="mesa_3">Mesa 3</option>
+            <option value="mesa_4">Mesa 4</option>-->
+        </select><br><br>
+
+        <button onclick="finalizarCompra()">Finalizar Compra</button>
+    </div>
+
         <br>
         <br>
         <div class="m-5">
@@ -555,6 +574,16 @@ $user_id = $_SESSION['user_id'];
                 alert("Seu carrinho está vazio. Adicione itens antes de finalizar a compra.");
                 return;
             }
+            
+            const formaPagamento = document.getElementById('formaPagamento').value;
+            const espacoMesa = document.getElementById('espacoMesa').value; // Adiciona esta linha para obter o valor da mesa
+
+            // Adiciona a forma de pagamento e a mesa a cada item do carrinho
+            const carrinhoComPagamento = carrinho.map(item => ({
+                ...item,
+                forma_pagamento: formaPagamento,
+                espaco_mesa: espacoMesa // Adiciona a mesa selecionada
+            }));
 
             console.log('Dados a serem enviados:', JSON.stringify(carrinho)); // Verificar dados enviados
             fetch('processar_carrinho.php', {
@@ -562,7 +591,7 @@ $user_id = $_SESSION['user_id'];
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(carrinho),
+                body: JSON.stringify(carrinhoComPagamento),
             })
             .then(response => response.json())
             .then(data => {
@@ -574,13 +603,15 @@ $user_id = $_SESSION['user_id'];
                 carrinho = []; // Limpar o carrinho
                 localStorage.removeItem('carrinho_mesa_1_' + userId); // Limpar o localStorage
                 atualizarCarrinho();
-                window.location.href = "imprimir copy.php"; // Redirecionar para a página de vendas
+                window.location.href = "imprimir_carrinho.php"; // Redirecionar para a página de vendas
             })
             .catch((error) => {
                 console.error('Erro ao enviar dados:', error);
                 alert("Erro ao finalizar a compra. Por favor, tente novamente.");
             });
         }
+
+
 
         function cancelarVenda() {
             if (confirm("Você tem certeza que deseja cancelar a venda?")) {
