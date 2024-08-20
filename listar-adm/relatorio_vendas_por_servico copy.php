@@ -293,6 +293,8 @@
 
         <a href="sangrias copy.php" class="btn-b">Sangrias</a>
 
+        <a href="fundo_caixa.php"class="btn-b">Fundo de caixa</a>
+
         <a href="https://lightcoral-cassowary-439946.hostingersite.com/listar-adm/graficos/graficos_geral.php#"class="btn-b">Graficos</a>
 
     </header>

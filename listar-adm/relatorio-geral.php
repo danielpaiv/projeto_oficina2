@@ -288,6 +288,8 @@
 
         <a href="relatorio-diario.php"class="btn-b">relatorio de Valores Diario</a>
 
+        <a href="fundo_caixa.php"class="btn-b">Fundo de caixa</a>
+
         <a href="sangrias copy.php" class="btn-b">Sangrias</a>
 
         <a href="https://lightcoral-cassowary-439946.hostingersite.com/listar-adm/graficos/graficos_geral.php"class="btn-b">Graficos</a>
@@ -299,6 +301,7 @@
         <a href="#" onclick="facharMenu()">&times; Fechar</a>
 
         <a href="painel.php">Voltar</a>
+        <a href="fundo_caixa.php">Fundo de caixa</a>
         <a href="despesas.php">Cadastrar Despesas</a>
         <a href="http://localhost/projeto_oficina/adm/index.php">Cadastrar User</a>
 
