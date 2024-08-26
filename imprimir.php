@@ -52,6 +52,7 @@ date_default_timezone_set('America/Sao_Paulo');
         <p><strong>Nome do Usuário:</strong> <?php echo $nome_usuario; ?></p>
         <p><strong>Valor da Sangria:</strong> R$ <?php echo number_format($valor_sangria, 2, ',', '.'); ?></p>
         <p><strong>Data da Sangria:</strong> <?php echo $data_sangria; ?></p>
+        <p><strong>,,,,,,,,,,</strong> <?php ?></p>
     </div>
     <script>
         window.onload = function() {

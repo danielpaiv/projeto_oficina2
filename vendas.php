@@ -413,15 +413,15 @@
             printWindow.document.write('<h1>Dados Selecionados</h1>');
             printWindow.document.write('<table>');
             printWindow.document.write('<thead><tr>');
-            printWindow.document.write('<th>id</th>');
-            printWindow.document.write('<th>user_id</th>');
-            printWindow.document.write('<th>usuario_id</th>');
-            printWindow.document.write('<th>servico_id</th>');
+            //printWindow.document.write('<th>id</th>');
+            //printWindow.document.write('<th>user_id</th>');
+            //printWindow.document.write('<th>usuario_id</th>');
+            //printWindow.document.write('<th>servico_id</th>');
             printWindow.document.write('<th>espaco_mesa</th>');
             printWindow.document.write('<th>servico</th>');
-            printWindow.document.write('<th>forma_pagamento</th>');
+            //printWindow.document.write('<th>forma_pagamento</th>');
             printWindow.document.write('<th>valor</th>');
-            printWindow.document.write('<th>data_insercao</th>');
+            //printWindow.document.write('<th>data_insercao</th>');
             printWindow.document.write('</tr></thead><tbody>');
 
             selecionados.forEach(cb => {
@@ -429,20 +429,21 @@
                 somaValores += parseFloat(data.valor);  // Soma os valores
 
                 printWindow.document.write('<tr>');
-                printWindow.document.write('<td>' + data.id + '</td>');
-                printWindow.document.write('<td>' + data.user_id + '</td>');
-                printWindow.document.write('<td>' + data.usuario_id + '</td>');
-                printWindow.document.write('<td>' + data.servico_id + '</td>');
+                //printWindow.document.write('<td>' + data.id + '</td>');
+                //printWindow.document.write('<td>' + data.user_id + '</td>');
+                //printWindow.document.write('<td>' + data.usuario_id + '</td>');
+                //printWindow.document.write('<td>' + data.servico_id + '</td>');
                 printWindow.document.write('<td>' + data.espaco_mesa + '</td>');
                 printWindow.document.write('<td>' + data.servico + '</td>');
-                printWindow.document.write('<td>' + data.forma_pagamento + '</td>');
+                //printWindow.document.write('<td>' + data.forma_pagamento + '</td>');
                 printWindow.document.write('<td>' + data.valor + '</td>');
-                printWindow.document.write('<td>' + data.data_insercao + '</td>');
+                //printWindow.document.write('<td>' + data.data_insercao + '</td>');
                 printWindow.document.write('</tr>');
             });
 
             printWindow.document.write('</tbody></table>');
             printWindow.document.write('<h2>Total: ' + somaValores.toFixed(2) + '</h2>');  // Exibe a soma dos valores
+            printWindow.document.write('<h2>Total: ' +  + '</h2>');  // Exibe a soma dos valores
             printWindow.document.write('</body></html>');
             printWindow.document.close();
             printWindow.focus();

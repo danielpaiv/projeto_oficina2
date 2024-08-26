@@ -22,7 +22,7 @@ if (!isset($_SESSION['user_id'])) {
         }
         
         table {
-            width: 100%;
+            width: 50%;
             border-collapse: collapse;
             margin: 20px 0;
             font-size: 14px;
@@ -206,7 +206,7 @@ if (!isset($_SESSION['user_id'])) {
             <tbody id="listaServicos"></tbody>
             <tfoot>
                 <tr class="total">
-                    <td colspan="5">Total</td>
+                    <td colspan="2">Total</td>
                     
                     <td id="totalValue"></td>
                 </tr>
