@@ -294,8 +294,8 @@
                     <tr class="table">
                         <th scope="col"><input type="checkbox" id="selecionarTodos" onclick="selecionarTodos(this)"></th>
                         <th scope="col">id</th>
-                        <th scope="col">user_id</th>
-                        <th scope="col">usuario_id</th>
+                       <!-- <th scope="col">user_id</th>
+                        <th scope="col">usuario_id</th>-->
                         <th scope="col">servico_id</th>
                         <!--<th scope="col">nome</th>-->
                         <th scope="col">espaco_mesa</th>
@@ -318,8 +318,8 @@
                         echo "<tr>";
                         echo "<td><input type='checkbox' class='linhaSelecionada' data-json='".json_encode($user_data)."'></td>";
                         echo "<td>".$user_data['id']."</td>";
-                        echo "<td>".$user_data['user_id']."</td>";
-                        echo "<td>".$user_data['usuario_id']."</td>";
+                        //echo "<td>".$user_data['user_id']."</td>";
+                        //echo "<td>".$user_data['usuario_id']."</td>";
                         echo "<td>".$user_data['servico_id']."</td>";
                         //echo "<td>".$user_data['nome']."</td>";
                         echo "<td>".$user_data['espaco_mesa']."</td>";
@@ -354,12 +354,12 @@
             }
 
             let dataMaisRecente = new Date(Math.max.apply(null, Array.from(linhas).map(tr => {
-                const dataInsercao = tr.querySelector('td:nth-child(10)').textContent;
+                const dataInsercao = tr.querySelector('td:nth-child(8)').textContent;
                 return new Date(dataInsercao);
             })));
 
             linhas.forEach(tr => {
-                const dataInsercao = new Date(tr.querySelector('td:nth-child(10)').textContent);
+                const dataInsercao = new Date(tr.querySelector('td:nth-child(8)').textContent);
                 if (dataInsercao.getTime() === dataMaisRecente.getTime()) {
                     tr.style.display = ''; // Mostra a linha
                 } else {
