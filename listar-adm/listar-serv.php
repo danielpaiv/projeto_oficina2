@@ -207,11 +207,15 @@ $sql = "SELECT * FROM usuarios ORDER BY id DESC";
         <input type="date" id="filtroData" onchange="filtrarPorData()">
         <br>
         <br>
-    
+        <button onclick="imprimirSelecionados()">Imprimir Selecionados</button>
+            <br><br>
+
+            
 
         <table id="clientesTabela" class="box">
             <thead>
                 <tr class="table">
+                <th scope="col"><input type="checkbox" id="selecionarTodos" onclick="selecionarTodos(this)"></th>
                 <th scope="col">id</th>
                     <!--<th scope="col">nome</th>
                     <th scope="col">cnpj</th>
@@ -231,6 +235,7 @@ $sql = "SELECT * FROM usuarios ORDER BY id DESC";
                     while($user_data = mysqli_fetch_assoc($result))
                     {
                         echo "<tr>";
+                        echo "<td><input type='checkbox' class='linhaSelecionada' data-json='".json_encode($user_data)."'></td>";
                         echo "<td>".$user_data['id']."</td>";
                         //echo "<td>".$user_data['nome']."</td>";
                         //echo "<td>".$user_data['cnpj']."</td>";
@@ -261,6 +266,72 @@ $sql = "SELECT * FROM usuarios ORDER BY id DESC";
         </table>
     </div>   
     <script>
+
+        function selecionarTodos(checkbox) {
+            const checkboxes = document.querySelectorAll('.linhaSelecionada');
+            checkboxes.forEach(cb => cb.checked = checkbox.checked);
+        }
+
+        function imprimirSelecionados() {
+            const selecionados = document.querySelectorAll('.linhaSelecionada:checked');
+            if (selecionados.length === 0) {
+                alert('Nenhuma linha selecionada!');
+                return;
+            }
+
+            let somaValores = 0;
+
+            const printWindow = window.open('', '', 'height=600,width=800');
+            printWindow.document.write('<html><head><title>Imprimir Selecionados</title>');
+            printWindow.document.write('<style>');
+            printWindow.document.write('table { width: 50%; border-collapse: collapse; }');
+            printWindow.document.write('th, td { border: 1px solid black; padding: 8px; text-align: left; }');
+            printWindow.document.write('th { background-color: #f2f2f2; }');
+            printWindow.document.write('body { font-family: Arial, Helvetica, sans-serif; }');
+            printWindow.document.write('</style>');
+            printWindow.document.write('</head><body>');
+            printWindow.document.write('<h1>Venda Selecionada</h1>');
+            printWindow.document.write('<table>');
+            printWindow.document.write('<thead><tr>');
+            //printWindow.document.write('<th>id</th>');
+            //printWindow.document.write('<th>user_id</th>');
+            //printWindow.document.write('<th>usuario_id</th>');
+            printWindow.document.write('<th>servico_id</th>');
+            //printWindow.document.write('<th>espaco_mesa</th>');
+            //printWindow.document.write('<th>servico</th>');
+            //printWindow.document.write('<th>forma_pagamento</th>');
+            printWindow.document.write('<th>valor</th>');
+            printWindow.document.write('<th>estoque</th>');
+            //printWindow.document.write('<th>data_insercao</th>');
+            printWindow.document.write('</tr></thead><tbody>');
+
+            selecionados.forEach(cb => {
+                const data = JSON.parse(cb.getAttribute('data-json'));
+                somaValores += parseFloat(data.valor);  // Soma os valores
+
+                printWindow.document.write('<tr>');
+                //printWindow.document.write('<td>' + data.id + '</td>');
+                //printWindow.document.write('<td>' + data.user_id + '</td>');
+                //printWindow.document.write('<td>' + data.usuario_id + '</td>');
+                //printWindow.document.write('<td>' + data.servico_id + '</td>');
+                //printWindow.document.write('<td>' + data.espaco_mesa + '</td>');
+                printWindow.document.write('<td>' + data.servico + '</td>');
+                //printWindow.document.write('<td>' + data.forma_pagamento + '</td>');
+                printWindow.document.write('<td>' + data.valor + '</td>');
+                printWindow.document.write('<td>' + data.estoque + '</td>');
+                //printWindow.document.write('<td>' + data.data_insercao + '</td>');
+                printWindow.document.write('</tr>');
+            });
+
+            printWindow.document.write('</tbody></table>');
+            printWindow.document.write('<h2>Total: ' + somaValores.toFixed(2) + '</h2>');  // Exibe a soma dos valores
+            printWindow.document.write('<h2>: ' +  + '</h2>');  // Exibe a soma dos valores
+            printWindow.document.write('</body></html>');
+            printWindow.document.close();
+            printWindow.focus();
+            printWindow.print();
+        }
+
         function filtrarPorNome() {
             const input = document.getElementById('filtroNome');
             const filter = input.value.toLowerCase();

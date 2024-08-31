@@ -57,6 +57,11 @@ $user_id = $_SESSION['user_id'];
             overflow: hidden;
             transition: width 0.3s;
         }
+
+        .hidden {
+            display: none;
+            }
+            
         nav a{
             color: white;
             font-size: 25px;
@@ -398,6 +403,7 @@ $user_id = $_SESSION['user_id'];
         <div id="options" class="hidden">
             <a href="meuRelatorio.php">Relatorio por administradora</a>
             <a href="relatorio_vendas_por_servico.php">Relatório por itens</a>
+            <a href="relatorio_canal.php">Canal de vendas</a>
             <a href="painel.php">Painel</a>
             <a href="sair.php">Sair</a>
         </div>
@@ -405,28 +411,37 @@ $user_id = $_SESSION['user_id'];
     <br>
     <main id="conteudo">
 
-    <div id="carrinho" class="carrinho">
-        <h2>Carrinho de Serviços</h2>
-        <ul id="listaCarrinho"></ul>
+        <div id="carrinho" class="carrinho">
+            <h2>Carrinho de Serviços</h2>
+            <ul id="listaCarrinho"></ul>
 
-        <label for="formaPagamento">Forma de Pagamento:</label>
-        <select id="formaPagamento">
-            <option value="debito">Débito</option>
-            <option value="credito">Crédito</option>
-            <option value="dinheiro">Dinheiro</option>
-            <option value="pix">Pix</option>
-        </select>
+            <label for="formaPagamento">Forma de Pagamento:</label>
+            <select id="formaPagamento">
+                <option value="debito">Débito</option>
+                <option value="credito">Crédito</option>
+                <option value="dinheiro">Dinheiro</option>
+                <option value="pix">Pix</option>
+            </select>
 
-        <label for="espacoMesa">Selecione a mesa:</label>
-        <select id="espacoMesa">
-            <option value="mesa_1">Mesa 1</option>
-            <!--<option value="mesa_2">Mesa 2</option>
-            <option value="mesa_3">Mesa 3</option>
-            <option value="mesa_4">Mesa 4</option>-->
-        </select><br><br>
+            <label for="espacoMesa">Selecione a mesa:</label>
+            <select id="espacoMesa">
+                <option value="mesa_1">Mesa 1</option>
+                <!--<option value="mesa_2">Mesa 2</option>
+                <option value="mesa_3">Mesa 3</option>
+                <option value="mesa_4">Mesa 4</option>-->
+            </select><br><br>
 
-        <button onclick="finalizarCompra()">Finalizar Compra</button>
-    </div>
+            <label for="canalVenda">Canal de Venda:</label>
+            <select id="canalVenda">
+                <option value="whatsapp">WhatsApp</option>
+                <option value="instagram">Instagram</option>
+                <option value="ifood">iFood</option>
+                <option value="local">Local</option>
+            </select><br><br>
+
+            <button onclick="finalizarCompra()">Finalizar Compra</button>
+        </div>
+
 
         <br>
         <br>
@@ -576,29 +591,31 @@ $user_id = $_SESSION['user_id'];
             }
             
             const formaPagamento = document.getElementById('formaPagamento').value;
-            const espacoMesa = document.getElementById('espacoMesa').value; // Adiciona esta linha para obter o valor da mesa
+            const espacoMesa = document.getElementById('espacoMesa').value; // Obter o valor da mesa
+            const canalVenda = document.getElementById('canalVenda').value; // Obter o valor do canal de venda
 
-            // Adiciona a forma de pagamento e a mesa a cada item do carrinho
-            const carrinhoComPagamento = carrinho.map(item => ({
+            // Adicionar a forma de pagamento, mesa e canal de venda a cada item do carrinho
+            const carrinhoComDetalhes = carrinho.map(item => ({
                 ...item,
                 forma_pagamento: formaPagamento,
-                espaco_mesa: espacoMesa // Adiciona a mesa selecionada
+                espaco_mesa: espacoMesa, // Adicionar a mesa selecionada
+                canal_venda: canalVenda  // Adicionar o canal de venda selecionado
             }));
 
-            console.log('Dados a serem enviados:', JSON.stringify(carrinho)); // Verificar dados enviados
+            console.log('Dados a serem enviados:', JSON.stringify(carrinhoComDetalhes)); // Verificar dados enviados
             fetch('processar_carrinho.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(carrinhoComPagamento),
+                body: JSON.stringify(carrinhoComDetalhes),
             })
             .then(response => response.json())
             .then(data => {
                 console.log('Success:', data);
                 alert("Compra finalizada com sucesso!");
 
-                localStorage.setItem('carrinhoFinalizado_mesa_1_' + userId, JSON.stringify(carrinho));
+                localStorage.setItem('carrinhoFinalizado_mesa_1_' + userId, JSON.stringify(carrinhoComDetalhes));
 
                 carrinho = []; // Limpar o carrinho
                 localStorage.removeItem('carrinho_mesa_1_' + userId); // Limpar o localStorage
@@ -610,6 +627,7 @@ $user_id = $_SESSION['user_id'];
                 alert("Erro ao finalizar a compra. Por favor, tente novamente.");
             });
         }
+
 
 
 

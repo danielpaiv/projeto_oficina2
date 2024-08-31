@@ -28,12 +28,18 @@ foreach ($carrinho as $item) {
     $endereco = $item['endereco'];
     $forma_pagamento = $item['forma_pagamento'];
     $espaco_mesa = $item['espaco_mesa']; // Adiciona a mesa selecionada
+    $canal_venda = $item['canal_venda']; // Adiciona o canal de venda
     $valor = $item['valor'];
     $data_insercao = date('Y-m-d H:i:s');
 
-    $sql = "INSERT INTO carrinho (usuario_id, servico_id, nome, cnpj, telefone, servico, data_serv, cidade, estado, endereco, forma_pagamento, espaco_mesa, valor, data_insercao) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    // Atualiza a query para incluir o campo canal_venda
+    $sql = "INSERT INTO carrinho (usuario_id, servico_id, nome, cnpj, telefone, servico, data_serv, cidade, estado, endereco, forma_pagamento, espaco_mesa, canal_venda, valor, data_insercao) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conexao->prepare($sql);
-    $stmt->bind_param("isssssssssssds", $user_id, $servico_id, $nome, $cnpj, $telefone, $servico, $data_serv, $cidade, $estado, $endereco, $forma_pagamento, $espaco_mesa, $valor, $data_insercao);
+    
+    // Certifique-se de usar "s" para strings, incluindo canal_venda
+    $stmt->bind_param("issssssssssssds", $user_id, $servico_id, $nome, $cnpj, $telefone, $servico, $data_serv, $cidade, $estado, $endereco, $forma_pagamento, $espaco_mesa, $canal_venda, $valor, $data_insercao);
+    
     $stmt->execute();
 }
 

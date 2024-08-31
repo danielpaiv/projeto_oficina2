@@ -299,6 +299,7 @@
                         <th scope="col">servico_id</th>
                         <!--<th scope="col">nome</th>-->
                         <th scope="col">espaco_mesa</th>
+                        <th scope="col">canal_venda</th>
                         <!--<th scope="col">cnpj / Cpf</th>
                         <th scope="col">telefone</th>-->
                         <th scope="col">servico</th>
@@ -323,6 +324,7 @@
                         echo "<td>".$user_data['servico_id']."</td>";
                         //echo "<td>".$user_data['nome']."</td>";
                         echo "<td>".$user_data['espaco_mesa']."</td>";
+                        echo "<td>".$user_data['canal_venda']."</td>";
                         //echo "<td>".$user_data['cnpj']."</td>";
                         //echo "<td>".$user_data['telefone']."</td>";
                         echo "<td>".$user_data['servico']."</td>";
@@ -354,12 +356,12 @@
             }
 
             let dataMaisRecente = new Date(Math.max.apply(null, Array.from(linhas).map(tr => {
-                const dataInsercao = tr.querySelector('td:nth-child(8)').textContent;
+                const dataInsercao = tr.querySelector('td:nth-child(9)').textContent;
                 return new Date(dataInsercao);
             })));
 
             linhas.forEach(tr => {
-                const dataInsercao = new Date(tr.querySelector('td:nth-child(8)').textContent);
+                const dataInsercao = new Date(tr.querySelector('td:nth-child(9)').textContent);
                 if (dataInsercao.getTime() === dataMaisRecente.getTime()) {
                     tr.style.display = ''; // Mostra a linha
                 } else {
@@ -408,9 +410,10 @@
             printWindow.document.write('table { width: 50%; border-collapse: collapse; }');
             printWindow.document.write('th, td { border: 1px solid black; padding: 8px; text-align: left; }');
             printWindow.document.write('th { background-color: #f2f2f2; }');
+            printWindow.document.write('body { font-family: Arial, Helvetica, sans-serif; }');
             printWindow.document.write('</style>');
             printWindow.document.write('</head><body>');
-            printWindow.document.write('<h1>Dados Selecionados</h1>');
+            printWindow.document.write('<h1>Venda Selecionada</h1>');
             printWindow.document.write('<table>');
             printWindow.document.write('<thead><tr>');
             //printWindow.document.write('<th>id</th>');
