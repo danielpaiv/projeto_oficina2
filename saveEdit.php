@@ -33,10 +33,10 @@
         $estado = $_POST['estado'];
         $endereco = $_POST['endereco'];
         $forma_pagamento = $_POST['forma_pagamento'];
-       // $valor = $_POST['valor'];
+       $valor = $_POST['valor'];
         $user_id = $_POST['user_id']; // Obtém o ID do usuário da sessão
 
-        $sqlUpdate = "UPDATE clientes SET nome='$nome', cnpj='$cnpj', telefone='$telefone', cidade='$cidade', estado='$estado', endereco='$endereco', forma_pagamento='$forma_pagamento', user_id='$user_id'
+        $sqlUpdate = "UPDATE carrinho SET nome='$nome', cnpj='$cnpj', telefone='$telefone',servico='$servico',data_serv='$data_serv', cidade='$cidade', estado='$estado', endereco='$endereco', forma_pagamento='$forma_pagamento',valor='$valor', user_id='$user_id'
         WHERE id='$id'";
 
         $result = $conexao->query($sqlUpdate); 

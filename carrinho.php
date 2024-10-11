@@ -183,7 +183,7 @@ $user_id = $_SESSION['user_id'];
             border: 1px solid #ddd;
             padding: 10px;
             background-color: blue;
-            width: 30%;
+            width: 35%;
             top: 120px;
         }
         #carrinho h2 {
@@ -247,15 +247,16 @@ $user_id = $_SESSION['user_id'];
                 top: 50;
                 
             }
-            }
+            }*/
+            
             .hidden {
-            display: none;
+                display: none;
             }
 
             #options a {
                 display: block;
                 margin: 5px 0;
-            }*/
+            }
         .fixed-info {
             position: ;
             top: 0;
@@ -318,7 +319,38 @@ $user_id = $_SESSION['user_id'];
             padding: 10px;
             background-color: blue;
             width: 95%;
+            }
+            
+            #filtroNome{
+                color:white;
+            }
+            
+            #filtroId{
+                color:white;
+            }
+            #formaPagamento{
+                color:white;
+            }
+            #espacoMesa{
+                 color:white;
+            }
         }
+        
+         @media (max-width: 768px) {
+            
+             #filtroNome{
+                color:black;
+            }
+            
+            #filtroId{
+                color:black;
+            }
+            #formaPagamento{
+                color:black;
+            }
+            #espacoMesa{
+                 color:black;
+            }
         }
 
         @media (max-width: 400px) {
@@ -373,6 +405,16 @@ $user_id = $_SESSION['user_id'];
             #filtroNome{
                 color:white;
             }
+            
+            #filtroId{
+                color:white;
+            }
+            #formaPagamento{
+                color:white;
+            }
+            #espacoMesa{
+                 color:white;
+            }
             .m-5{
                 width: 115%;
             }
@@ -393,12 +435,17 @@ $user_id = $_SESSION['user_id'];
     
     <nav id="menu">
         <a href="#" onclick="fecharMenu()">&times; Fechar</a>
+        <a href="painel.php">Painel</a>
         <a href="vendas.php">Minhas vendas</a>
+        <a href="ambiente/barra-lateral.php">Dash</a>
+        
+        <a href="https://app.powerbi.com/view?r=eyJrIjoiZDQ1Y2ExM2QtMjczNS00NjZhLWI1MDktZDE4MTQ0N2FjZTI1IiwidCI6Ijc5YTk0YThmLTA0NWYtNGNkNC04MTRhLTgwNTA5MzlhYTJjNCJ9">dashboard</a>
+        
         <a href="#" id="showOptions">Mais opções</a>
         <div id="options" class="hidden">
             <a href="meuRelatorio.php">Relatorio por administradora</a>
             <a href="relatorio_vendas_por_servico.php">Relatório por itens</a>
-            <a href="painel.php">Painel</a>
+            <a href="relatorio_canal.php">Canal de vendas</a>
             <a href="sair.php">Sair</a>
         </div>
     </nav>
@@ -407,8 +454,8 @@ $user_id = $_SESSION['user_id'];
         <div id="carrinho" class="carrinho">
             <h2>Carrinho de Serviços</h2>
             <ul id="listaCarrinho"></ul>
-
-            <label for="formaPagamento">Forma de Pagamento:</label>
+            
+             <label for="formaPagamento">Forma de Pagamento:</label>
             <select id="formaPagamento">
                 <option value="debito">Débito</option>
                 <option value="credito">Crédito</option>
@@ -418,11 +465,20 @@ $user_id = $_SESSION['user_id'];
 
             <label for="espacoMesa">Selecione a mesa:</label>
             <select id="espacoMesa">
-                <!--<option value="mesa_1">Mesa 1</option>-->
+                <option value="mesa_1">Mesa 1</option>
                 <option value="mesa_2">Mesa 2</option>
-                <!--<option value="mesa_3">Mesa 3</option>
-                <option value="mesa_4">Mesa 4</option>-->
+                <option value="mesa_3">Mesa 3</option>
+                <option value="mesa_4">Mesa 4</option>
             </select><br><br>
+            
+            <label for="canalVenda">Canal de Venda:</label>
+            <select id="canalVenda">
+                <option value="whatsapp">WhatsApp</option>
+                <option value="instagram">Instagram</option>
+                <option value="ifood">iFood</option>
+                <option value="local">Local</option>
+            </select><br><br>
+            
             <button onclick="finalizarCompra()">Finalizar Compra</button>
         </div>
         <br>
@@ -571,35 +627,38 @@ $user_id = $_SESSION['user_id'];
                 alert("Seu carrinho está vazio. Adicione itens antes de finalizar a compra.");
                 return;
             }
-
+            
             const formaPagamento = document.getElementById('formaPagamento').value;
-            const espacoMesa = document.getElementById('espacoMesa').value; // Adiciona esta linha para obter o valor da mesa
+            const espacoMesa = document.getElementById('espacoMesa').value; // Obter o valor da mesa
+            const canalVenda = document.getElementById('canalVenda').value; // Obter o valor do canal de venda
 
-            // Adiciona a forma de pagamento e a mesa a cada item do carrinho
-            const carrinhoComPagamento = carrinho.map(item => ({
+            // Adicionar a forma de pagamento, mesa e canal de venda a cada item do carrinho
+            const carrinhoComDetalhes = carrinho.map(item => ({
                 ...item,
                 forma_pagamento: formaPagamento,
-                espaco_mesa: espacoMesa // Adiciona a mesa selecionada
+                espaco_mesa: espacoMesa, // Adicionar a mesa selecionada
+                canal_venda: canalVenda  // Adicionar o canal de venda selecionado
             }));
 
+            console.log('Dados a serem enviados:', JSON.stringify(carrinhoComDetalhes)); // Verificar dados enviados
             fetch('processar_carrinho.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(carrinhoComPagamento),
+                body: JSON.stringify(carrinhoComDetalhes),
             })
             .then(response => response.json())
             .then(data => {
                 console.log('Success:', data);
                 alert("Compra finalizada com sucesso!");
 
-                localStorage.setItem('carrinhoFinalizado_carrinho_' + userId, JSON.stringify(carrinho));
+                localStorage.setItem('carrinhoFinalizado_carrinho_' + userId, JSON.stringify(carrinhoComDetalhes));
 
                 carrinho = []; // Limpar o carrinho
                 localStorage.removeItem('carrinho_carrinho_' + userId); // Limpar o localStorage
                 atualizarCarrinho();
-                window.location.href = "imprimir_carrinho.php";
+                window.location.href = "imprimir_carrinho.php"; // Redirecionar para a página de vendas
             })
             .catch((error) => {
                 console.error('Erro ao enviar dados:', error);

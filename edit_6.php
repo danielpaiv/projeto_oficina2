@@ -34,7 +34,7 @@
 
         $id = $_GET['id'];
 
-        $sqlSelect = "SELECT * FROM clientes WHERE id=$id";
+        $sqlSelect = "SELECT * FROM carrinho WHERE id=$id";
 
         $result = $conexao->query($sqlSelect);
 
@@ -53,7 +53,7 @@
                 $forma_pagamento = $user_data['forma_pagamento'];
                 $valor = $user_data['valor'];
                 $user_id =$user_data['user_id']; // Obtém o ID do usuário da sessão
-                $estoque =$user_data['estoque'];
+                //$estoque =$user_data['estoque'];
 
                 //print_r("USER : " .$nome);
                 
@@ -92,7 +92,7 @@
         .box{
             columns: 1;
             position: absolute;
-            top: 62%;
+            top: 52%;
             left: 50%;
             transform: translate(-50%,-50%);
             background-color: rgba(0, 0, 0, 0.6);
@@ -220,13 +220,13 @@
 
 
                 <div class="inputbox">
-                    <input type="text" name="user_id" id="user_id" class="inputUser" value="<?php echo $user_id ?>" required>
+                    <input type="text" name="user_id" id="user_id" class="inputUser" value="<?php echo $user_id ?>" >
                     <label for="user_id" class="labelInput">user_id</label>
                 </div>
                 <br><br>
 
                 <div class="inputbox">
-                    <input type="text" name="nome" id="nome" class="inputUser" >
+                    <input type="text" name="nome" id="nome" class="inputUser" value="<?php echo $nome ?>" >
                     <label for="nome" class="labelInput">Cliente</label>
                 </div>
                 <br><br>
@@ -242,7 +242,7 @@
                 <br><br>
                 <!--<p>Serviço de Limpeza</p>-->
                 <div class="inputbox">
-                    <input type="tel" name="servico" id="servico" class="inputUser" value="<?php echo $servico ?>" required>
+                    <input type="tel" name="servico" id="servico" class="inputUser" value="<?php echo $servico ?>" >
                     <label for="servico" class="labelInput">serviço</label>
                 </div>
                 
@@ -256,7 +256,7 @@
                 <input type="radio" id="outro" name="serviço" value="outro" <?php echo ($serviço == "outro") ? 'checked' : ''; ?> required>
                 <label for="outro">Outro</label>
             -->
-                <br><br>
+             <!--   <br><br>
                 <label for="data_serv"><b>Data do Serviço</b></label>
                 <input type="date" name="data_serv" id="data_serv" value="<?php echo $data_serv ?>" required>  
                 <br><br><br>
@@ -277,7 +277,7 @@
                     <label for="endereco" class="labelInput">Endereço</label>
                 </div>
                 
-            <!--
+            
                 <div class="inputbox">
                     <input type="text" name="forma_pagamento" id="forma_pagamento" class="inputUser" value="<?php echo $forma_pagamento ?>" required>
                     <label for="forma_pagamento" class="labelInput">Forma de pagamento</label>
@@ -303,12 +303,12 @@
                     <input type="text" name="valor" id="valor" class="inputUser" value="<?php echo $valor ?>" required>
                     <label for="valor" class="labelInput">Valor</label>
                 </div><br><br>
-                <div class="inputbox">
+                <!--<div class="inputbox">
                     <input type="text" name="estoque" id="estoque" class="inputUser" value="<?php echo $estoque ?>" required>
                     <label for="estoque" class="labelInput">estoque</label>
-                </div>
+                </div>-->
                 <br><br>
-                <input type="hidden" name="arquivo_atual" value="mesa_1.php">
+                <input type="hidden" name="arquivo_atual" value="vendas.php">
                 <input type="hidden" name="id" value="<?php echo $id ?>">
                 <input type="submit" name="update" id="update">
                 
